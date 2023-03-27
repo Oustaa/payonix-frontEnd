@@ -27,6 +27,8 @@ const GlobalStyles = createGlobalStyle`
         --spacing-sm: .5rem;
         --spacing-xsm: .25rem;
     
+        --boxShadow: rgba(0, 0, 0, 0.32) 1px 1px 14px -10px;
+
     }
 
     /* Box sizing rules */

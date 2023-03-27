@@ -19,6 +19,7 @@ const StyledNavLinks = styled.div`
       color: var(--primary-blue-800);
       background-color: var(--primary-dark-100);
       border-radius: var(--radius-sm);
+      border: none !important;
     }
   }
 `;
@@ -39,7 +40,7 @@ const SideNavLinks = () => {
       <NavLink className={isActive} to="/products_inventory">
         Products Inventory
       </NavLink>
-      <NavLink className={isActive} to="/raw materials">
+      <NavLink className={isActive} to="/raw_materials">
         Raw materials
       </NavLink>
       <NavLink className={isActive} to="/raw_material_stock">
