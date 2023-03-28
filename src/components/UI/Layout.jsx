@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Outlet } from "react-router-dom";
 
 import SideNav from "./sidenav/SideNav";
-import NavBar from "./NavBar";
+import NavBar from "./NavBar/NavBar";
 
 const StyledBody = styled.div`
   display: flex;

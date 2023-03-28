@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logIn as login } from "../features/auth-slice";
+import { useCookies } from "react-cookie";
 
 import styled from "styled-components";
 import { InputGroup, Button } from "../styles";
@@ -45,7 +46,10 @@ const StyledLogInForm = styled.form`
 const LogIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggedin = useSelector((state) => state.auth.value);
+
+  const [cookies, setCookie] = useCookies(["access_token", "refresh_token"]);
+
+  const { value: isLoggedin } = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState({ value: "", valid: true });
   const [password, setPassword] = useState({ value: "", valid: true });
@@ -61,6 +65,10 @@ const LogIn = () => {
     });
   };
 
+  useEffect(() => {
+    if (isLoggedin) return navigate("/");
+  }, [isLoggedin, navigate]);
+
   const submitHundler = async (e) => {
     e.preventDefault();
     console.log({
@@ -73,20 +81,44 @@ const LogIn = () => {
         u_password: password.value,
       });
 
-      const { accessToken } = response.data;
+      const { accessToken, username } = response.data;
 
       if (accessToken) {
-        dispatch(login({ accessToken }));
-        localStorage.setItem("accessToken", accessToken);
+        dispatch(login({ accessToken, username }));
+
+        let expires = new Date();
+        expires.setTime(expires.getTime() + 43200 * 1000);
+        setCookie("access_token", response.data.accessToken, {
+          path: "/",
+          expires,
+        });
+        // setCookie('refresh_token', response.data.refresh_token, {path: '/', expires})
+
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
-      const responseData = error.response;
+      const responseData = error.response.data;
+
+      if (!responseData.email)
+        setEmail((prev) => {
+          return { ...prev, valid: false };
+        });
+      else {
+        setEmail((prev) => {
+          return { ...prev, valid: true };
+        });
+      }
+      if (!responseData.password)
+        setPassword((prev) => {
+          return { ...prev, valid: false };
+        });
+      else {
+        setPassword((prev) => {
+          return { ...prev, valid: true };
+        });
+      }
     }
   };
-
-  if (isLoggedin) return navigate("/");
 
   return (
     <StyledLogInContainer>
@@ -96,7 +128,7 @@ const LogIn = () => {
           <h2>Log in</h2>
         </StyledLogInHeader>
         <StyledLogInForm onSubmit={submitHundler}>
-          <InputGroup inline={false}>
+          <InputGroup className={!email.valid ? "invalid" : ""} inline={false}>
             <label htmlFor="">Username or Email:</label>
             <input
               type="text"
@@ -104,8 +136,12 @@ const LogIn = () => {
               value={email.value}
               onChange={emailChangeHndler}
             />
+            {/* {!email.valid ? <p>email is invalid</p> : null} */}
           </InputGroup>
-          <InputGroup inline={false}>
+          <InputGroup
+            className={!password.valid ? "invalid" : ""}
+            inline={false}
+          >
             <label htmlFor="">Password:</label>
             <input
               type="text"
@@ -113,6 +149,7 @@ const LogIn = () => {
               value={password.value}
               onChange={passwordChangeHndler}
             />
+            {/* {!password.valid ? <p>password is invalid</p> : null} */}
           </InputGroup>
           <Button bgColor={"var(--primary-cyan-800)"} color={"var(--white)"}>
             Log in

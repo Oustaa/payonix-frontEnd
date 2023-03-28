@@ -23,10 +23,6 @@ export const InputGroup = styled.div`
 
   margin-bottom: var(--spacing-sm);
 
-  // & + & {
-  //   margin-top: var(--spacing-sm);
-  // }
-
   label {
     width: ${({ inline }) => (!inline ? "100%" : "fit-content")};
     margin-right: ${({ inline }) => (!inline ? "" : "var(--spacing-sm)")};
@@ -42,6 +38,22 @@ export const InputGroup = styled.div`
 
     &::-webkit-input-placeholder {
       color: var(--primary-dark-100);
+    }
+  }
+  &.invalid {
+    label {
+      color: red;
+    }
+    input {
+      border: 1px solid red;
+      background-color: #ff000029;
+      color: var(--primary-dark-800);
+    }
+    p {
+      display: inline;
+      text-align: left;
+      font-size: 0.87rem;
+      color: red;
     }
   }
 `;

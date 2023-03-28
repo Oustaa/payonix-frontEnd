@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const authSlice = createSlice({
   name: "ui",
   initialState: {
-    sidNavOpen: false,
+    sidNavOpen: true,
   },
   reducers: {
     openSidebar: (state) => {

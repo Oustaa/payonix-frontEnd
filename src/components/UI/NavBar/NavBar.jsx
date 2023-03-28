@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 import { BsLayoutSidebarInsetReverse } from "react-icons/bs";
-
+import NavBarBtn from "./NavBarBtn";
 import { useSelector, useDispatch } from "react-redux";
-import { openSidebar } from "../../features/ui-slice";
-import { Button } from "../../styles";
+import { openSidebar } from "../../../features/ui-slice";
+import { Button } from "../../../styles";
 
 const StyledNavBar = styled.nav`
   display: flex;
@@ -26,8 +26,7 @@ const StyledNavBar = styled.nav`
 
 const NavBar = () => {
   const dispatch = useDispatch();
-  // const username = useSelector((state) => state.auth);
-  const sidNavOpen = useSelector((state) => state.ui.sidNavOpen);
+  const { sidNavOpen } = useSelector((state) => state.ui);
 
   return (
     <StyledNavBar sidNavOpen={sidNavOpen}>
@@ -36,7 +35,7 @@ const NavBar = () => {
           <BsLayoutSidebarInsetReverse />
         </Button>
       ) : null}
-      <h4>username</h4>
+      <NavBarBtn />
     </StyledNavBar>
   );
 };

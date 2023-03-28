@@ -17,9 +17,9 @@ const StyledSidNav = styled.aside`
   ${({ open }) => {
     if (!open) {
       return `
-                position: absolute;
-                transform: translate(-100%)
-              `;
+              position: absolute;
+              transform: translate(-100%)
+            `;
     }
     return `
       position: unset;
