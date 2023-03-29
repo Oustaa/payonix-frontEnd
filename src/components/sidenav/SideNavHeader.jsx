@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 import { BsLayoutSidebarInset } from "react-icons/bs";
-import { useSelector, useDispatch } from "react-redux";
-import { closeSidebar } from "../../../features/ui-slice";
+import { useDispatch } from "react-redux";
+import { closeSidebar } from "../../features/ui-slice";
 
-import { Button } from "../../../styles/index";
+import { Button } from "../../styles/index";
 
 const StyledHeader = styled.header`
   display: flex;

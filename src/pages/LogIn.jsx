@@ -47,6 +47,7 @@ const LogIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // eslint-disable-next-line
   const [cookies, setCookie] = useCookies(["access_token", "refresh_token"]);
 
   const { value: isLoggedin } = useSelector((state) => state.auth);
@@ -71,10 +72,7 @@ const LogIn = () => {
 
   const submitHundler = async (e) => {
     e.preventDefault();
-    console.log({
-      u_email: email.value,
-      u_password: password.value,
-    });
+
     try {
       const response = await axios.post("http://localhost:8000/auth/login", {
         u_email: email.value,
@@ -82,23 +80,16 @@ const LogIn = () => {
       });
 
       const { accessToken, username } = response.data;
+      console.log(response.data);
 
       if (accessToken) {
-        dispatch(login({ accessToken, username }));
+        dispatch(login({ accessToken, username, setCookie }));
 
-        let expires = new Date();
-        expires.setTime(expires.getTime() + 43200 * 1000);
-        setCookie("access_token", response.data.accessToken, {
-          path: "/",
-          expires,
-        });
-        // setCookie('refresh_token', response.data.refresh_token, {path: '/', expires})
-
-        navigate("/");
+        navigate("/dash");
       }
     } catch (error) {
-      const responseData = error.response.data;
-
+      console.log(error);
+      const responseData = error?.response?.data;
       if (!responseData.email)
         setEmail((prev) => {
           return { ...prev, valid: false };

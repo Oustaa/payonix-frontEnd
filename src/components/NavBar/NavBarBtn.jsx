@@ -1,11 +1,12 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-
-import { logOut } from "../../../features/auth-slice";
+import { useNavigate } from "react-router-dom";
+import { logOut } from "../../features/auth-slice";
 
 import { MdLogout } from "react-icons/md";
 import styled from "styled-components";
-import { Button } from "../../../styles";
+import { Button } from "../../styles";
+import { useCookies } from "react-cookie";
 
 const StyledBtnContainer = styled.div`
   display: flex;
@@ -13,15 +14,17 @@ const StyledBtnContainer = styled.div`
 `;
 
 const NavBarBtn = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [cookies, setCookies] = useCookies();
   const { username } = useSelector((state) => state.auth);
+
   return (
     <StyledBtnContainer>
       <span>{username}</span>
-      {/* bgColor="var(--primary-dark-700)" color="var(--white)" */}
       <Button
         onClick={() => {
-          dispatch(logOut());
+          dispatch(logOut({ setCookies, navigate }));
         }}
       >
         <MdLogout />

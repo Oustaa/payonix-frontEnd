@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useCookies } from "react-cookie";
-
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { isLoggedIn } from "../utils/isloggedin";
+// import { isLoggedIn } from "../utils/isloggedin";
+import { isLoggedIn } from "../features/auth-slice";
 
 import styled from "styled-components";
 
@@ -18,20 +19,21 @@ const StyledPendingPage = styled.div`
 
 const Pending = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { status, value } = useSelector((state) => state.auth);
+  // eslint-disable-next-line
   const [cookies, setCookie] = useCookies();
+  const token = cookies.access_token;
 
   useEffect(() => {
-    isLoggedIn(cookies.access_token)
-      .then((data) => {
-        const isLoggedIn = data?.isLoggedIn;
-        if (isLoggedIn) {
-          return navigate("/dashboard");
-        }
-      })
-      .catch((err) => {
-        return navigate("/log_in");
-      });
-  }, [cookies, navigate]);
+    if (!token) return navigate("/log_in");
+    else {
+      dispatch(isLoggedIn({ token }));
+      if (value) return navigate("/dashboard");
+      else return navigate("/log_in");
+    }
+  }, [token, value, dispatch, navigate]);
 
   return (
     <StyledPendingPage>We are loading you state wait please</StyledPendingPage>

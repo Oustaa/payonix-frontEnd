@@ -1,7 +1,7 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
+// pages
 import Dashboard from "../pages/Dashboard";
 import Products from "../pages/Products";
 import ProductInventory from "../pages/ProductInventory";
@@ -11,14 +11,9 @@ import RawMaterialsStock from "../pages/RawMaterialsStock";
 import Artisans from "../pages/Artisans";
 import Suppliers from "../pages/Suppliers";
 
-import Layout from "./UI/Layout";
+import Layout from "./Layout";
 
 const ProtectedRoutes = () => {
-  const isLoggedin = useSelector((state) => state.auth.value);
-
-  if (!isLoggedin) {
-    return <Navigate to="/log_in" replace />;
-  }
   return (
     <Routes>
       <Route element={<Layout />}>

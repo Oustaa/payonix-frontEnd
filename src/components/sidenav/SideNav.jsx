@@ -26,6 +26,11 @@ const StyledSidNav = styled.aside`
       transform: unset;
     `;
   }};
+
+  @media (max-width: 900px) {
+    position: absolute;
+    transform: translateX(-100%);
+  }
 `;
 
 const SideNav = () => {

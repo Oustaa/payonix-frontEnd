@@ -8,15 +8,16 @@ import NavBar from "./NavBar/NavBar";
 
 const StyledBody = styled.div`
   display: flex;
-  grid-template-columns: repeat(14, 7.14%);
-  grid-template-rows: repeat(auto-fill, 100px);
   // gap: var(--spacing-lg);
+  // max-width: 1600px;
+  margin-inline: auto;
 `;
 
 const StyledMain = styled.main`
   display: flex;
   gap: var(--spacing-lg);
   width: 100%;
+  min-width: 70%;
   flex-direction: column;
   padding-inline: var(--spacing-lg);
 `;

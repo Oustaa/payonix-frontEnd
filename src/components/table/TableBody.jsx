@@ -9,7 +9,7 @@ const TableBody = ({ data, headers }) => {
   return (
     <StyledTableBody>
       {data.map((data, i) => (
-        <TableRow data={data} fields={fields} />
+        <TableRow key={i} data={data} fields={fields} />
       ))}
     </StyledTableBody>
   );

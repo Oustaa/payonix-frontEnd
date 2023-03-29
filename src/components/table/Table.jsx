@@ -8,15 +8,21 @@ import TableBody from "./TableBody";
 const StyledTable = styled.table`
   width: 100%;
   min-width: max-content;
-  overflow-x: scroll;
+`;
+
+const StyledTableConainers = styled.div`
+  max-width: 100%;
+  overflow-x: auto;
 `;
 
 const Table = ({ headers, data }) => {
   return (
-    <StyledTable>
-      <TableHeader headers={headers} />
-      <TableBody data={data} headers={headers} />
-    </StyledTable>
+    <StyledTableConainers>
+      <StyledTable>
+        <TableHeader headers={headers} />
+        <TableBody data={data} headers={headers} />
+      </StyledTable>
+    </StyledTableConainers>
   );
 };
 

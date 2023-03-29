@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { BsLayoutSidebarInsetReverse } from "react-icons/bs";
 import NavBarBtn from "./NavBarBtn";
 import { useSelector, useDispatch } from "react-redux";
-import { openSidebar } from "../../../features/ui-slice";
-import { Button } from "../../../styles";
+import { openSidebar } from "../../features/ui-slice";
+import { Button } from "../../styles";
 
 const StyledNavBar = styled.nav`
   display: flex;
