@@ -15,6 +15,8 @@ const StyledNavBar = styled.nav`
   width: 100%;
   height: 70px;
   padding-inline: var(--spacing-lg);
+  position: sticky;
+  top: 0;
 
   background-color: var(--white);
   // padding: var(--spacing-xl);

@@ -8,6 +8,6 @@ export default configureStore({
   reducer: {
     auth: authSlice,
     ui: uiSlice,
-    p_inventory: productsInventorySlice,
+    products: productsInventorySlice,
   },
 });

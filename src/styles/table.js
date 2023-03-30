@@ -19,14 +19,21 @@ export const StyledTh = styled.th`
   padding-block: var(--spacing-lg);
   font-size: 0.9rem;
   font-weight: 300;
+  padding-block: var(--spacing-lg);
 `;
 
 export const StyledTd = styled.td`
   color: var(--primary-dark-700);
   padding-block: var(--spacing-lg);
+  padding-inline: var(--spacing-sm);
   font-weight: 500;
   text-align: center;
-  padding-inline: var(--spacing-sm);
+
+  &.image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 export const StyledTableBody = styled.tbody`

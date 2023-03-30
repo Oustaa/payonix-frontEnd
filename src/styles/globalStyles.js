@@ -31,7 +31,6 @@ const GlobalStyles = createGlobalStyle`
 
     }
 
-    /* Box sizing rules */
     *,
     *::before,
     *::after {

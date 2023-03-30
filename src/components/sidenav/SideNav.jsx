@@ -12,7 +12,7 @@ const StyledSidNav = styled.aside`
   padding-inline: var(--spacing-lg);
 
   box-shadow: var(--boxShadow);
-
+  top: 0;
   transition: transform 200ms ease-in;
   ${({ open }) => {
     if (!open) {
@@ -22,8 +22,8 @@ const StyledSidNav = styled.aside`
             `;
     }
     return `
-      position: unset;
-      transform: unset;
+    position: sticky;
+    transform: unset;
     `;
   }};
 

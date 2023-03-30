@@ -22,28 +22,16 @@ export const isLoggedIn = createAsyncThunk(
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { status: null, value: false, username: "" },
+  initialState: { status: null, value: false },
   reducers: {
-    logIn: (state, { payload: { accessToken, username, setCookie } }) => {
+    logIn: (state, { payload: { accessToken, username } }) => {
       state.value = true;
       state.username = username;
-      let expires = new Date();
-      expires.setTime(expires.getTime() + 43200 * 1000);
-      setCookie("access_token", accessToken, {
-        path: "/",
-        expires,
-      });
-      // httpOnly: true,
-      //   secure: true,
-      // setCookie('refresh_token', response.data.refresh_token, {path: '/', expires})
     },
 
-    logOut: (state, { payload: { setCookies, navigate } }) => {
-      console.log("Logging out please wait");
+    logOut: (state, { payload }) => {
       state.value = true;
       state.username = "";
-      setCookies("access_token", null);
-      navigate("/log_in");
     },
   },
   extraReducers: (builder) => {
@@ -59,7 +47,10 @@ const authSlice = createSlice({
           state.username = username;
           state.status = "idle";
         }
-      );
+      )
+      .addCase(isLoggedIn.rejected, (state, action) => {
+        state.status = "error";
+      });
   },
 });
 

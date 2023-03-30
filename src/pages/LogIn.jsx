@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logIn as login } from "../features/auth-slice";
+import { logIn as login, isLoggedIn } from "../features/auth-slice";
 import { useCookies } from "react-cookie";
 
 import styled from "styled-components";
@@ -48,9 +48,10 @@ const LogIn = () => {
   const navigate = useNavigate();
 
   // eslint-disable-next-line
-  const [cookies, setCookie] = useCookies(["access_token", "refresh_token"]);
+  const [cookies, setCookie] = useCookies();
+  const token = cookies.access_token;
 
-  const { value: isLoggedin } = useSelector((state) => state.auth);
+  const { status, value } = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState({ value: "", valid: true });
   const [password, setPassword] = useState({ value: "", valid: true });
@@ -67,8 +68,12 @@ const LogIn = () => {
   };
 
   useEffect(() => {
-    if (isLoggedin) return navigate("/");
-  }, [isLoggedin, navigate]);
+    dispatch(isLoggedIn({ token }));
+  }, []);
+
+  useEffect(() => {
+    if (status === "idle") return navigate("/");
+  }, [navigate, status, value]);
 
   const submitHundler = async (e) => {
     e.preventDefault();
@@ -80,12 +85,24 @@ const LogIn = () => {
       });
 
       const { accessToken, username } = response.data;
-      console.log(response.data);
 
       if (accessToken) {
-        dispatch(login({ accessToken, username, setCookie }));
+        dispatch(login({ accessToken, username }));
 
-        navigate("/dash");
+        let expires = new Date();
+        expires.setTime(expires.getTime() + 43200 * 1000);
+        setCookie("access_token", accessToken, {
+          path: "/",
+          expires,
+        });
+        setCookie("user_name", username, {
+          path: "/",
+          expires,
+        });
+
+        // setCookie('refresh_token', response.data.refresh_token, {path: '/', expires})
+
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log(error);
@@ -135,7 +152,7 @@ const LogIn = () => {
           >
             <label htmlFor="">Password:</label>
             <input
-              type="text"
+              type="password"
               placeholder="enter your password"
               value={password.value}
               onChange={passwordChangeHndler}

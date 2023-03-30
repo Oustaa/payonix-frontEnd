@@ -6,7 +6,8 @@ export const Button = styled.button`
   justify-content: center;
 
   border-radius: var(--radius-sm);
-  padding: var(--spacing-sm) var(--spacing-lg);
+  padding: ${({ padding }) => (padding ? padding : "var(--spacing-sm)")}
+    var(--spacing-lg);
   background-color: ${({ bgColor }) => (bgColor ? bgColor : "transparent")};
   color: ${({ color }) => (color ? color : "inherit")};
   border: none;
@@ -56,4 +57,9 @@ export const InputGroup = styled.div`
       color: red;
     }
   }
+`;
+
+export const FlexContainer = styled.div`
+  display: flex;
+  gap: var(--spacing-ms);
 `;

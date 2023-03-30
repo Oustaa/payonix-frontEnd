@@ -12,5 +12,6 @@ export async function isLoggedIn(token) {
   );
 
   const data = response.data;
+
   return data;
 }
