@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8000/auth";
+const BASE_URL = "http://localhost:8000/api/auth";
 
 export const isLoggedIn = createAsyncThunk(
   "auth/isLoogedIn",
@@ -29,7 +29,7 @@ const authSlice = createSlice({
       state.username = username;
     },
 
-    logOut: (state, { payload }) => {
+    logOut: (state) => {
       state.value = true;
       state.username = "";
     },
@@ -42,7 +42,6 @@ const authSlice = createSlice({
       .addCase(
         isLoggedIn.fulfilled,
         (state, { payload: { isLoggedIn, username } }) => {
-          console.log("fulfilled with username: ", username);
           state.value = isLoggedIn;
           state.username = username;
           state.status = "idle";

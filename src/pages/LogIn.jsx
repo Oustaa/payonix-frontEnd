@@ -79,10 +79,13 @@ const LogIn = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8000/auth/login", {
-        u_email: email.value,
-        u_password: password.value,
-      });
+      const response = await axios.post(
+        "http://localhost:8000/api/auth/login",
+        {
+          u_email: email.value,
+          u_password: password.value,
+        }
+      );
 
       const { accessToken, username } = response.data;
 
@@ -105,7 +108,6 @@ const LogIn = () => {
         navigate("/dashboard");
       }
     } catch (error) {
-      console.log(error);
       const responseData = error?.response?.data;
       if (!responseData.email)
         setEmail((prev) => {

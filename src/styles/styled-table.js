@@ -30,7 +30,7 @@ export const StyledTable = styled.table`
   min-width: max-content;
   overflow-x: scroll;
   width: ${({ width }) => (width ? `${width} !important` : "100%")};
-  min-width: ${({ width }) => (width ? `${width}` : "max-content")};
+  min-width: max-content;
   box-shadow: var(--boxShadow);
   position: sticky;
   bottom: 0;

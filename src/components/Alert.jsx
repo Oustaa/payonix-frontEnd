@@ -21,7 +21,7 @@ const Alert = ({ componentFunction, title }) => {
   const component = componentFunction();
 
   return (
-    <StyledAlertContainer onClick={() => dispatch(closeAlert())}>
+    <StyledAlertContainer>
       <StyledAlert>
         <StyledAlertHeader>
           <h4>{title}</h4>

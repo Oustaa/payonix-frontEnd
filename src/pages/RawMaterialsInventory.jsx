@@ -23,7 +23,7 @@ const RawMaterialsInventory = () => {
   const [cookies, setCookie] = useCookies();
   const token = cookies.access_token;
   const { data, loading, error } = useFetch({
-    url: "http://localhost:8000/rawMaterials/inventory",
+    url: "http://localhost:8000/api/rawMaterials/inventory",
     config: {
       method: "GET",
       headers: {

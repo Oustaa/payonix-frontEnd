@@ -15,7 +15,6 @@ const TableRow = ({ data, fields }) => {
     "https://content.la-z-boy.com/Images/product/category/tables/large/090_1065.jpg";
 
   const displayedValues = fields.map((field, i) => {
-    console.log(field.value, data[field.value]);
     if (field.type === "image")
       return (
         <StyledTd key={i} className="image">

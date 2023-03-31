@@ -21,7 +21,6 @@ const rawMaterialsTypesHeaders = {
   Availability: {
     checked: true,
     check: (data) => {
-      console.log(data);
       if (
         data["rmt_availability"] < data["rmt_reorder_point"] &&
         !Boolean(data["rmt_command_launched"])
@@ -35,7 +34,6 @@ const rawMaterialsTypesHeaders = {
   "Command Launched": {
     checked: true,
     check: (data) => {
-      console.log(data);
       if (
         data["rmt_availability"] < data["rmt_reorder_point"] &&
         !Boolean(data["rmt_command_launched"])
@@ -56,7 +54,7 @@ const RawMaterials = () => {
     loading: rawMaterialsLoading,
     error: rawMaterialsError,
   } = useFetch({
-    url: "http://localhost:8000/rawMaterials/bases",
+    url: "http://localhost:8000/api/rawMaterials/bases",
     config: {
       method: "GET",
       headers: {
@@ -69,7 +67,7 @@ const RawMaterials = () => {
     loading: rawMaterialsTypesLoading,
     error: rawMaterialsTypesError,
   } = useFetch({
-    url: "http://localhost:8000/rawMaterials/types",
+    url: "http://localhost:8000/api/rawMaterials/types",
     config: {
       method: "GET",
       headers: {

@@ -21,7 +21,6 @@ const productsVarietyHeaders = {
   Availability: {
     checked: true,
     check: (data) => {
-      console.log(data);
       if (
         data["pv_availibility"] < data["pv_reorder_point"] &&
         !Boolean(data["pv_command_lanched"])
@@ -41,7 +40,6 @@ const productsVarietyHeaders = {
   "Command Launched": {
     checked: true,
     check: (data) => {
-      console.log(data);
       if (
         data["pv_availibility"] < data["pv_reorder_point"] &&
         !Boolean(data["pv_command_lanched"])
@@ -62,7 +60,7 @@ const Products = () => {
     loading: productsLoading,
     error: productsError,
   } = useFetch({
-    url: "http://localhost:8000/products",
+    url: "http://localhost:8000/api/products",
     config: {
       method: "GET",
       headers: {
@@ -75,7 +73,7 @@ const Products = () => {
     loading: productsVarietyLoading,
     error: productsVarietyError,
   } = useFetch({
-    url: "http://localhost:8000/products/variety",
+    url: "http://localhost:8000/api/products/variety",
     config: {
       method: "GET",
       headers: {

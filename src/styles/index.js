@@ -72,3 +72,12 @@ export const StyledTableAlert = styled.span`
   padding: var(--spacing-sm) var(--spacing-xl);
   border-radius: var(--radius-lg);
 `;
+
+export const StyledForm = styled.form`
+  padding-block: var(--spacing-sm);
+
+  p.error_message {
+    padding-block-end: var(--spacing-sm);
+    color: var(--danger);
+  }
+`;

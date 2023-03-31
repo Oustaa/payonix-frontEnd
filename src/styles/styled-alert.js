@@ -15,7 +15,7 @@ export const StyledAlertContainer = styled.div`
 export const StyledAlert = styled.div`
   width: 500px;
   max-width: calc(100% - var(--spacing-lg));
-  height: 500px;
+  height: max-content;
   min-height: max-content;
   background-color: var(--white);
   border-radius: var(--radius-sm);
