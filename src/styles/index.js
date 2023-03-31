@@ -25,8 +25,10 @@ export const InputGroup = styled.div`
   margin-bottom: var(--spacing-sm);
 
   label {
-    width: ${({ inline }) => (!inline ? "100%" : "fit-content")};
+    width: ${({ inline }) => (!inline ? "100%" : "30%")};
+    min-width: ${({ inline }) => (!inline ? "100%" : "fit-content")};
     margin-right: ${({ inline }) => (!inline ? "" : "var(--spacing-sm)")};
+    color: var(--primary-dark-700);
   }
 
   input {
@@ -35,7 +37,7 @@ export const InputGroup = styled.div`
     border-radius: var(--radius-sm);
     padding: var(--spacing-xsm);
     color: var(--white);
-    width: ${({ inline }) => (!inline ? "100%" : "300px")};
+    width: ${({ inline }) => (!inline ? "100%" : "70%")};
 
     &::-webkit-input-placeholder {
       color: var(--primary-dark-100);
@@ -62,4 +64,11 @@ export const InputGroup = styled.div`
 export const FlexContainer = styled.div`
   display: flex;
   gap: var(--spacing-ms);
+`;
+
+export const StyledTableAlert = styled.span`
+  background-color: var(--danger);
+  color: var(--white);
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border-radius: var(--radius-lg);
 `;

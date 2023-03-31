@@ -1,16 +1,11 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { MdLogout } from "react-icons/md";
-import styled from "styled-components";
-import { Button } from "../../styles";
 import { useCookies } from "react-cookie";
+import { MdLogout } from "react-icons/md";
 
-const StyledBtnContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
+import { Button } from "../../styles";
+import { StyledBtnContainer } from "../../styles/styled-navBar";
 
 const NavBarBtn = () => {
   const navigate = useNavigate();

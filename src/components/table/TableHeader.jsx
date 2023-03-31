@@ -1,12 +1,20 @@
 import React from "react";
 
-import { StyledTableHeader, StyledTh, StyledTr } from "../../styles/table";
+import {
+  StyledTableHeader,
+  StyledTh,
+  StyledTr,
+} from "../../styles/styled-table";
 
 const TableHeader = ({ headers }) => {
+  const headersToDisplay = Object.keys(headers).filter((field) => {
+    return typeof headers[field] !== "function";
+  });
+
   return (
     <StyledTableHeader>
       <StyledTr>
-        {Object.keys(headers).map((header, i) => (
+        {headersToDisplay.map((header, i) => (
           <StyledTh key={i}>{header}</StyledTh>
         ))}
       </StyledTr>

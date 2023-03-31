@@ -1,37 +1,35 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
+import { MdFilterListAlt } from "react-icons/md";
+import { useDispatch } from "react-redux";
 
-import styled from "styled-components";
+import { openAlert } from "../../features/ui-slice";
 
+// components
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
 import Loading from "../Loading";
-import { Navigate } from "react-router-dom";
+
+// styled components
 import { Button } from "../../styles";
-const StyledTable = styled.table`
-  width: ${({ width }) => (width ? `${width} !important` : "100%")};
-  min-width: ${({ width }) => (width ? `${width}` : "max-content")};
-  box-shadow: var(--boxShadow);
-  position: sticky;
-  bottom: 0;
-`;
+import {
+  StyledTableConainers,
+  StyledTable,
+  StyledTableHead,
+} from "../../styles/styled-table";
 
-const StyledTableConainers = styled.div`
-  width: ${({ width }) => (width ? `${width} !important` : "100%")};
-  min-width: ${({ width }) => (width ? `${width} !important` : "100%")};
-  overflow-x: auto;
-  padding-bottom: var(--spacing-lg);
-`;
-
-const StyledTableHead = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--spacing-lg);
-  margin-bottom: var(--spacing-sm);
-`;
-
-const Table = ({ headers, data, width, loading, error, tableTitle }) => {
-  // const { width, maxWidth } = dimontions;
+const Table = ({
+  headers,
+  data,
+  width,
+  loading,
+  error,
+  tableTitle,
+  filter,
+  createForm,
+  filterForm,
+}) => {
+  const dispatch = useDispatch();
 
   if (loading) {
     return <Loading />;
@@ -41,17 +39,34 @@ const Table = ({ headers, data, width, loading, error, tableTitle }) => {
     return <Navigate to="/log_in" />;
   }
 
+  const openCreateAlertHandler = () => {
+    dispatch(openAlert({ formFunction: createForm }));
+  };
+
+  const openFilterAlertHandler = () => {
+    dispatch(openAlert({ formFunction: filterForm }));
+  };
+
   return (
     <StyledTableConainers width={width}>
       <StyledTableHead>
-        <h4>{tableTitle}</h4>
-        <Button
-          color="var(--white)"
-          bgColor="var(--green-cyan)"
-          padding="var(--spacing-xsm)"
-        >
-          Add new
-        </Button>
+        <div>
+          <h4>{tableTitle}</h4>
+          <Button
+            color="var(--white)"
+            bgColor="var(--green-cyan)"
+            padding="var(--spacing-xsm)"
+            onClick={openCreateAlertHandler}
+          >
+            Add new
+          </Button>
+        </div>
+        {filter ? (
+          <Button onClick={openFilterAlertHandler} padding="var(--spacing-xsm)">
+            <span>Filters </span>
+            <MdFilterListAlt />
+          </Button>
+        ) : null}
       </StyledTableHead>
       <StyledTable>
         <TableHeader headers={headers} />

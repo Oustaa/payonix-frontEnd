@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyledTr, StyledTd } from "../../styles/table";
+import { StyledTr, StyledTd } from "../../styles/styled-table";
 
 import styled from "styled-components";
 
@@ -12,9 +12,10 @@ const StyledImage = styled.img`
 
 const TableRow = ({ data, fields }) => {
   const src =
-    "https://images.unsplash.com/photo-1679678691328-54929d271c3f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwyNnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60";
+    "https://content.la-z-boy.com/Images/product/category/tables/large/090_1065.jpg";
 
   const displayedValues = fields.map((field, i) => {
+    console.log(field.value, data[field.value]);
     if (field.type === "image")
       return (
         <StyledTd key={i} className="image">
@@ -27,10 +28,12 @@ const TableRow = ({ data, fields }) => {
           {new Date(data[field.value]).toDateString()}
         </StyledTd>
       );
-    else if (data[field.value] !== null)
+    else if (data[field.value] !== null && data[field.value] !== undefined)
       return <StyledTd key={i}>{data[field.value]}</StyledTd>;
     else if (field.default)
       return <StyledTd key={i}>{field.defaultValue}</StyledTd>;
+    else if (field.checked)
+      return <StyledTd key={i}>{field.check(data, i)}</StyledTd>;
     else return <StyledTd key={i}>none</StyledTd>;
   });
 

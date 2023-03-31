@@ -1,7 +1,5 @@
 import React from "react";
-
 import { useFetch } from "../hooks/useFetch";
-
 import { useCookies } from "react-cookie";
 
 import Table from "../components/table/Table";
@@ -37,7 +35,9 @@ const ProductInventory = () => {
       headers={headers}
       loading={loading}
       data={data}
-      tableTitle="Product Inventory"
+      error={error}
+      tableTitle="Product Inventory:"
+      filter={true}
     />
   );
 };

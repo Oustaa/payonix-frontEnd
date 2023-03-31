@@ -1,10 +1,12 @@
 import React from "react";
 
 import TableRow from "./TableRow";
-import { StyledTableBody } from "../../styles/table";
+import { StyledTableBody } from "../../styles/styled-table";
 
 const TableBody = ({ data, headers }) => {
-  const fields = Object.values(headers);
+  const fields = Object.values(headers).filter((field) => {
+    return typeof field !== "function";
+  });
 
   return (
     <StyledTableBody>

@@ -1,9 +1,12 @@
 import React from "react";
 import { useFetch } from "../hooks/useFetch";
 import { useCookies } from "react-cookie";
-import Table from "../components/table/Table";
 
-import { FlexContainer } from "../styles";
+import Table from "../components/table/Table";
+import CreateProductForm from "../components/Forms/CreateProductForm";
+
+import { FlexContainer, StyledTableAlert } from "../styles";
+import { BsDashLg } from "react-icons/bs";
 
 const productsHeaders = {
   // image: { value: "p_image", type: "image" },
@@ -15,9 +18,39 @@ const productsVarietyHeaders = {
   image: { value: "pv_image", type: "image" },
   Name: { value: "pv_name" },
   Description: { value: "pv_description" },
-  Availability: { value: "pv_availibility" },
-  "Reorder Point": { value: "pv_reorder_point" },
-  "Command Launched": { value: "pv_command_lanched" },
+  Availability: {
+    checked: true,
+    check: (data) => {
+      console.log(data);
+      if (
+        data["pv_availibility"] < data["pv_reorder_point"] &&
+        !Boolean(data["pv_command_lanched"])
+      ) {
+        return <StyledTableAlert>{data["pv_availibility"]}</StyledTableAlert>;
+      }
+      return data["rmt_availability"];
+    },
+  },
+  "Reorder Point": {
+    value: "pv_reorder_point",
+    check: (data) => {
+      return data["pv_description"];
+    },
+  },
+
+  "Command Launched": {
+    checked: true,
+    check: (data) => {
+      console.log(data);
+      if (
+        data["pv_availibility"] < data["pv_reorder_point"] &&
+        !Boolean(data["pv_command_lanched"])
+      ) {
+        return <StyledTableAlert>Not yet!</StyledTableAlert>;
+      }
+      return <BsDashLg />;
+    },
+  },
 };
 
 const Products = () => {
@@ -59,7 +92,8 @@ const Products = () => {
         data={productsData}
         loading={productsLoading}
         error={productsError}
-        tableTitle="Products"
+        tableTitle="Products:"
+        createForm={() => <CreateProductForm />}
       />
       <Table
         width="80%"
@@ -67,7 +101,8 @@ const Products = () => {
         data={productsVarietyData}
         loading={productsVarietyLoading}
         error={productsVarietyError}
-        tableTitle="Product Varieties"
+        tableTitle="Product Varieties:"
+        filter={true}
       />
     </FlexContainer>
   );
