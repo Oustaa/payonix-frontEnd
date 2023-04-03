@@ -143,7 +143,6 @@ const artisnas = createSlice({
         state.artisans_compta.type = "";
       })
       .addCase(postArtisansCompta.rejected, (state, { error }) => {
-        console.log("rejected: ");
         state.artisans_compta.error = error;
         state.artisans_compta.loading = false;
         state.artisans_compta.status = "error";
