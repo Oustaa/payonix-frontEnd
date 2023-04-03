@@ -2,8 +2,9 @@ import styled from "styled-components";
 
 export const StyledTableConainers = styled.div`
   width: ${({ width }) => (width ? `${width} !important` : "100%")};
-  min-width: ${({ width }) => (width ? `max-content` : "100%")};
+  // min-width: ${({ width }) => (width ? `max-content` : "100%")};
   overflow-x: auto;
+  // height: calc(100vh - var(--spacing-lg) - 70px);
   padding-bottom: var(--spacing-lg);
   position: sticky;
   top: 0;
