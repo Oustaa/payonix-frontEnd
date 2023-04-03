@@ -5,7 +5,7 @@ const BASE_URL = "http://localhost:8000/api/artisans";
 
 export const getArtisans = createAsyncThunk("get/artisans", async () => {
   const response = await axios.get(BASE_URL, { withCredentials: true });
-  console.log(response.data);
+
   return response.data;
 });
 
@@ -15,11 +15,14 @@ export const postArtisans = createAsyncThunk(
     const response = await fetch(BASE_URL, {
       method: "POST",
       body: JSON.stringify(data),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
       credentials: "include",
     });
-    const responsData = await response.json();
-    console.log(response);
-    return responsData;
+    console.log(await response.json());
+    return response;
   }
 );
 
@@ -116,7 +119,7 @@ const artisnas = createSlice({
         state.artisans.error = null;
       })
       .addCase(postArtisans.fulfilled, (state, { payload }) => {
-        state.artisans.data.unshift(payload);
+        state.artisans.data.unshift(payload.body);
         state.artisans.loading = false;
         state.artisans.status = "success";
         state.artisans.type = "";

@@ -1,6 +1,5 @@
 import React from "react";
 import { useFetch } from "../hooks/useFetch";
-import { useCookies } from "react-cookie";
 
 import Table from "../components/table/Table";
 
