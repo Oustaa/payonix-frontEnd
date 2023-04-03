@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 import { InputGroup, StyledForm, Button } from "../../styles";
+import Input from "../Input";
 
 const CURRENT_DATE = new Date().toISOString().substring(0, 10);
 
@@ -39,7 +40,6 @@ const CreateProduct = () => {
       const missingFields = error.response.data?.missing_field || [];
       const updatedInputs = { ...inputs };
       for (const missingField of missingFields) {
-        console.log(missingField);
         if (Boolean(missingField) && updatedInputs[missingField]) {
           updatedInputs[missingField].valid = false;
         }
@@ -53,7 +53,7 @@ const CreateProduct = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/artisans/compta`,
+        `http://localhost:8000/api/artisans/comptas`,
         {
           ac_artisan_id: inputs.ac_artisan_id.value,
           ac_amount: inputs.ac_amount.value,
@@ -72,7 +72,7 @@ const CreateProduct = () => {
     } catch (err) {
       console.log(err);
       setError(err);
-      setMessage(error?.response?.data?.error_message);
+      setMessage(err?.response?.data?.error_message);
     }
   };
 
@@ -92,52 +92,33 @@ const CreateProduct = () => {
       {message ? (
         <p className={`message  ${error ? "error" : ""}`}>{message}</p>
       ) : null}
-
-      <InputGroup>
-        <label htmlFor="ac_artisan_id">Artisan Name:</label>
-        <input
-          type="text"
-          name="ac_artisan_id"
-          value={inputs.ac_artisan_id.value}
-          onChange={handleinputChange}
-          id="ac_artisan_id"
-        />
-      </InputGroup>
-      <InputGroup>
-        <label htmlFor="ac_amount">Amount:</label>
-        <input
-          type="text"
-          name="ac_amount"
-          value={inputs.ac_amount.value}
-          onChange={handleinputChange}
-          id="ac_amount"
-        />
-      </InputGroup>
-      <InputGroup>
-        <label htmlFor="ac_note">Note:</label>
-        <input
-          type="text"
-          name="ac_note"
-          value={inputs.ac_note.value}
-          onChange={handleinputChange}
-          id="ac_note"
-        />
-      </InputGroup>
-      <InputGroup
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-        className={!inputs.ac_date.valid ? "invalid" : ""}
-      >
-        <label htmlFor="ac_date">Date:</label>
-        <input
-          type="date"
-          name="ac_date"
-          id="ac_date"
-          value={inputs.ac_date.value}
-          onChange={handleinputChange}
-        />
-      </InputGroup>
-
+      <Input
+        name="ac_artisan_id"
+        label="Artisan Name:"
+        value={inputs.ac_artisan_id.value}
+        onChangeHandler={handleinputChange}
+        className={() => (!inputs.ac_artisan_id.valid ? "invalid" : "")}
+      />
+      <Input
+        name="ac_amount"
+        label="Amount:"
+        value={inputs.ac_amount.value}
+        onChangeHandler={handleinputChange}
+        className={() => (!inputs.ac_amount.valid ? "invalid" : "")}
+      />
+      <Input
+        name="ac_note"
+        label="Note:"
+        value={inputs.ac_note.value}
+        onChangeHandler={handleinputChange}
+      />
+      <Input
+        name="ac_date"
+        label="Date:"
+        value={inputs.ac_date.value}
+        onChangeHandler={handleinputChange}
+        type="date"
+      />
       <Button bgColor="var(--primary-cyan-800)">Create</Button>
     </StyledForm>
   );

@@ -92,7 +92,9 @@ const CreateProductForm = () => {
   return (
     <StyledForm onSubmit={handleSubmit}>
       {error?.response ? (
-        <p className="error_message">{error?.response?.data?.error_message}</p>
+        <p className={`message  ${error ? "error" : ""}`}>
+          {error?.response?.data?.error_message}
+        </p>
       ) : null}
       <InputGroup
         inputBgColor="var(--primary-dark-600)"
@@ -106,6 +108,20 @@ const CreateProductForm = () => {
           id="pv_name"
           value={inputs.pv_name.value}
           onChange={handleinputChange}
+        />
+      </InputGroup>
+      <InputGroup
+        className={!inputs.pv_product_id.valid ? "invalid" : ""}
+        inputBgColor="var(--primary-dark-600)"
+        inline={false}
+      >
+        <label htmlFor="pv_product_id">Products origin:</label>
+        <input
+          type="text"
+          name="pv_product_id"
+          value={inputs.pv_product_id.value}
+          onChange={handleinputChange}
+          id="pv_product_id"
         />
       </InputGroup>
       <InputGroup
@@ -136,21 +152,7 @@ const CreateProductForm = () => {
           id="pv_reorder_point"
         />
       </InputGroup>
-      <InputGroup
-        className={!inputs.pv_product_id.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="pv_product_id">Products origin:</label>
-        <input
-          type="text"
-          name="pv_product_id"
-          value={inputs.pv_product_id.value}
-          onChange={handleinputChange}
-          id="pv_product_id"
-        />
-      </InputGroup>
-      <InputGroup inputBgColor="var(--primary-dark-600)" inline={false}>
+      <InputGroup>
         <label htmlFor="p_image">Products Image:</label>
         <input type="file" name="p_image" onChange={handleFileChange} />
       </InputGroup>

@@ -4,10 +4,28 @@ export const StyledTableConainers = styled.div`
   width: ${({ width }) => (width ? `${width} !important` : "100%")};
   // min-width: ${({ width }) => (width ? `max-content` : "100%")};
   overflow-x: auto;
-  // height: calc(100vh - var(--spacing-lg) - 70px);
-  padding-bottom: var(--spacing-lg);
-  position: sticky;
-  top: 0;
+  max-height: calc(100vh - var(--spacing-lg) - 90px);
+  height: fit-content;
+  margin-bottom: var(--spacing-lg);
+  position: relative;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--primary-dark-200);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary-dark-500);
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark-600);
+  }
+
+  & + & {
+    margin-left: var(--spacing-lg);
+  }
 `;
 
 export const StyledTableHead = styled.div`
@@ -18,8 +36,10 @@ export const StyledTableHead = styled.div`
   gap: var(--spacing-lg);
   margin-bottom: var(--spacing-sm);
   position: sticky;
+  top: 0;
   left: 0;
-
+  background-color: var(--white);
+  padding: var(--spacing-sm);
   & > * {
     display: flex;
     flex-direction: row;

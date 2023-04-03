@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 import { InputGroup, StyledForm, Button } from "../../styles";
+import Input from "../Input";
 
 const initialInputValues = {
   a_name: {
@@ -58,13 +59,17 @@ const CreateProduct = () => {
       );
 
       if (response.status === 201) {
-        setMessage(response?.data?.message);
+        setError(null);
+        setMessage(
+          `Artisan with the name '${response.data.a_name}' has been created`
+        );
         setInputs(initialInputValues);
       }
+      console.log(response);
     } catch (err) {
       console.log(err);
       setError(err);
-      setMessage(error?.response?.data?.error_message);
+      setMessage(err?.response?.data?.error_message);
     }
   };
 
@@ -84,40 +89,27 @@ const CreateProduct = () => {
       {message ? (
         <p className={`message  ${error ? "error" : ""}`}>{message}</p>
       ) : null}
-      <InputGroup
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-        className={!inputs.a_name.valid ? "invalid" : ""}
-      >
-        <label htmlFor="a_name">Artisans Name:</label>
-        <input
-          type="text"
-          name="a_name"
-          id="a_name"
-          value={inputs.a_name.value}
-          onChange={handleinputChange}
-        />
-      </InputGroup>
-      <InputGroup>
-        <label htmlFor="a_phone">Artisan Phone Number:</label>
-        <input
-          type="text"
-          name="a_phone"
-          value={inputs.a_phone.value}
-          onChange={handleinputChange}
-          id="a_phone"
-        />
-      </InputGroup>
-      <InputGroup>
-        <label htmlFor="a_address">Artisan Address:</label>
-        <input
-          type="text"
-          name="a_address"
-          value={inputs.a_address.value}
-          onChange={handleinputChange}
-          id="a_address"
-        />
-      </InputGroup>
+      <Input
+        name="a_name"
+        value={inputs.a_name.value}
+        onChangeHandler={handleinputChange}
+        label="Artisans Name:"
+        className={() => {
+          return !inputs.a_name.valid ? "invalid" : "";
+        }}
+      />
+      <Input
+        name="a_phone"
+        value={inputs.a_phone.value}
+        onChangeHandler={handleinputChange}
+        label="Artisan Phone Number:"
+      />
+      <Input
+        name="a_address"
+        value={inputs.a_address.value}
+        onChangeHandler={handleinputChange}
+        label="Artisan Address:"
+      />
       <Button bgColor="var(--primary-cyan-800)">Create</Button>
     </StyledForm>
   );
