@@ -23,6 +23,7 @@ const Table = ({
   data,
   width,
   loading,
+  type,
   error,
   tableTitle,
   filter,
@@ -31,7 +32,7 @@ const Table = ({
 }) => {
   const dispatch = useDispatch();
 
-  if (loading) {
+  if (loading && type === "get") {
     return <Loading />;
   }
 

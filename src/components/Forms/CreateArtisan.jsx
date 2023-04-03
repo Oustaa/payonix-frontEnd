@@ -1,6 +1,6 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import { useDispatch } from "react-redux";
+import { postArtisans } from "../../features/artisan-slice";
 import { InputGroup, StyledForm, Button } from "../../styles";
 
 const initialInputValues = {
@@ -22,50 +22,35 @@ const initialInputValues = {
 };
 
 const CreateProduct = () => {
+  const dispatch = useDispatch();
   const [inputs, setInputs] = useState(initialInputValues);
 
-  const [error, setError] = useState(null);
-  const [message, setMessage] = useState(null);
-
-  useEffect(() => {
-    if (error?.response?.status === 400) {
-      const missingFields = error.response.data?.missing_field || [];
-      const updatedInputs = { ...inputs };
-      for (const missingField of missingFields) {
-        console.log(missingField);
-        if (Boolean(missingField) && updatedInputs[missingField]) {
-          updatedInputs[missingField].valid = false;
-        }
-      }
-      setInputs(updatedInputs);
-    }
-  }, [error, message]);
+  // useEffect(() => {
+  //   if (error?.response?.status === 400) {
+  //     const missingFields = error.response.data?.missing_field || [];
+  //     const updatedInputs = { ...inputs };
+  //     for (const missingField of missingFields) {
+  //       console.log(missingField);
+  //       if (Boolean(missingField) && updatedInputs[missingField]) {
+  //         updatedInputs[missingField].valid = false;
+  //       }
+  //     }
+  //     setInputs(updatedInputs);
+  //   }
+  // }, [error, message]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        `http://localhost:8000/api/artisans`,
-        {
+    dispatch(
+      postArtisans({
+        data: {
           a_name: inputs.a_name.value,
           a_phone: inputs.a_phone.value,
           a_address: inputs.a_address.value,
         },
-        {
-          withCredentials: true,
-        }
-      );
-
-      if (response.status === 201) {
-        setMessage(response?.data?.message);
-        setInputs(initialInputValues);
-      }
-    } catch (err) {
-      console.log(err);
-      setError(err);
-      setMessage(error?.response?.data?.error_message);
-    }
+      })
+    );
   };
 
   const handleinputChange = (e) => {
@@ -81,9 +66,9 @@ const CreateProduct = () => {
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      {message ? (
+      {/* {message ? (
         <p className={`message  ${error ? "error" : ""}`}>{message}</p>
-      ) : null}
+      ) : null} */}
       <InputGroup
         inputBgColor="var(--primary-dark-600)"
         inline={false}

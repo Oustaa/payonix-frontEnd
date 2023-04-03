@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledAlertContainer = styled.div`
-  position: absolute;
+  position: fixed;
   inset: 0 0 0 0;
   background-color: #3a3a3a4a;
   z-index: 1000;
@@ -13,8 +13,8 @@ export const StyledAlertContainer = styled.div`
 `;
 
 export const StyledAlert = styled.div`
-  width: 500px;
-  max-width: calc(100% - var(--spacing-lg));
+  width: calc(100% - var(--spacing-lg));
+  max-width: 500px;
   height: max-content;
   min-height: max-content;
   background-color: var(--white);

@@ -1,10 +1,12 @@
-import React from "react";
-import { useFetch } from "../hooks/useFetch";
+import React, { useEffect } from "react";
 
 import Table from "../components/table/Table";
 
 import { FlexContainer, StyledTableAlert } from "../styles";
 import { BsDashLg } from "react-icons/bs";
+
+import { useSelector, useDispatch } from "react-redux";
+import { getArtisansCompta, getArtisans } from "../features/artisan-slice";
 
 const artisansHeaders = {
   "Artisan name": { value: "a_name" },
@@ -14,7 +16,7 @@ const artisansHeaders = {
     defaultValue: <BsDashLg />,
   },
   Address: { value: "a_address", default: true, defaultValue: <BsDashLg /> },
-  Availability: {
+  Total: {
     checked: true,
     check: (data) => {
       if (data["a_total"] < 0) {
@@ -33,26 +35,30 @@ const productsVarietyHeaders = {
 };
 
 const Artisans = () => {
+  const dispatch = useDispatch();
+  const { artisans, artisans_compta } = useSelector((state) => state.artisans);
+
   const {
     data: artisansData,
     loading: artisansLoading,
     error: artisansError,
-  } = useFetch({
-    url: "http://localhost:8000/api/artisans",
-    config: {
-      method: "GET",
-    },
-  });
+    type: artisansType,
+  } = artisans;
+
   const {
     data: productsVarietyData,
     loading: productsVarietyLoading,
     error: productsVarietyError,
-  } = useFetch({
-    url: "http://localhost:8000/api/artisans/comptas",
-    config: {
-      method: "GET",
-    },
-  });
+  } = artisans_compta;
+
+  useEffect(() => {
+    if (!artisans.data.length) {
+      dispatch(getArtisans());
+    }
+    if (!artisans_compta.data.length) {
+      dispatch(getArtisansCompta());
+    }
+  }, []);
 
   return (
     <FlexContainer>
@@ -61,6 +67,7 @@ const Artisans = () => {
         headers={artisansHeaders}
         data={artisansData}
         loading={artisansLoading}
+        type={artisansType}
         error={artisansError}
         tableTitle="Artisans:"
         componentName="artisan"

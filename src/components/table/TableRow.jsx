@@ -28,7 +28,11 @@ const TableRow = ({ data, fields }) => {
           {new Date(data[field.value]).toLocaleDateString()}
         </StyledTd>
       );
-    else if (data[field.value] !== null && data[field.value] !== undefined)
+    else if (
+      data[field.value] !== null &&
+      data[field.value] !== undefined &&
+      data[field.value] !== ""
+    )
       return <StyledTd key={i}>{data[field.value]}</StyledTd>;
     else if (field.default)
       return <StyledTd key={i}>{field.defaultValue}</StyledTd>;

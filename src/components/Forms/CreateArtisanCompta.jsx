@@ -1,5 +1,6 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { postArtisansCompta } from "../../features/artisan-slice";
 
 import { InputGroup, StyledForm, Button } from "../../styles";
 
@@ -29,10 +30,12 @@ const initialInputValues = {
 };
 
 const CreateProduct = () => {
+  const dispatch = useDispatch();
   const [inputs, setInputs] = useState(initialInputValues);
 
-  const [error, setError] = useState(null);
-  const [message, setMessage] = useState(null);
+  const {
+    artisans_compta: { error, status, loading },
+  } = useSelector((state) => state.artisans);
 
   useEffect(() => {
     if (error?.response?.status === 400) {
@@ -46,34 +49,22 @@ const CreateProduct = () => {
       }
       setInputs(updatedInputs);
     }
-  }, [error, message]);
+    console.log(error);
+  }, [error]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        `http://localhost:8000/api/artisans/compta`,
-        {
+    dispatch(
+      postArtisansCompta({
+        data: {
           ac_artisan_id: inputs.ac_artisan_id.value,
           ac_amount: inputs.ac_amount.value,
           ac_date: inputs.ac_date.value,
           ac_note: inputs.ac_note.value,
         },
-        {
-          withCredentials: true,
-        }
-      );
-
-      if (response.status === 201) {
-        setMessage(response?.data?.message);
-        setInputs(initialInputValues);
-      }
-    } catch (err) {
-      console.log(err);
-      setError(err);
-      setMessage(error?.response?.data?.error_message);
-    }
+      })
+    );
   };
 
   const handleinputChange = (e) => {
@@ -89,9 +80,11 @@ const CreateProduct = () => {
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      {message ? (
-        <p className={`message  ${error ? "error" : ""}`}>{message}</p>
-      ) : null}
+      {/* {error ? (
+        <p className={`message  ${error ? "error" : ""}`}>
+          {error.response.data?.error_message}
+        </p>
+      ) : null} */}
 
       <InputGroup>
         <label htmlFor="ac_artisan_id">Artisan Name:</label>
