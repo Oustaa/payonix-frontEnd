@@ -5,6 +5,9 @@ export const StyledTableConainers = styled.div`
   // min-width: ${({ width }) => (width ? `max-content` : "100%")};
   overflow-x: auto;
   padding-bottom: var(--spacing-lg);
+  & + & {
+    margin-left: var(--spacing-lg);
+  }
 `;
 
 export const StyledTableHead = styled.div`

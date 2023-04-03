@@ -38,8 +38,8 @@ const CreateProduct = () => {
   } = useSelector((state) => state.artisans);
 
   useEffect(() => {
-    if (error?.response?.status === 400) {
-      const missingFields = error.response.data?.missing_field || [];
+    if (error?.status === 400) {
+      const missingFields = error.data?.missing_field || [];
       const updatedInputs = { ...inputs };
       for (const missingField of missingFields) {
         console.log(missingField);
@@ -49,7 +49,6 @@ const CreateProduct = () => {
       }
       setInputs(updatedInputs);
     }
-    console.log(error);
   }, [error]);
 
   const handleSubmit = async (e) => {
@@ -82,7 +81,7 @@ const CreateProduct = () => {
     <StyledForm onSubmit={handleSubmit}>
       {/* {error ? (
         <p className={`message  ${error ? "error" : ""}`}>
-          {error.response.data?.error_message}
+          {error.data?.error_message}
         </p>
       ) : null} */}
 

@@ -4,52 +4,50 @@ import axios from "axios";
 const BASE_URL = "http://localhost:8000/api/artisans";
 
 export const getArtisans = createAsyncThunk("get/artisans", async () => {
-  const response = await axios.get(BASE_URL, { withCredentials: true });
-
-  return response.data;
+  try {
+    const response = await axios.get(BASE_URL, { withCredentials: true });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
 });
 
 export const postArtisans = createAsyncThunk(
   "post/artisans",
   async ({ data }) => {
-    const response = await fetch(BASE_URL, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
+    const response = await axios.post(BASE_URL, data, {
+      withCredentials: true,
     });
-    console.log(await response.json());
-    return response;
+    console.log(response.data);
+    return response.data;
   }
 );
 
 export const getArtisansCompta = createAsyncThunk(
   "get/artisans/comptas",
   async () => {
-    const response = await axios.get(`${BASE_URL}/comptas`, {
-      withCredentials: true,
-    });
-
-    return response.data;
+    try {
+      const response = await axios.get(`${BASE_URL}/comptas`, {
+        withCredentials: true,
+      });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || error.message;
+    }
   }
 );
 
 export const postArtisansCompta = createAsyncThunk(
   "post/artisans/comptas",
   async ({ data }) => {
-    console.log(data);
-    const response = await axios.post(
-      `${BASE_URL}/comptas`,
-      { ...data },
-      {
+    try {
+      const response = await axios.post(`${BASE_URL}/comptas`, data, {
         withCredentials: true,
-      }
-    );
-
-    return response.data;
+      });
+      return response;
+    } catch (error) {
+      throw error;
+    }
   }
 );
 
@@ -139,12 +137,13 @@ const artisnas = createSlice({
         state.artisans_compta.error = null;
       })
       .addCase(postArtisansCompta.fulfilled, (state, { payload }) => {
-        state.artisans_compta.data.unshift(payload);
-        state.artisans_compta.loading = false;
+        state.artisans_compta.data.unshift(payload.data);
         state.artisans_compta.status = "success";
+        state.artisans_compta.loading = false;
         state.artisans_compta.type = "";
       })
       .addCase(postArtisansCompta.rejected, (state, { error }) => {
+        console.log("rejected: ");
         state.artisans_compta.error = error;
         state.artisans_compta.loading = false;
         state.artisans_compta.status = "error";

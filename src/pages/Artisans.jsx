@@ -63,7 +63,7 @@ const Artisans = () => {
   return (
     <FlexContainer>
       <Table
-        width="40%"
+        width="35%"
         headers={artisansHeaders}
         data={artisansData}
         loading={artisansLoading}
@@ -74,7 +74,7 @@ const Artisans = () => {
         alertTitle="Create Artisan"
       />
       <Table
-        width="60%"
+        width="65%"
         headers={productsVarietyHeaders}
         data={productsVarietyData}
         loading={productsVarietyLoading}
