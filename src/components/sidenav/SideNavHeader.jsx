@@ -1,23 +1,10 @@
 import React from "react";
-import styled from "styled-components";
-
-import { BsLayoutSidebarInset } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { closeSidebar } from "../../features/ui-slice";
 
+import { BsLayoutSidebarInset } from "react-icons/bs";
 import { Button } from "../../styles/index";
-
-const StyledHeader = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: var(--primary-blue-800);
-  height: 70px;
-
-  h1 {
-    font-weight: 700;
-  }
-`;
+import { StyledHeader } from "../../styles/styled-sideNav";
 
 const SideNavHeader = () => {
   const dispatch = useDispatch();

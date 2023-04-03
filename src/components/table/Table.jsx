@@ -26,8 +26,8 @@ const Table = ({
   error,
   tableTitle,
   filter,
-  createForm,
-  filterForm,
+  componentName,
+  alertTitle,
 }) => {
   const dispatch = useDispatch();
 
@@ -40,11 +40,11 @@ const Table = ({
   }
 
   const openCreateAlertHandler = () => {
-    dispatch(openAlert({ formFunction: createForm }));
+    dispatch(openAlert({ name: componentName, type: "create", alertTitle }));
   };
 
   const openFilterAlertHandler = () => {
-    dispatch(openAlert({ formFunction: filterForm }));
+    dispatch(openAlert({ name: componentName, type: "filter", alertTitle }));
   };
 
   return (

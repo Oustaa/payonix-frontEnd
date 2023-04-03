@@ -9,7 +9,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import GlobalStyles from "./styles/globalStyles";
 
 const App = () => {
-  const { alertOpen, alertComponent } = useSelector((state) => state.ui);
+  const { alertOpen } = useSelector((state) => state.ui);
 
   return (
     <>
@@ -17,12 +17,7 @@ const App = () => {
         src="http://localhost:8000/images/1679658285851-20210317_212114.jpg"
         alt="sd"
       /> */}
-      {alertOpen ? (
-        <Alert
-          title={"Add new Product Inventory"}
-          componentFunction={alertComponent}
-        />
-      ) : null}
+      {alertOpen ? <Alert /> : null}
       <Router>
         <Routes>
           <Route path="/log_in" element={<LogIn />} />

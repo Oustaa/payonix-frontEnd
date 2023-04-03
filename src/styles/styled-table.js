@@ -2,9 +2,11 @@ import styled from "styled-components";
 
 export const StyledTableConainers = styled.div`
   width: ${({ width }) => (width ? `${width} !important` : "100%")};
-  min-width: ${({ width }) => (width ? `${width} !important` : "100%")};
+  min-width: ${({ width }) => (width ? `max-content` : "100%")};
   overflow-x: auto;
   padding-bottom: var(--spacing-lg);
+  position: sticky;
+  top: 0;
 `;
 
 export const StyledTableHead = styled.div`
@@ -32,8 +34,6 @@ export const StyledTable = styled.table`
   width: ${({ width }) => (width ? `${width} !important` : "100%")};
   min-width: max-content;
   box-shadow: var(--boxShadow);
-  position: sticky;
-  bottom: 0;
 `;
 
 export const StyledTableHeader = styled.thead`

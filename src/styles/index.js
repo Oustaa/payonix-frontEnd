@@ -29,6 +29,7 @@ export const InputGroup = styled.div`
     min-width: ${({ inline }) => (!inline ? "100%" : "fit-content")};
     margin-right: ${({ inline }) => (!inline ? "" : "var(--spacing-sm)")};
     color: var(--primary-dark-700);
+    text-transform: capitalize;
   }
 
   input {
@@ -41,6 +42,10 @@ export const InputGroup = styled.div`
 
     &::-webkit-input-placeholder {
       color: var(--primary-dark-100);
+    }
+
+    &::-webkit-calendar-picker-indicator {
+      filter: invert(1);
     }
   }
   &.invalid {
@@ -67,7 +72,7 @@ export const FlexContainer = styled.div`
 `;
 
 export const StyledTableAlert = styled.span`
-  background-color: var(--danger);
+  background-color: var(--${({ type }) => (type ? type : "danger")});
   color: var(--white);
   padding: var(--spacing-sm) var(--spacing-xl);
   border-radius: var(--radius-lg);
@@ -76,8 +81,11 @@ export const StyledTableAlert = styled.span`
 export const StyledForm = styled.form`
   padding-block: var(--spacing-sm);
 
-  p.error_message {
+  p.message {
     padding-block-end: var(--spacing-sm);
-    color: var(--danger);
+    color: var(--success);
+    &.error {
+      color: var(--danger);
+    }
   }
 `;

@@ -1,29 +1,27 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-import { useCookies } from "react-cookie";
-
 import { InputGroup, StyledForm, Button } from "../../styles";
 
-const CreateProductForm = () => {
-  // eslint-disable-next-line
-  const [cookies, setCookie] = useCookies();
-  const token = cookies.access_token;
+const initialInputValues = {
+  p_name: {
+    value: "",
+    valid: true,
+    focused: false,
+  },
+  p_raw_mat_base_id: {
+    value: "",
+    valid: true,
+    focused: false,
+  },
+};
 
+const CreateProduct = () => {
   const [file, setFile] = useState(null);
-  const [inputs, setInputs] = useState({
-    p_name: {
-      value: "",
-      valid: true,
-      focused: false,
-    },
-    p_raw_mat_base_id: {
-      value: "",
-      valid: true,
-      focused: false,
-    },
-  });
+  const [inputs, setInputs] = useState(initialInputValues);
+
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     if (error?.response?.status === 400) {
@@ -51,18 +49,23 @@ const CreateProductForm = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            authorization: token,
           },
           params: {
             p_name: inputs.p_name.value,
             p_raw_mat_base_id: inputs.p_raw_mat_base_id.value,
           },
+          withCredentials: true,
         }
       );
-      console.log(response);
+      if (response.status === 201) {
+        setMessage(response?.data?.message);
+        setInputs(initialInputValues);
+        setFile(null);
+      }
     } catch (err) {
       console.log(err);
       setError(err);
+      setMessage(error?.response?.data?.error_message);
     }
   };
 
@@ -83,9 +86,10 @@ const CreateProductForm = () => {
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      {error?.response ? (
-        <p className="error_message">{error?.response?.data?.error_message}</p>
+      {message ? (
+        <p className={`message  ${error ? "error" : ""}`}>{message}</p>
       ) : null}
+
       <InputGroup
         inputBgColor="var(--primary-dark-600)"
         inline={false}
@@ -123,4 +127,4 @@ const CreateProductForm = () => {
   );
 };
 
-export default CreateProductForm;
+export default CreateProduct;

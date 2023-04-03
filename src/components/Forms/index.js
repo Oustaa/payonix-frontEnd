@@ -1,0 +1,9 @@
+export { default as CreateProduct } from "./CreateProduct";
+export { default as CreateProductVariety } from "./CreateProductVariety";
+export { default as CreateProductInventory } from "./CreateProductInventory";
+export { default as CreateRawMatBase } from "./CreateRawMatBase";
+export { default as CreateRawMatType } from "./CreateRawMatType";
+export { default as CreateRawMaterialStock } from "./CreateRawMaterialStock";
+export { default as CreateRawMaterialInventory } from "./CreateRawMaterialInventory";
+export { default as CreateArtisan } from "./CreateArtisan";
+export { default as CreateArtisanCompta } from "./CreateArtisanCompta";

@@ -7,6 +7,8 @@ const GlobalStyles = createGlobalStyle`
         --green-cyan: #11BCBB;
         --secondary-blue-600: #11BCBB;
         --danger: #E64646;
+        --success: #3eb325;
+        --warning: #f0d400;
 
         --primary-dark-800: #111111;
         --primary-dark-700: #3A3A3A;
@@ -105,6 +107,22 @@ const GlobalStyles = createGlobalStyle`
         scroll-behavior: auto !important;
     }
 
+   
+    body::-webkit-scrollbar {
+        width: 10px;
+      }
+      body::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+      }
+        body::-webkit-scrollbar-thumb {
+        background: #888; 
+          border-radius:10px;
+      }
+      body::-webkit-scrollbar-thumb:hover {
+        
+        background: #555; 
+      }     
+       
     
 `;
 

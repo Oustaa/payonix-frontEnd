@@ -6,17 +6,16 @@ export const useFetch = ({ url, config }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch(url, config)
+    fetch(url, { ...config, credentials: "include" })
       .then((response) => response.json())
       .then((data) => {
         if (data.error) setError(true);
         else setData(data);
-
-        setLoading(false);
       })
       .catch((error) => {
         setError(true);
-      });
+      })
+      .finally(setLoading(false));
   }, []);
 
   return { data, loading, error };

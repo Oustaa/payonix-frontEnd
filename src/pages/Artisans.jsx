@@ -1,9 +1,7 @@
 import React from "react";
 import { useFetch } from "../hooks/useFetch";
-import { useCookies } from "react-cookie";
 
 import Table from "../components/table/Table";
-import CreateProductForm from "../components/Forms/CreateProductForm";
 
 import { FlexContainer, StyledTableAlert } from "../styles";
 import { BsDashLg } from "react-icons/bs";
@@ -31,13 +29,10 @@ const productsVarietyHeaders = {
   "Artisan name": { value: "a_name" },
   "Amount (DH)": { value: "ac_amount" },
   "Translate at": { value: "ac_date", type: "date" },
-  Note: { value: "pv_name", default: true, defaultValue: <BsDashLg /> },
+  Note: { value: "ac_note", default: true, defaultValue: <BsDashLg /> },
 };
 
 const Artisans = () => {
-  // eslint-disable-next-line
-  const [cookies, setCookie] = useCookies();
-  const token = cookies.access_token;
   const {
     data: artisansData,
     loading: artisansLoading,
@@ -46,9 +41,6 @@ const Artisans = () => {
     url: "http://localhost:8000/api/artisans",
     config: {
       method: "GET",
-      headers: {
-        authorization: token,
-      },
     },
   });
   const {
@@ -59,9 +51,6 @@ const Artisans = () => {
     url: "http://localhost:8000/api/artisans/comptas",
     config: {
       method: "GET",
-      headers: {
-        authorization: token,
-      },
     },
   });
 
@@ -74,7 +63,8 @@ const Artisans = () => {
         loading={artisansLoading}
         error={artisansError}
         tableTitle="Artisans:"
-        createForm={() => <CreateProductForm />}
+        componentName="artisan"
+        alertTitle="Create Artisan"
       />
       <Table
         width="60%"
@@ -82,8 +72,10 @@ const Artisans = () => {
         data={productsVarietyData}
         loading={productsVarietyLoading}
         error={productsVarietyError}
-        tableTitle="Product Varieties:"
+        tableTitle="Artisans Compta:"
         filter={true}
+        componentName="artisanCompta"
+        alertTitle="Create Artisan Compta"
       />
     </FlexContainer>
   );

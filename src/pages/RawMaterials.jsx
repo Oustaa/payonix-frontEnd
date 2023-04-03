@@ -85,7 +85,7 @@ const RawMaterials = () => {
         loading={rawMaterialsLoading}
         error={rawMaterialsError}
         tableTitle="Raw materials:"
-        createForm={() => {}}
+        componentName="rawMaterialBase"
       />
       <Table
         width="80%"
@@ -95,6 +95,7 @@ const RawMaterials = () => {
         error={rawMaterialsTypesError}
         tableTitle="Raw materials types:"
         filter={true}
+        componentName="rawMaterialsTypes"
       />
     </FlexContainer>
   );

@@ -13,6 +13,7 @@ const StyledImage = styled.img`
 const TableRow = ({ data, fields }) => {
   const src =
     "https://content.la-z-boy.com/Images/product/category/tables/large/090_1065.jpg";
+  // const src = "http://localhost:8000/images/1679658285851-20210317_212114.jpg";
 
   const displayedValues = fields.map((field, i) => {
     if (field.type === "image")
@@ -24,7 +25,7 @@ const TableRow = ({ data, fields }) => {
     else if (field.type === "date")
       return (
         <StyledTd key={i}>
-          {new Date(data[field.value]).toDateString()}
+          {new Date(data[field.value]).toLocaleDateString()}
         </StyledTd>
       );
     else if (data[field.value] !== null && data[field.value] !== undefined)

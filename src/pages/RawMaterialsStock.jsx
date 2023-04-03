@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 import Table from "../components/table/Table";
 
 const headers = {
-  "#": { value: "id" },
+  // "#": { value: "id" },
   "Stock Date": { value: "rms_date_stock", type: "date" },
   "Raw type": { value: "rms_rm_type" },
   Quantity: { value: "rms_quantity" },
@@ -43,6 +43,7 @@ const RawMaterialsStock = () => {
       error={error}
       tableTitle="Raw Materials stock:"
       filter={true}
+      componentName="rawMaterialStock"
     />
   );
 };

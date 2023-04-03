@@ -3,7 +3,6 @@ import { useFetch } from "../hooks/useFetch";
 import { useCookies } from "react-cookie";
 
 import Table from "../components/table/Table";
-import CreateProductForm from "../components/Forms/CreateProductForm";
 
 import { FlexContainer, StyledTableAlert } from "../styles";
 import { BsDashLg } from "react-icons/bs";
@@ -27,7 +26,7 @@ const productsVarietyHeaders = {
       ) {
         return <StyledTableAlert>{data["pv_availibility"]}</StyledTableAlert>;
       }
-      return data["rmt_availability"];
+      return data["pv_availibility"];
     },
   },
   "Reorder Point": {
@@ -52,21 +51,12 @@ const productsVarietyHeaders = {
 };
 
 const Products = () => {
-  // eslint-disable-next-line
-  const [cookies, setCookie] = useCookies();
-  const token = cookies.access_token;
   const {
     data: productsData,
     loading: productsLoading,
     error: productsError,
   } = useFetch({
     url: "http://localhost:8000/api/products",
-    config: {
-      method: "GET",
-      headers: {
-        authorization: token,
-      },
-    },
   });
   const {
     data: productsVarietyData,
@@ -74,35 +64,34 @@ const Products = () => {
     error: productsVarietyError,
   } = useFetch({
     url: "http://localhost:8000/api/products/variety",
-    config: {
-      method: "GET",
-      headers: {
-        authorization: token,
-      },
-    },
   });
 
   return (
-    <FlexContainer>
-      <Table
-        width="20%"
-        headers={productsHeaders}
-        data={productsData}
-        loading={productsLoading}
-        error={productsError}
-        tableTitle="Products:"
-        createForm={() => <CreateProductForm />}
-      />
-      <Table
-        width="80%"
-        headers={productsVarietyHeaders}
-        data={productsVarietyData}
-        loading={productsVarietyLoading}
-        error={productsVarietyError}
-        tableTitle="Product Varieties:"
-        filter={true}
-      />
-    </FlexContainer>
+    <>
+      <FlexContainer>
+        <Table
+          width="20%"
+          headers={productsHeaders}
+          data={productsData}
+          loading={productsLoading}
+          error={productsError}
+          tableTitle="Products:"
+          alertTitle="Create new title"
+          componentName="product"
+        />
+        <Table
+          width="80%"
+          headers={productsVarietyHeaders}
+          data={productsVarietyData}
+          loading={productsVarietyLoading}
+          error={productsVarietyError}
+          tableTitle="Product Varieties:"
+          componentName="productsVariety"
+          alertTitle="Create new product variety"
+          filter={true}
+        />
+      </FlexContainer>
+    </>
   );
 };
 

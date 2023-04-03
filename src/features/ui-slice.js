@@ -5,22 +5,26 @@ const authSlice = createSlice({
   initialState: {
     sidNavOpen: true,
     alertOpen: false,
-    alertComponent: () => {},
+    alertFor: null,
+    alertTitle: "",
   },
   reducers: {
+    // side nav
     openSidebar: (state) => {
       state.sidNavOpen = !state.sidNavOpen;
     },
     closeSidebar: (state) => {
       state.sidNavOpen = false;
     },
-    openAlert: (state, { payload: { formFunction } }) => {
+    // alert
+    openAlert: (state, { payload: { name, type, alertTitle } }) => {
       state.alertOpen = true;
-      state.alertComponent = formFunction;
+      state.alertFor = { name, type };
+      state.alertTitle = alertTitle;
     },
     closeAlert: (state) => {
       state.alertOpen = false;
-      state.alertComponent = null;
+      state.alertFor = null;
     },
   },
 });

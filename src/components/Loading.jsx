@@ -4,7 +4,7 @@ import { PuffLoader } from "react-spinners";
 
 const StyledLoading = styled.div`
   width: 100%;
-  height: 100vh;
+  height: calc(80vh);
 
   display: flex;
   align-items: center;

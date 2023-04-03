@@ -1,8 +1,9 @@
 import React from "react";
 import { useFetch } from "../hooks/useFetch";
 import { useCookies } from "react-cookie";
-
+import { BsDashLg } from "react-icons/bs";
 import Table from "../components/table/Table";
+import { StyledTableAlert } from "../styles";
 
 const headers = {
   "Inventory Date": { value: "rmi_date", type: "date" },
@@ -11,12 +12,26 @@ const headers = {
   Quantity: { value: "rmi_quantity" },
   "Unit Price": { value: "rmi_unit_price" },
   Amount: { value: "rmi_amount" },
-  "Estemated product's number": { value: "rmi_estimated_nbr_prod" },
+  "Estemated product's number": {
+    value: "rmi_estimated_nbr_prod",
+    default: true,
+    defaultValue: <BsDashLg />,
+  },
   "Received product's number": { value: "rmi_number_prods_recived" },
-  Completed: { value: "catigory" },
-  "Raw material / Product": { value: "pi_raw_mat_inv_id" },
-  "Raw material price / Product": { value: "pi_raw_mat_inv_id" },
+  Completed: {
+    checked: true,
+    check: (data) => {
+      if (data["rmi_estimated_nbr_prod"] < data["rmi_number_prods_recived"]) {
+        return <StyledTableAlert type="danger">not yet</StyledTableAlert>;
+      }
+      return <StyledTableAlert type="success">Completed</StyledTableAlert>;
+    },
+  },
+  "Raw material / Product": { value: "rmi_rawMat_prod" },
+  "Raw material price / Product": { value: "rmi_rawMat_price_prod" },
 };
+
+// toFixed(2)
 
 const RawMaterialsInventory = () => {
   // eslint-disable-next-line
@@ -38,8 +53,10 @@ const RawMaterialsInventory = () => {
       loading={loading}
       data={data}
       error={error}
-      tableTitle="Product Inventory:"
+      tableTitle="Raw Material Inventory:"
       filter={true}
+      alertTitle="Add Material Inventory"
+      componentName="rawMaterialInventory"
     />
   );
 };

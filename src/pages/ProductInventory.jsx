@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import Table from "../components/table/Table";
 
 const headers = {
-  "#": { value: "id" },
+  // "#": { value: "id" },
   "Inventory Date": { value: "pi_date", type: "date" },
   name: { value: "name" },
   Category: { value: "catigory" },
@@ -38,6 +38,8 @@ const ProductInventory = () => {
       error={error}
       tableTitle="Product Inventory:"
       filter={true}
+      componentName="productsInventory"
+      alertTitle="Create Product Inventory"
     />
   );
 };
