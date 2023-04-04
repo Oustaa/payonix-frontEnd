@@ -32,7 +32,8 @@ export const InputGroup = styled.div`
     text-transform: capitalize;
   }
 
-  input {
+  input,
+  select {
     background-color: var(--primary-dark-400);
     border: none;
     border-radius: var(--radius-sm);
@@ -48,12 +49,24 @@ export const InputGroup = styled.div`
       filter: invert(1);
     }
   }
+  select option {
+    margin-block: var(--spacing-sm);
+    &:hover {
+      background-color: red;
+    }
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
   &.invalid {
     label {
       color: red;
     }
-    input {
-      border: 1px solid red;
+    input,
+    select {
+      outline: 1px solid red;
       background-color: #ff000029;
       color: var(--primary-dark-800);
     }

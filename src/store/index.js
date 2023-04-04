@@ -12,4 +12,5 @@ export default configureStore({
     products: productsInventorySlice,
     artisans: artisanSlice,
   },
+  devTools: true,
 });

@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
-import { InputGroup, StyledForm, Button } from "../../styles";
+import { useDispatch } from "react-redux";
+import { addArtisan } from "../../features/artisan-slice";
+import { StyledForm, Button } from "../../styles";
 import Input from "../Input";
 
 const initialInputValues = {
@@ -23,6 +24,8 @@ const initialInputValues = {
 };
 
 const CreateProduct = () => {
+  const dispatch = useDispatch();
+
   const [inputs, setInputs] = useState(initialInputValues);
 
   const [error, setError] = useState(null);
@@ -64,6 +67,7 @@ const CreateProduct = () => {
           `Artisan with the name '${response.data.a_name}' has been created`
         );
         setInputs(initialInputValues);
+        dispatch(addArtisan(response.data));
       }
       console.log(response);
     } catch (err) {

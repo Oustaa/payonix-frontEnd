@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-
-import { InputGroup, StyledForm, Button } from "../../styles";
+import React, { useEffect, useState, useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addArtisanCompta } from "../../features/artisan-slice";
+import { StyledForm, Button } from "../../styles";
 import Input from "../Input";
 
 const CURRENT_DATE = new Date().toISOString().substring(0, 10);
@@ -30,6 +31,11 @@ const initialInputValues = {
 };
 
 const CreateProduct = () => {
+  const dispatch = useDispatch();
+  const { artisans } = useSelector((state) => state.artisans);
+  const memoizedArtisans = useMemo(() => artisans, []);
+  const { data: artisansData } = memoizedArtisans;
+
   const [inputs, setInputs] = useState(initialInputValues);
 
   const [error, setError] = useState(null);
@@ -50,7 +56,7 @@ const CreateProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(inputs);
     try {
       const response = await axios.post(
         `http://localhost:8000/api/artisans/comptas`,
@@ -66,11 +72,17 @@ const CreateProduct = () => {
       );
 
       if (response.status === 201) {
-        setMessage(response?.data?.message);
+        setError(null);
+        setMessage("Artisans compta was added successfully");
         setInputs(initialInputValues);
+        console.log(response);
+        dispatch(
+          addArtisanCompta({
+            ...response.data,
+          })
+        );
       }
     } catch (err) {
-      console.log(err);
       setError(err);
       setMessage(err?.response?.data?.error_message);
     }
@@ -82,7 +94,7 @@ const CreateProduct = () => {
     setInputs((prev) => {
       return {
         ...prev,
-        [name]: { ...prev[name], value: e.target.value },
+        [name]: { ...prev[name], value: e.target.value, valid: true },
       };
     });
   };
@@ -97,11 +109,15 @@ const CreateProduct = () => {
         label="Artisan Name:"
         value={inputs.ac_artisan_id.value}
         onChangeHandler={handleinputChange}
+        type={"select"}
+        data={artisansData}
+        holders={["a_id", "a_name"]}
         className={() => (!inputs.ac_artisan_id.valid ? "invalid" : "")}
       />
       <Input
         name="ac_amount"
         label="Amount:"
+        type="number"
         value={inputs.ac_amount.value}
         onChangeHandler={handleinputChange}
         className={() => (!inputs.ac_amount.valid ? "invalid" : "")}
