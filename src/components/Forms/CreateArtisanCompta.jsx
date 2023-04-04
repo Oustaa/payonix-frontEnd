@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addArtisanCompta } from "../../features/artisan-slice";
 import { StyledForm, Button } from "../../styles";
 import Input from "../Input";
+import changeHandler from "../../utils/inputChangeHndler";
 
 const CURRENT_DATE = new Date().toISOString().substring(0, 10);
 
@@ -88,17 +89,6 @@ const CreateProduct = () => {
     }
   };
 
-  const handleinputChange = (e) => {
-    const name = e.target.name;
-
-    setInputs((prev) => {
-      return {
-        ...prev,
-        [name]: { ...prev[name], value: e.target.value, valid: true },
-      };
-    });
-  };
-
   return (
     <StyledForm onSubmit={handleSubmit}>
       {message ? (
@@ -108,7 +98,7 @@ const CreateProduct = () => {
         name="ac_artisan_id"
         label="Artisan Name:"
         value={inputs.ac_artisan_id.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         type={"select"}
         data={artisansData}
         holders={["a_id", "a_name"]}
@@ -119,20 +109,20 @@ const CreateProduct = () => {
         label="Amount:"
         type="number"
         value={inputs.ac_amount.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.ac_amount.valid ? "invalid" : "")}
       />
       <Input
         name="ac_note"
         label="Note:"
         value={inputs.ac_note.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
       />
       <Input
         name="ac_date"
         label="Date:"
         value={inputs.ac_date.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         type="date"
       />
       <Button bgColor="var(--primary-cyan-800)">Create</Button>

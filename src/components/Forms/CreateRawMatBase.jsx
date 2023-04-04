@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { addBase } from "../../features/rawMaterial-slice";
 import { StyledForm, Button } from "../../styles";
 import Input from "../Input";
+import changeHandler from "../../utils/inputChangeHndler";
+
 const initialInputValues = {
   rmb_name: {
     value: "",
@@ -56,17 +58,6 @@ const CreateRawMatBase = () => {
     }
   };
 
-  const handleinputChange = (e) => {
-    const name = e.target.name;
-
-    setInputs((prev) => {
-      return {
-        ...prev,
-        [name]: { ...prev[name], value: e.target.value, valid: true },
-      };
-    });
-  };
-
   return (
     <StyledForm onSubmit={handleSubmit}>
       {message ? (
@@ -77,7 +68,7 @@ const CreateRawMatBase = () => {
         label="Raw material name:"
         name="rmb_name"
         value={inputs.rmb_name.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.rmb_name.valid ? "invalid" : "")}
       />
       <Button bgColor="var(--primary-cyan-800)">Create</Button>

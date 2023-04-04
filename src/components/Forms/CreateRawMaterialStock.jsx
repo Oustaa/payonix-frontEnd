@@ -4,6 +4,7 @@ import Input from "../Input";
 import { StyledForm, Button } from "../../styles";
 import { useSelector, useDispatch } from "react-redux";
 import { getMaterialsTypes, addStock } from "../../features/rawMaterial-slice";
+import changeHandler from "../../utils/inputChangeHndler";
 const CURRENT_DATE = new Date().toISOString().substring(0, 10);
 
 const initialInputValues = {
@@ -83,17 +84,6 @@ const CreateProduct = () => {
     }
   };
 
-  const handleinputChange = (e) => {
-    const name = e.target.name;
-
-    setInputs((prev) => {
-      return {
-        ...prev,
-        [name]: { ...prev[name], value: e.target.value, valid: true },
-      };
-    });
-  };
-
   return (
     <StyledForm onSubmit={handleSubmit}>
       {message ? (
@@ -103,7 +93,7 @@ const CreateProduct = () => {
         type="date"
         name="rms_date_stock"
         label="Material Stock date:"
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         value={inputs.rms_date_stock.value}
       />
       <Input
@@ -112,7 +102,7 @@ const CreateProduct = () => {
         holders={["rmt_id", "rmt_name"]}
         name="rms_raw_mat_id"
         label="Material type:"
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         value={inputs.rms_raw_mat_id.value}
         className={() => (!inputs.rms_raw_mat_id.valid ? "invalid" : "")}
       />
@@ -120,7 +110,7 @@ const CreateProduct = () => {
         type="number"
         name="rms_quantity"
         label="Material Quantity:"
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         value={inputs.rms_quantity.value}
         className={() => (!inputs.rms_quantity.valid ? "invalid" : "")}
       />
@@ -128,7 +118,7 @@ const CreateProduct = () => {
         type="number"
         name="rms_unit_price"
         label="Unit Price:"
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         value={inputs.rms_unit_price.value}
         className={() => (!inputs.rms_unit_price.valid ? "invalid" : "")}
       />

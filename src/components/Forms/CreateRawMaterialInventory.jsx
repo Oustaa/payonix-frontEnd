@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import changeHandler from "../../utils/inputChangeHndler";
 import { InputGroup, StyledForm, Button } from "../../styles";
 
 const CURRENT_DATE = new Date().toISOString().substring(0, 10);
@@ -82,17 +82,6 @@ const CreateProduct = () => {
     }
   };
 
-  const handleinputChange = (e) => {
-    const name = e.target.name;
-
-    setInputs((prev) => {
-      return {
-        ...prev,
-        [name]: { ...prev[name], value: e.target.value },
-      };
-    });
-  };
-
   return (
     <StyledForm onSubmit={handleSubmit}>
       {message ? (
@@ -109,7 +98,7 @@ const CreateProduct = () => {
           name="rms_date_stock"
           id="rms_date_stock"
           value={inputs.rms_date_stock.value}
-          onChange={handleinputChange}
+          onChange={(e) => changeHandler(e, setInputs)}
         />
       </InputGroup>
       <InputGroup
@@ -122,7 +111,7 @@ const CreateProduct = () => {
           type="text"
           name="rmi_artisan_id"
           value={inputs.rmi_artisan_id.value}
-          onChange={handleinputChange}
+          onChange={(e) => changeHandler(e, setInputs)}
           id="rmi_artisan_id"
         />
       </InputGroup>
@@ -136,7 +125,7 @@ const CreateProduct = () => {
           type="text"
           name="rmi_raw_mat_stock_id"
           value={inputs.rmi_raw_mat_stock_id.value}
-          onChange={handleinputChange}
+          onChange={(e) => changeHandler(e, setInputs)}
           id="rmi_raw_mat_stock_id"
         />
       </InputGroup>
@@ -150,7 +139,7 @@ const CreateProduct = () => {
           type="text"
           name="rmi_quantity"
           value={inputs.rmi_quantity.value}
-          onChange={handleinputChange}
+          onChange={(e) => changeHandler(e, setInputs)}
           id="rmi_quantity"
         />
       </InputGroup>
@@ -166,7 +155,7 @@ const CreateProduct = () => {
           type="text"
           name="rmi_estimated_nbr_prod"
           value={inputs.rmi_estimated_nbr_prod.value}
-          onChange={handleinputChange}
+          onChange={(e) => changeHandler(e, setInputs)}
           id="rmi_estimated_nbr_prod"
         />
       </InputGroup>

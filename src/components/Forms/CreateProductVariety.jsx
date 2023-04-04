@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addProductVariety } from "../../features/products-slice";
 import Input from "../Input";
 import { InputGroup, StyledForm, Button } from "../../styles";
+import changeHandler from "../../utils/inputChangeHndler";
 
 const initialInputValues = {
   pv_name: {
@@ -91,17 +92,6 @@ const CreateProductForm = () => {
     setFile(e.target.files[0]);
   };
 
-  const handleinputChange = (e) => {
-    const name = e.target.name;
-
-    setInputs((prev) => {
-      return {
-        ...prev,
-        [name]: { ...prev[name], value: e.target.value, valid: true },
-      };
-    });
-  };
-
   return (
     <StyledForm onSubmit={handleSubmit}>
       {message ? (
@@ -111,14 +101,14 @@ const CreateProductForm = () => {
         label="Products Variety Name:"
         name="pv_name"
         value={inputs.pv_name.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.pv_name.valid ? "invalid" : "")}
       />
       <Input
         label="Products origin:"
         name="pv_product_id"
         value={inputs.pv_product_id.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.pv_product_id.valid ? "invalid" : "")}
         type="select"
         data={productsData}
@@ -128,14 +118,14 @@ const CreateProductForm = () => {
         label="Product Variety description:"
         name="pv_description"
         value={inputs.pv_description.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.pv_description.valid ? "invalid" : "")}
       />
       <Input
         label="Reorder point:"
         name="pv_reorder_point"
         value={inputs.pv_reorder_point.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.pv_reorder_point.valid ? "invalid" : "")}
       />
 

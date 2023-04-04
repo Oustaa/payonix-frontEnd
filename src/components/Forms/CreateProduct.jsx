@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addProduct } from "../../features/products-slice";
 import { InputGroup, StyledForm, Button } from "../../styles";
 import Input from "../Input";
+import changeHandler from "../../utils/inputChangeHndler";
 
 const initialInputValues = {
   p_name: {
@@ -77,17 +78,6 @@ const CreateProduct = () => {
     setFile(e.target.files[0]);
   };
 
-  const handleinputChange = (e) => {
-    const name = e.target.name;
-
-    setInputs((prev) => {
-      return {
-        ...prev,
-        [name]: { ...prev[name], value: e.target.value, valid: true },
-      };
-    });
-  };
-
   return (
     <StyledForm onSubmit={handleSubmit}>
       {message ? (
@@ -98,14 +88,14 @@ const CreateProduct = () => {
         label="Products name:"
         className={() => (!inputs.p_name.valid ? "invalid" : "")}
         value={inputs.p_name.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
       />
       <Input
         name="p_raw_mat_base_id"
         label="Products Raw Material origin:"
         className={() => (!inputs.p_raw_mat_base_id.valid ? "invalid" : "")}
         value={inputs.p_raw_mat_base_id.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
       />
       <InputGroup inputBgColor="var(--primary-dark-600)" inline={false}>
         <label htmlFor="p_image">Products Image:</label>

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductsVariety } from "../../features/products-slice";
 import { getArtisans } from "../../features/artisan-slice";
 import { StyledForm, Button } from "../../styles";
+import changeHandler from "../../utils/inputChangeHndler";
 
 const currentDate = new Date().toISOString().substring(0, 10);
 
@@ -106,17 +107,6 @@ const CreateProductForm = () => {
     }
   };
 
-  const handleinputChange = (e) => {
-    const name = e.target.name;
-
-    setInputs((prev) => {
-      return {
-        ...prev,
-        [name]: { ...prev[name], value: e.target.value, valid: true },
-      };
-    });
-  };
-
   return (
     <StyledForm onSubmit={handleSubmit}>
       {message ? <p className={`message`}>{message}</p> : null}
@@ -124,7 +114,7 @@ const CreateProductForm = () => {
         type={"date"}
         name="pi_date"
         value={inputs.pi_date.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         label="Inventory Date:"
       />
       <Input
@@ -134,7 +124,7 @@ const CreateProductForm = () => {
         name="pi_artisan_id"
         label="Artisan name:"
         value={inputs.pi_artisan_id.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.pi_artisan_id.valid ? "invalid" : "")}
       />
       <Input
@@ -144,28 +134,28 @@ const CreateProductForm = () => {
         name="pi_prod_variant_id"
         label="Product variety:"
         value={inputs.pi_prod_variant_id.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.pi_prod_variant_id.valid ? "invalid" : "")}
       />
       <Input
         name="pi_raw_mat_inv_id"
         label="Material Inventory origin:"
         value={inputs.pi_raw_mat_inv_id.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.pi_raw_mat_inv_id.valid ? "invalid" : "")}
       />
       <Input
         name="pi_quantity"
         label="Products quantity:"
         value={inputs.pi_quantity.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.pi_quantity.valid ? "invalid" : "")}
       />
       <Input
         name="pi_unit_price"
         label="Unit Price:"
         value={inputs.pi_unit_price.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.pi_unit_price.valid ? "invalid" : "")}
       />
 

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getMaterialsBase, addType } from "../../features/rawMaterial-slice";
 import Input from "../Input";
 import { StyledForm, Button } from "../../styles";
+import changeHandler from "../../utils/inputChangeHndler";
 
 const initialInputValues = {
   rmt_raw_mat_base_type: {
@@ -76,17 +77,6 @@ const CreateRawMatBase = () => {
     }
   };
 
-  const handleinputChange = (e) => {
-    const name = e.target.name;
-
-    setInputs((prev) => {
-      return {
-        ...prev,
-        [name]: { ...prev[name], value: e.target.value, valid: true },
-      };
-    });
-  };
-
   return (
     <StyledForm onSubmit={handleSubmit}>
       {message ? (
@@ -97,7 +87,7 @@ const CreateRawMatBase = () => {
         className={() => (!inputs.rmt_name.valid ? "invalid" : "")}
         name="rmt_name"
         value={inputs.rmt_name.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
       />
       <Input
         type="select"
@@ -107,7 +97,7 @@ const CreateRawMatBase = () => {
         className={() => (!inputs.rmt_raw_mat_base_type.valid ? "invalid" : "")}
         name="rmt_raw_mat_base_type"
         value={inputs.rmt_raw_mat_base_type.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
       />
       <Input
         label="Reorder point:"
@@ -115,7 +105,7 @@ const CreateRawMatBase = () => {
         className={() => (!inputs.rmt_reorder_point.valid ? "invalid" : "")}
         name="rmt_reorder_point"
         value={inputs.rmt_reorder_point.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
       />
       <Button bgColor="var(--primary-cyan-800)">Create</Button>
     </StyledForm>
