@@ -1,9 +1,12 @@
-import React from "react";
-import { useFetch } from "../hooks/useFetch";
-import { useCookies } from "react-cookie";
+import React, { useEffect } from "react";
 import { BsDashLg } from "react-icons/bs";
+import {
+  getMaterialsBase,
+  getMaterialsTypes,
+} from "../features/rawMaterial-slice";
 import Table from "../components/table/Table";
 import { FlexContainer, StyledTableAlert } from "../styles";
+import { useSelector, useDispatch } from "react-redux";
 
 const rawMaterialsHeaders = {
   "Raw material": { value: "rmb_name" },
@@ -46,35 +49,23 @@ const rawMaterialsTypesHeaders = {
 };
 
 const RawMaterials = () => {
-  // eslint-disable-next-line
-  const [cookies, setCookie] = useCookies();
-  const token = cookies.access_token;
+  const dispatch = useDispatch();
+  const { base, type } = useSelector((state) => state.materials);
   const {
     data: rawMaterialsData,
     loading: rawMaterialsLoading,
     error: rawMaterialsError,
-  } = useFetch({
-    url: "http://localhost:8000/api/rawMaterials/bases",
-    config: {
-      method: "GET",
-      headers: {
-        authorization: token,
-      },
-    },
-  });
+  } = base;
   const {
     data: rawMaterialsTypesData,
     loading: rawMaterialsTypesLoading,
     error: rawMaterialsTypesError,
-  } = useFetch({
-    url: "http://localhost:8000/api/rawMaterials/types",
-    config: {
-      method: "GET",
-      headers: {
-        authorization: token,
-      },
-    },
-  });
+  } = type;
+
+  useEffect(() => {
+    if (rawMaterialsData.length === 0) dispatch(getMaterialsBase());
+    if (rawMaterialsTypesData.length === 0) dispatch(getMaterialsTypes());
+  }, []);
 
   return (
     <FlexContainer>
@@ -86,6 +77,7 @@ const RawMaterials = () => {
         error={rawMaterialsError}
         tableTitle="Raw materials:"
         componentName="rawMaterialBase"
+        alertTitle="Create a new material base"
       />
       <Table
         width="80%"
@@ -96,6 +88,7 @@ const RawMaterials = () => {
         tableTitle="Raw materials types:"
         filter={true}
         componentName="rawMaterialsTypes"
+        alertTitle="Create a new material type"
       />
     </FlexContainer>
   );

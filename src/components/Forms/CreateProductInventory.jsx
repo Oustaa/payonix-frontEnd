@@ -1,7 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
-import { InputGroup, StyledForm, Button } from "../../styles";
+import Input from "../Input";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductsVariety } from "../../features/products-slice";
+import { getArtisans } from "../../features/artisan-slice";
+import { StyledForm, Button } from "../../styles";
 
 const currentDate = new Date().toISOString().substring(0, 10);
 
@@ -39,10 +42,16 @@ const initialInputValues = {
 };
 
 const CreateProductForm = () => {
+  const dispatch = useDispatch();
   const [inputs, setInputs] = useState(initialInputValues);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
-
+  const { data: dataVariety, loading: loadingVariety } = useSelector(
+    (state) => state.products.varity
+  );
+  const { data: dataArtisan, loading: loadingArtisan } = useSelector(
+    (state) => state.artisans.artisans
+  );
   useEffect(() => {
     if (error?.response?.status === 400) {
       const missingFields = error.response.data?.missing_field || [];
@@ -55,7 +64,12 @@ const CreateProductForm = () => {
       }
       setInputs(updatedInputs);
     }
-  }, [error]);
+  }, [error, message]);
+
+  useEffect(() => {
+    if (dataVariety.length === 0) dispatch(getProductsVariety());
+    if (dataArtisan.length === 0) dispatch(getArtisans());
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -98,7 +112,7 @@ const CreateProductForm = () => {
     setInputs((prev) => {
       return {
         ...prev,
-        [name]: { ...prev[name], value: e.target.value },
+        [name]: { ...prev[name], value: e.target.value, valid: true },
       };
     });
   };
@@ -106,90 +120,55 @@ const CreateProductForm = () => {
   return (
     <StyledForm onSubmit={handleSubmit}>
       {message ? <p className={`message`}>{message}</p> : null}
-      <InputGroup
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-        className={!inputs.pi_date.valid ? "invalid" : ""}
-      >
-        <label htmlFor="pi_date">Inventory Date:</label>
-        <input
-          type="date"
-          name="pi_date"
-          id="pi_date"
-          value={inputs.pi_date.value}
-          onChange={handleinputChange}
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.pi_artisan_id.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="pi_artisan_id">Artisan name:</label>
-        <input
-          type="text"
-          name="pi_artisan_id"
-          value={inputs.pi_artisan_id.value}
-          onChange={handleinputChange}
-          id="pi_artisan_id"
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.pi_quantity.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="pi_quantity">Products quantity:</label>
-        <input
-          type="text"
-          name="pi_quantity"
-          value={inputs.pi_quantity.value}
-          onChange={handleinputChange}
-          id="pi_quantity"
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.pi_unit_price.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="pi_unit_price">Unit Price:</label>
-        <input
-          type="text"
-          name="pi_unit_price"
-          value={inputs.pi_unit_price.value}
-          onChange={handleinputChange}
-          id="pi_unit_price"
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.pi_prod_variant_id.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="pi_prod_variant_id">Product variety:</label>
-        <input
-          type="text"
-          name="pi_prod_variant_id"
-          value={inputs.pi_prod_variant_id.value}
-          onChange={handleinputChange}
-          id="pi_prod_variant_id"
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.pi_raw_mat_inv_id.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="pi_raw_mat_inv_id">Product variety:</label>
-        <input
-          type="text"
-          name="pi_raw_mat_inv_id"
-          value={inputs.pi_raw_mat_inv_id.value}
-          onChange={handleinputChange}
-          id="pi_raw_mat_inv_id"
-        />
-      </InputGroup>
+      <Input
+        type={"date"}
+        name="pi_date"
+        value={inputs.pi_date.value}
+        onChangeHandler={handleinputChange}
+        label="Inventory Date:"
+      />
+      <Input
+        type="select"
+        data={dataArtisan}
+        holders={["a_id", "a_name"]}
+        name="pi_artisan_id"
+        label="Artisan name:"
+        value={inputs.pi_artisan_id.value}
+        onChangeHandler={handleinputChange}
+        className={() => (!inputs.pi_artisan_id.valid ? "invalid" : "")}
+      />
+      <Input
+        type="select"
+        data={dataVariety}
+        holders={["pv_id", "pv_name"]}
+        name="pi_prod_variant_id"
+        label="Product variety:"
+        value={inputs.pi_prod_variant_id.value}
+        onChangeHandler={handleinputChange}
+        className={() => (!inputs.pi_prod_variant_id.valid ? "invalid" : "")}
+      />
+      <Input
+        name="pi_raw_mat_inv_id"
+        label="Material Inventory origin:"
+        value={inputs.pi_raw_mat_inv_id.value}
+        onChangeHandler={handleinputChange}
+        className={() => (!inputs.pi_raw_mat_inv_id.valid ? "invalid" : "")}
+      />
+      <Input
+        name="pi_quantity"
+        label="Products quantity:"
+        value={inputs.pi_quantity.value}
+        onChangeHandler={handleinputChange}
+        className={() => (!inputs.pi_quantity.valid ? "invalid" : "")}
+      />
+      <Input
+        name="pi_unit_price"
+        label="Unit Price:"
+        value={inputs.pi_unit_price.value}
+        onChangeHandler={handleinputChange}
+        className={() => (!inputs.pi_unit_price.valid ? "invalid" : "")}
+      />
+
       <Button bgColor="var(--primary-cyan-800)">Create</Button>
     </StyledForm>
   );

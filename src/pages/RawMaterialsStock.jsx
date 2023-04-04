@@ -1,10 +1,7 @@
-import React from "react";
-
-import { useFetch } from "../hooks/useFetch";
-
-import { useCookies } from "react-cookie";
-
+import React, { useEffect } from "react";
 import Table from "../components/table/Table";
+import { useDispatch, useSelector } from "react-redux";
+import { getMaterialsStock } from "../features/rawMaterial-slice";
 
 const headers = {
   // "#": { value: "id" },
@@ -22,18 +19,14 @@ const headers = {
 };
 
 const RawMaterialsStock = () => {
-  // eslint-disable-next-line
-  const [cookies, setCookie] = useCookies();
-  const token = cookies.access_token;
-  const { data, loading, error } = useFetch({
-    url: "http://localhost:8000/api/rawMaterials/stock",
-    config: {
-      method: "GET",
-      headers: {
-        authorization: token,
-      },
-    },
-  });
+  const dispatch = useDispatch();
+  const { data, loading, error } = useSelector(
+    (state) => state.materials.stock
+  );
+
+  useEffect(() => {
+    if (data.length === 0) dispatch(getMaterialsStock());
+  }, []);
 
   return (
     <Table
@@ -44,6 +37,7 @@ const RawMaterialsStock = () => {
       tableTitle="Raw Materials stock:"
       filter={true}
       componentName="rawMaterialStock"
+      alertTitle={"Create a new Material Stock"}
     />
   );
 };

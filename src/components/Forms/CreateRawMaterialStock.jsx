@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
-import { InputGroup, StyledForm, Button } from "../../styles";
-
+import Input from "../Input";
+import { StyledForm, Button } from "../../styles";
+import { useSelector, useDispatch } from "react-redux";
+import { getMaterialsTypes, addStock } from "../../features/rawMaterial-slice";
 const CURRENT_DATE = new Date().toISOString().substring(0, 10);
 
 const initialInputValues = {
@@ -29,8 +30,9 @@ const initialInputValues = {
 };
 
 const CreateProduct = () => {
+  const dispatch = useDispatch();
   const [inputs, setInputs] = useState(initialInputValues);
-
+  const { data, loading } = useSelector((state) => state.materials.type);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
@@ -39,7 +41,6 @@ const CreateProduct = () => {
       const missingFields = error.response.data?.missing_field || [];
       const updatedInputs = { ...inputs };
       for (const missingField of missingFields) {
-        console.log(missingField);
         if (Boolean(missingField) && updatedInputs[missingField]) {
           updatedInputs[missingField].valid = false;
         }
@@ -47,6 +48,10 @@ const CreateProduct = () => {
       setInputs(updatedInputs);
     }
   }, [error, message]);
+
+  useEffect(() => {
+    if (data.length === 0) dispatch(getMaterialsTypes());
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,11 +73,13 @@ const CreateProduct = () => {
       if (response.status === 201) {
         setMessage(response?.data?.message);
         setInputs(initialInputValues);
+        setError(null);
+        dispatch(addStock(response.data.item));
       }
     } catch (err) {
       console.log(err);
       setError(err);
-      setMessage(error?.response?.data?.error_message);
+      setMessage(err?.response?.data?.error_message);
     }
   };
 
@@ -82,7 +89,7 @@ const CreateProduct = () => {
     setInputs((prev) => {
       return {
         ...prev,
-        [name]: { ...prev[name], value: e.target.value },
+        [name]: { ...prev[name], value: e.target.value, valid: true },
       };
     });
   };
@@ -92,62 +99,40 @@ const CreateProduct = () => {
       {message ? (
         <p className={`message  ${error ? "error" : ""}`}>{message}</p>
       ) : null}
-      <InputGroup
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-        className={!inputs.rms_date_stock.valid ? "invalid" : ""}
-      >
-        <label htmlFor="rms_date_stock">Material Stock date:</label>
-        <input
-          type="date"
-          name="rms_date_stock"
-          id="rms_date_stock"
-          value={inputs.rms_date_stock.value}
-          onChange={handleinputChange}
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.rms_raw_mat_id.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="rms_raw_mat_id">Material type:</label>
-        <input
-          type="text"
-          name="rms_raw_mat_id"
-          value={inputs.rms_raw_mat_id.value}
-          onChange={handleinputChange}
-          id="rms_raw_mat_id"
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.rms_quantity.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="rms_quantity">Material Quantity:</label>
-        <input
-          type="text"
-          name="rms_quantity"
-          value={inputs.rms_quantity.value}
-          onChange={handleinputChange}
-          id="rms_quantity"
-        />
-      </InputGroup>{" "}
-      <InputGroup
-        className={!inputs.rms_unit_price.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="rms_unit_price">Unit Price:</label>
-        <input
-          type="text"
-          name="rms_unit_price"
-          value={inputs.rms_unit_price.value}
-          onChange={handleinputChange}
-          id="rms_unit_price"
-        />
-      </InputGroup>
+      <Input
+        type="date"
+        name="rms_date_stock"
+        label="Material Stock date:"
+        onChangeHandler={handleinputChange}
+        value={inputs.rms_date_stock.value}
+      />
+      <Input
+        type="select"
+        data={data}
+        holders={["rmt_id", "rmt_name"]}
+        name="rms_raw_mat_id"
+        label="Material type:"
+        onChangeHandler={handleinputChange}
+        value={inputs.rms_raw_mat_id.value}
+        className={() => (!inputs.rms_raw_mat_id.valid ? "invalid" : "")}
+      />
+      <Input
+        type="number"
+        name="rms_quantity"
+        label="Material Quantity:"
+        onChangeHandler={handleinputChange}
+        value={inputs.rms_quantity.value}
+        className={() => (!inputs.rms_quantity.valid ? "invalid" : "")}
+      />
+      <Input
+        type="number"
+        name="rms_unit_price"
+        label="Unit Price:"
+        onChangeHandler={handleinputChange}
+        value={inputs.rms_unit_price.value}
+        className={() => (!inputs.rms_unit_price.valid ? "invalid" : "")}
+      />
+
       <Button bgColor="var(--primary-cyan-800)">Create</Button>
     </StyledForm>
   );

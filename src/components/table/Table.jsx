@@ -36,6 +36,7 @@ const Table = ({
   }
 
   if (!loading && error) {
+    console.log(error);
     return <Navigate to="/log_in" />;
   }
 

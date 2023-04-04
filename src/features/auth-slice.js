@@ -3,22 +3,13 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:8000/api/auth";
 
-export const isLoggedIn = createAsyncThunk(
-  "auth/isLoogedIn",
-  async ({ token }) => {
-    const response = await axios.post(
-      `${BASE_URL}/isLoggedIn`,
-      {},
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    );
+export const isLoggedIn = createAsyncThunk("auth/isLoogedIn", async () => {
+  const response = await axios.get(`${BASE_URL}/isLoggedIn`, {
+    withCredentials: true,
+  });
 
-    return response.data;
-  }
-);
+  return response.data;
+});
 
 const authSlice = createSlice({
   name: "auth",

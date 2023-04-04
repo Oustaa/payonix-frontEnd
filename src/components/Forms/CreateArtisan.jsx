@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addArtisan } from "../../features/artisan-slice";
 import { StyledForm, Button } from "../../styles";
+import changeHandler from "../../utils/inputChangeHndler";
+
 import Input from "../Input";
 
 const initialInputValues = {
@@ -77,17 +79,6 @@ const CreateProduct = () => {
     }
   };
 
-  const handleinputChange = (e) => {
-    const name = e.target.name;
-
-    setInputs((prev) => {
-      return {
-        ...prev,
-        [name]: { ...prev[name], value: e.target.value, valid: true },
-      };
-    });
-  };
-
   return (
     <StyledForm onSubmit={handleSubmit}>
       {message ? (
@@ -96,7 +87,7 @@ const CreateProduct = () => {
       <Input
         name="a_name"
         value={inputs.a_name.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         label="Artisans Name:"
         className={() => {
           return !inputs.a_name.valid ? "invalid" : "";
@@ -105,13 +96,13 @@ const CreateProduct = () => {
       <Input
         name="a_phone"
         value={inputs.a_phone.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         label="Artisan Phone Number:"
       />
       <Input
         name="a_address"
         value={inputs.a_address.value}
-        onChangeHandler={handleinputChange}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
         label="Artisan Address:"
       />
       <Button bgColor="var(--primary-cyan-800)">Create</Button>

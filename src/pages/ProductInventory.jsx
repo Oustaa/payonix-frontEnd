@@ -1,6 +1,6 @@
-import React from "react";
-import { useFetch } from "../hooks/useFetch";
-import { useCookies } from "react-cookie";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getProductsInventory } from "../features/products-slice";
 
 import Table from "../components/table/Table";
 
@@ -17,17 +17,13 @@ const headers = {
 };
 
 const ProductInventory = () => {
-  // eslint-disable-next-line
-  const [cookies, setCookie] = useCookies();
-  const token = cookies.access_token;
-  const { data, loading, error } = useFetch({
-    url: "http://localhost:8000/api/products/inventory",
-    config: {
-      method: "GET",
-      headers: {
-        authorization: token,
-      },
-    },
+  const dispatch = useDispatch();
+  const { data, loading, error } = useSelector(
+    (state) => state.products.inventory
+  );
+
+  useEffect(() => {
+    if (data.length === 0) dispatch(getProductsInventory());
   });
 
   return (
