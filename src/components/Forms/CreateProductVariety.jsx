@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import { useSelector, useDispatch } from "react-redux";
+import { addProductVariety } from "../../features/products-slice";
+import Input from "../Input";
 import { InputGroup, StyledForm, Button } from "../../styles";
 
 const initialInputValues = {
@@ -27,16 +29,20 @@ const initialInputValues = {
 };
 
 const CreateProductForm = () => {
+  const dispatch = useDispatch();
+  const { data: productsData } = useSelector(
+    (state) => state.products.products
+  );
   const [file, setFile] = useState(null);
   const [inputs, setInputs] = useState(initialInputValues);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     if (error?.response?.status === 400) {
       const missingFields = error.response.data?.missing_field || [];
       const updatedInputs = { ...inputs };
       for (const missingField of missingFields) {
-        console.log(missingField);
         if (Boolean(missingField) && updatedInputs[missingField]) {
           updatedInputs[missingField].valid = false;
         }
@@ -67,10 +73,17 @@ const CreateProductForm = () => {
           withCredentials: true,
         }
       );
-      console.log(response);
+      if (response.status === 201) {
+        setError(null);
+        setMessage(
+          `Artisan with the name '${response.data.a_name}' has been created`
+        );
+        setInputs(initialInputValues);
+        dispatch(addProductVariety(response.data.item));
+      }
     } catch (err) {
-      console.log(err);
       setError(err);
+      setMessage(err?.response?.data?.error_message);
     }
   };
 
@@ -84,74 +97,48 @@ const CreateProductForm = () => {
     setInputs((prev) => {
       return {
         ...prev,
-        [name]: { ...prev[name], value: e.target.value },
+        [name]: { ...prev[name], value: e.target.value, valid: true },
       };
     });
   };
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      {error?.response ? (
-        <p className={`message  ${error ? "error" : ""}`}>
-          {error?.response?.data?.error_message}
-        </p>
+      {message ? (
+        <p className={`message ${error ? "error" : ""}`}>{message}</p>
       ) : null}
-      <InputGroup
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-        className={!inputs.pv_name.valid ? "invalid" : ""}
-      >
-        <label htmlFor="pv_name">Products Variety Name:</label>
-        <input
-          type="text"
-          name="pv_name"
-          id="pv_name"
-          value={inputs.pv_name.value}
-          onChange={handleinputChange}
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.pv_product_id.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="pv_product_id">Products origin:</label>
-        <input
-          type="text"
-          name="pv_product_id"
-          value={inputs.pv_product_id.value}
-          onChange={handleinputChange}
-          id="pv_product_id"
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.pv_description.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="pv_description">Product Variety description:</label>
-        <input
-          type="text"
-          name="pv_description"
-          value={inputs.pv_description.value}
-          onChange={handleinputChange}
-          id="pv_description"
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.pv_reorder_point.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="pv_reorder_point">Reorder point:</label>
-        <input
-          type="text"
-          name="pv_reorder_point"
-          value={inputs.pv_reorder_point.value}
-          onChange={handleinputChange}
-          id="pv_reorder_point"
-        />
-      </InputGroup>
+      <Input
+        label="Products Variety Name:"
+        name="pv_name"
+        value={inputs.pv_name.value}
+        onChangeHandler={handleinputChange}
+        className={() => (!inputs.pv_name.valid ? "invalid" : "")}
+      />
+      <Input
+        label="Products origin:"
+        name="pv_product_id"
+        value={inputs.pv_product_id.value}
+        onChangeHandler={handleinputChange}
+        className={() => (!inputs.pv_product_id.valid ? "invalid" : "")}
+        type="select"
+        data={productsData}
+        holders={["p_id", "p_name"]}
+      />
+      <Input
+        label="Product Variety description:"
+        name="pv_description"
+        value={inputs.pv_description.value}
+        onChangeHandler={handleinputChange}
+        className={() => (!inputs.pv_description.valid ? "invalid" : "")}
+      />
+      <Input
+        label="Reorder point:"
+        name="pv_reorder_point"
+        value={inputs.pv_reorder_point.value}
+        onChangeHandler={handleinputChange}
+        className={() => (!inputs.pv_reorder_point.valid ? "invalid" : "")}
+      />
+
       <InputGroup>
         <label htmlFor="p_image">Products Image:</label>
         <input type="file" name="p_image" onChange={handleFileChange} />

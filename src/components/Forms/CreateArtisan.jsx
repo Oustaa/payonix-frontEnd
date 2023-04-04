@@ -83,7 +83,7 @@ const CreateProduct = () => {
     setInputs((prev) => {
       return {
         ...prev,
-        [name]: { ...prev[name], value: e.target.value },
+        [name]: { ...prev[name], value: e.target.value, valid: true },
       };
     });
   };
@@ -91,7 +91,7 @@ const CreateProduct = () => {
   return (
     <StyledForm onSubmit={handleSubmit}>
       {message ? (
-        <p className={`message  ${error ? "error" : ""}`}>{message}</p>
+        <p className={`message ${error ? "error" : ""}`}>{message}</p>
       ) : null}
       <Input
         name="a_name"

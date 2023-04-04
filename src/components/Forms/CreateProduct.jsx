@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../features/products-slice";
 import { InputGroup, StyledForm, Button } from "../../styles";
+import Input from "../Input";
 
 const initialInputValues = {
   p_name: {
@@ -17,6 +19,7 @@ const initialInputValues = {
 };
 
 const CreateProduct = () => {
+  const dispatch = useDispatch();
   const [file, setFile] = useState(null);
   const [inputs, setInputs] = useState(initialInputValues);
 
@@ -58,9 +61,10 @@ const CreateProduct = () => {
         }
       );
       if (response.status === 201) {
+        dispatch(addProduct(response.data.item));
+        setError(null);
         setMessage(response?.data?.message);
         setInputs(initialInputValues);
-        setFile(null);
       }
     } catch (err) {
       console.log(err);
@@ -79,7 +83,7 @@ const CreateProduct = () => {
     setInputs((prev) => {
       return {
         ...prev,
-        [name]: { ...prev[name], value: e.target.value },
+        [name]: { ...prev[name], value: e.target.value, valid: true },
       };
     });
   };
@@ -87,37 +91,22 @@ const CreateProduct = () => {
   return (
     <StyledForm onSubmit={handleSubmit}>
       {message ? (
-        <p className={`message  ${error ? "error" : ""}`}>{message}</p>
+        <p className={`message ${error ? "error" : ""}`}>{message}</p>
       ) : null}
-
-      <InputGroup
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-        className={!inputs.p_name.valid ? "invalid" : ""}
-      >
-        <label htmlFor="p_name">Products name:</label>
-        <input
-          type="text"
-          name="p_name"
-          id="p_name"
-          value={inputs.p_name.value}
-          onChange={handleinputChange}
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.p_raw_mat_base_id.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="p_raw_mat_base_id">Products Raw Material origin:</label>
-        <input
-          type="text"
-          name="p_raw_mat_base_id"
-          value={inputs.p_raw_mat_base_id.value}
-          onChange={handleinputChange}
-          id="p_raw_mat_base_id"
-        />
-      </InputGroup>
+      <Input
+        name="p_name"
+        label="Products name:"
+        className={() => (!inputs.p_name.valid ? "invalid" : "")}
+        value={inputs.p_name.value}
+        onChangeHandler={handleinputChange}
+      />
+      <Input
+        name="p_raw_mat_base_id"
+        label="Products Raw Material origin:"
+        className={() => (!inputs.p_raw_mat_base_id.valid ? "invalid" : "")}
+        value={inputs.p_raw_mat_base_id.value}
+        onChangeHandler={handleinputChange}
+      />
       <InputGroup inputBgColor="var(--primary-dark-600)" inline={false}>
         <label htmlFor="p_image">Products Image:</label>
         <input type="file" name="p_image" onChange={handleFileChange} />

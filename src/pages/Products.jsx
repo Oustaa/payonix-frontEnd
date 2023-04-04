@@ -1,7 +1,6 @@
-import React from "react";
-import { useFetch } from "../hooks/useFetch";
-import { useCookies } from "react-cookie";
-
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getProducts, getProductsVariety } from "../features/products-slice";
 import Table from "../components/table/Table";
 
 import { FlexContainer, StyledTableAlert } from "../styles";
@@ -16,7 +15,11 @@ const productsHeaders = {
 const productsVarietyHeaders = {
   image: { value: "pv_image", type: "image" },
   Name: { value: "pv_name" },
-  Description: { value: "pv_description" },
+  Description: {
+    value: "pv_description",
+    default: true,
+    defaultValue: <BsDashLg />,
+  },
   Availability: {
     checked: true,
     check: (data) => {
@@ -51,20 +54,23 @@ const productsVarietyHeaders = {
 };
 
 const Products = () => {
+  const dispatch = useDispatch();
+  const { products, varity } = useSelector((state) => state.products);
   const {
     data: productsData,
     loading: productsLoading,
     error: productsError,
-  } = useFetch({
-    url: "http://localhost:8000/api/products",
-  });
+  } = products;
   const {
     data: productsVarietyData,
     loading: productsVarietyLoading,
     error: productsVarietyError,
-  } = useFetch({
-    url: "http://localhost:8000/api/products/variety",
-  });
+  } = varity;
+
+  useEffect(() => {
+    if (productsData.length === 0) dispatch(getProducts());
+    if (productsVarietyData.length === 0) dispatch(getProductsVariety());
+  }, []);
 
   return (
     <>
