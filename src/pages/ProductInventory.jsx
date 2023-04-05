@@ -24,7 +24,7 @@ const ProductInventory = () => {
 
   useEffect(() => {
     if (data.length === 0) dispatch(getProductsInventory());
-  });
+  }, []);
 
   return (
     <Table

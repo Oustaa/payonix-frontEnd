@@ -66,6 +66,7 @@ const materialsSlice = createSlice({
       state.type.data.unshift({ ...payload, rmb_origin });
     },
     addInventory: (state, { payload }) => {
+      console.log(payload);
       state.inventory.data.unshift(payload);
     },
     addStock: (state, { payload }) => {
@@ -73,6 +74,9 @@ const materialsSlice = createSlice({
         (type) => type.rmt_id === payload.rms_raw_mat_id
       ).rmt_name;
       state.stock.data.unshift({ ...payload, rms_rm_type });
+    },
+    updateInventory: (state, { payload }) => {
+      console.log(payload);
     },
   },
   extraReducers: (builder) => {
@@ -131,7 +135,7 @@ const materialsSlice = createSlice({
   },
 });
 
-export const { addBase, addType, addInventory, addStock } =
+export const { addBase, addType, addInventory, addStock, updateInventory } =
   materialsSlice.actions;
 
 export default materialsSlice.reducer;

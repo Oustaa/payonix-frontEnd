@@ -39,6 +39,7 @@ const components = {
 const Alert = () => {
   const dispatch = useDispatch();
   const { alertFor, alertTitle } = useSelector((state) => state.ui);
+
   return (
     <StyledAlertContainer>
       <StyledAlert>

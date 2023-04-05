@@ -1,7 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getArtisans } from "../../features/artisan-slice";
+import {
+  getMaterialsStock,
+  addInventory,
+} from "../../features/rawMaterial-slice";
+
 import changeHandler from "../../utils/inputChangeHndler";
-import { InputGroup, StyledForm, Button } from "../../styles";
+import Input from "../Input";
+import { StyledForm, Button } from "../../styles";
 
 const CURRENT_DATE = new Date().toISOString().substring(0, 10);
 
@@ -34,10 +42,22 @@ const initialInputValues = {
 };
 
 const CreateProduct = () => {
+  const dispatch = useDispatch();
   const [inputs, setInputs] = useState(initialInputValues);
 
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
+
+  const { data: artisansData, loading: artisansLoading } = useSelector(
+    (state) => state.artisans.artisans
+  );
+  const { data: materialStockData, loading: materialStockLoading } =
+    useSelector((state) => state.materials.stock);
+
+  useEffect(() => {
+    if (artisansData.length === 0) dispatch(getArtisans());
+    if (materialStockData.length === 0) dispatch(getMaterialsStock());
+  }, []);
 
   useEffect(() => {
     if (error?.response?.status === 400) {
@@ -57,6 +77,12 @@ const CreateProduct = () => {
     e.preventDefault();
 
     try {
+      const { a_name } = artisansData.find((artisan) => {
+        console.log(artisan);
+        return artisan.a_id === inputs.rmi_artisan_id.value;
+      });
+      console.log(a_name);
+
       const response = await axios.post(
         `http://localhost:8000/api/rawMaterials/inventory`,
         {
@@ -65,6 +91,7 @@ const CreateProduct = () => {
           rmi_artisan_id: inputs.rmi_artisan_id.value,
           rmi_quantity: inputs.rmi_quantity.value,
           rmi_estimated_nbr_prod: inputs.rmi_estimated_nbr_prod.value,
+          a_name,
         },
         {
           withCredentials: true,
@@ -74,11 +101,16 @@ const CreateProduct = () => {
       if (response.status === 201) {
         setMessage(response?.data?.message);
         setInputs(initialInputValues);
+        setError(null);
+        const { a_name } = artisansData.find(
+          (atisan) => atisan.a_id === response?.data?.item.rmi_artisan_id
+        );
+        dispatch(addInventory({ ...response?.data?.item, a_name }));
       }
     } catch (err) {
       console.log(err);
       setError(err);
-      setMessage(error?.response?.data?.error_message);
+      setMessage(err?.response?.data?.error_message);
     }
   };
 
@@ -87,78 +119,48 @@ const CreateProduct = () => {
       {message ? (
         <p className={`message  ${error ? "error" : ""}`}>{message}</p>
       ) : null}
-      <InputGroup
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-        className={!inputs.rms_date_stock.valid ? "invalid" : ""}
-      >
-        <label htmlFor="rms_date_stock">Inventory Date:</label>
-        <input
-          type="date"
-          name="rms_date_stock"
-          id="rms_date_stock"
-          value={inputs.rms_date_stock.value}
-          onChange={(e) => changeHandler(e, setInputs)}
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.rmi_artisan_id.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="rmi_artisan_id">Artisan Name:</label>
-        <input
-          type="text"
-          name="rmi_artisan_id"
-          value={inputs.rmi_artisan_id.value}
-          onChange={(e) => changeHandler(e, setInputs)}
-          id="rmi_artisan_id"
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.rmi_raw_mat_stock_id.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="rmi_raw_mat_stock_id">Material type:</label>
-        <input
-          type="text"
-          name="rmi_raw_mat_stock_id"
-          value={inputs.rmi_raw_mat_stock_id.value}
-          onChange={(e) => changeHandler(e, setInputs)}
-          id="rmi_raw_mat_stock_id"
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.rmi_quantity.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="rmi_quantity">Quantity:</label>
-        <input
-          type="text"
-          name="rmi_quantity"
-          value={inputs.rmi_quantity.value}
-          onChange={(e) => changeHandler(e, setInputs)}
-          id="rmi_quantity"
-        />
-      </InputGroup>
-      <InputGroup
-        className={!inputs.rmi_estimated_nbr_prod.valid ? "invalid" : ""}
-        inputBgColor="var(--primary-dark-600)"
-        inline={false}
-      >
-        <label htmlFor="rmi_estimated_nbr_prod">
-          Estimated Number of products:
-        </label>
-        <input
-          type="text"
-          name="rmi_estimated_nbr_prod"
-          value={inputs.rmi_estimated_nbr_prod.value}
-          onChange={(e) => changeHandler(e, setInputs)}
-          id="rmi_estimated_nbr_prod"
-        />
-      </InputGroup>
+      <Input
+        type="date"
+        name="rms_date_stock"
+        label="Inventory Date:"
+        value={inputs.rms_date_stock.value}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
+      />
+      <Input
+        type="select"
+        data={artisansData}
+        holders={["a_id", "a_name"]}
+        name="rmi_artisan_id"
+        label="Artisan Name:"
+        value={inputs.rmi_artisan_id.value}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
+        className={() => (!inputs.rmi_artisan_id.valid ? "invalid" : "")}
+      />
+      <Input
+        type="select"
+        data={materialStockData}
+        holders={["rms_id", "rms_id"]}
+        name="rmi_raw_mat_stock_id"
+        label="Material stock SKU:"
+        value={inputs.rmi_raw_mat_stock_id.value}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
+        className={() => (!inputs.rmi_raw_mat_stock_id.valid ? "invalid" : "")}
+      />
+      <Input
+        type="number"
+        name="rmi_quantity"
+        label="Quantity:"
+        value={inputs.rmi_quantity.value}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
+        className={() => (!inputs.rmi_quantity.valid ? "invalid" : "")}
+      />
+      <Input
+        type="number"
+        name="rmi_estimated_nbr_prod"
+        label="Estimated Number of products:"
+        value={inputs.rmi_estimated_nbr_prod.value}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
+      />
       <Button bgColor="var(--primary-cyan-800)">Create</Button>
     </StyledForm>
   );

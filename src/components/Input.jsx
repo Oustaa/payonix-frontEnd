@@ -11,8 +11,12 @@ const Input = ({
   data,
   holders,
 }) => {
+  console.log(value);
   return (
-    <InputGroup className={typeof className === "function" && className()}>
+    <InputGroup
+      margin="0px"
+      className={typeof className === "function" && className()}
+    >
       <label htmlFor={name}>{label}</label>
       {type === "select" ? (
         <select name={name} id={name} value={value} onChange={onChangeHandler}>

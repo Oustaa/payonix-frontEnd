@@ -2,8 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Input from "../Input";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsVariety } from "../../features/products-slice";
+import {
+  getProductsVariety,
+  addProductInventory,
+} from "../../features/products-slice";
 import { getArtisans } from "../../features/artisan-slice";
+import { getMaterialsInventory } from "../../features/rawMaterial-slice";
 import { StyledForm, Button } from "../../styles";
 import changeHandler from "../../utils/inputChangeHndler";
 
@@ -53,6 +57,8 @@ const CreateProductForm = () => {
   const { data: dataArtisan, loading: loadingArtisan } = useSelector(
     (state) => state.artisans.artisans
   );
+  const { data: dataMaterialInventory, loading: loadingMaterialInventory } =
+    useSelector((state) => state.materials.inventory);
   useEffect(() => {
     if (error?.response?.status === 400) {
       const missingFields = error.response.data?.missing_field || [];
@@ -74,14 +80,7 @@ const CreateProductForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
-      pi_date: inputs.pi_date.value,
-      pi_quantity: inputs.pi_quantity.value,
-      pi_unit_price: inputs.pi_unit_price.value,
-      pi_artisan_id: inputs.pi_artisan_id.value,
-      pi_prod_variant_id: inputs.pi_prod_variant_id.value,
-      pi_raw_mat_inv_id: inputs.pi_raw_mat_inv_id.value,
-    });
+
     try {
       const response = await axios.post(
         `http://localhost:8000/api/products/inventory`,
@@ -98,18 +97,23 @@ const CreateProductForm = () => {
         }
       );
 
-      if (response.status === 201) setMessage(response?.data?.message);
-      console.log(response);
+      if (response.status === 201) {
+        setMessage(response?.data?.message);
+        dispatch(addProductInventory(response.data?.item));
+        setInputs(initialInputValues);
+      }
     } catch (err) {
       console.log(err);
       setError(err);
-      setMessage(error?.response?.data?.error_message);
+      setMessage(err?.response?.data?.error_message);
     }
   };
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      {message ? <p className={`message`}>{message}</p> : null}
+      {message ? (
+        <p className={`message ${error ? "error" : ""}`}>{message}</p>
+      ) : null}
       <Input
         type={"date"}
         name="pi_date"
@@ -138,6 +142,9 @@ const CreateProductForm = () => {
         className={() => (!inputs.pi_prod_variant_id.valid ? "invalid" : "")}
       />
       <Input
+        type="select"
+        data={dataMaterialInventory}
+        holders={["rmi_id", "rmi_id"]}
         name="pi_raw_mat_inv_id"
         label="Material Inventory origin:"
         value={inputs.pi_raw_mat_inv_id.value}

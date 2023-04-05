@@ -34,6 +34,15 @@ const CreateProduct = () => {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
+    console.log("form entred");
+    return () => {
+      console.log("form exited");
+      setError(null);
+      setInputs((prev) => initialInputValues);
+    };
+  }, []);
+
+  useEffect(() => {
     if (error?.response?.status === 400) {
       const missingFields = error.response.data?.missing_field || [];
       const updatedInputs = { ...inputs };
@@ -71,9 +80,7 @@ const CreateProduct = () => {
         setInputs(initialInputValues);
         dispatch(addArtisan(response.data));
       }
-      console.log(response);
     } catch (err) {
-      console.log(err);
       setError(err);
       setMessage(err?.response?.data?.error_message);
     }
