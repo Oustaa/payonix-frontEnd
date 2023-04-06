@@ -97,7 +97,6 @@ const LogIn = () => {
         setCookie("access_token", accessToken, {
           path: "/",
           expires,
-          secure: true,
         });
         setCookie("user_name", username, {
           path: "/",

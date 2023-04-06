@@ -22,7 +22,11 @@ export const InputGroup = styled.div`
   align-items: center;
   flex-direction: ${({ inline }) => (!inline ? "column" : "row")};
 
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: ${({ margin }) => (margin ? margin : "var(--spacing-sm)")};
+
+  & + & {
+    margin-bottom: var(--spacing-sm);
+  }
 
   label {
     width: ${({ inline }) => (!inline ? "100%" : "30%")};
@@ -82,6 +86,8 @@ export const InputGroup = styled.div`
 export const FlexContainer = styled.div`
   display: flex;
   gap: var(--spacing-ms);
+  align-items: ${({ y }) => y};
+  justify-content: ${({ x }) => x};
 `;
 
 export const StyledTableAlert = styled.span`

@@ -52,9 +52,8 @@ const CreateRawMatBase = () => {
         dispatch(addBase(response.data?.item));
       }
     } catch (err) {
-      console.log(err);
       setError(err);
-      setMessage(error?.response?.data?.error_message);
+      setMessage(err?.response?.data?.error_message);
     }
   };
 

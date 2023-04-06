@@ -1,7 +1,9 @@
-import React from "react";
-import { useFetch } from "../hooks/useFetch";
-import { useCookies } from "react-cookie";
-import { BsDashLg } from "react-icons/bs";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getMaterialsInventory,
+  updateInventory,
+} from "../features/rawMaterial-slice";
 import Table from "../components/table/Table";
 import { StyledTableAlert } from "../styles";
 
@@ -13,9 +15,13 @@ const headers = {
   "Unit Price": { value: "rmi_unit_price" },
   Amount: { value: "rmi_amount" },
   "Estemated product's number": {
+    changable: true,
+    inputType: "number",
+    url: "http://localhost:8000/api/rawMaterials/inventory",
+    id: (data) => data["rmi_id"],
     value: "rmi_estimated_nbr_prod",
-    default: true,
-    defaultValue: <BsDashLg />,
+    name: "rmi_estimated_nbr_prod",
+    dispatch: { function: updateInventory, values: {} },
   },
   "Received product's number": { value: "rmi_number_prods_recived" },
   Completed: {
@@ -34,18 +40,15 @@ const headers = {
 // toFixed(2)
 
 const RawMaterialsInventory = () => {
-  // eslint-disable-next-line
-  const [cookies, setCookie] = useCookies();
-  const token = cookies.access_token;
-  const { data, loading, error } = useFetch({
-    url: "http://localhost:8000/api/rawMaterials/inventory",
-    config: {
-      method: "GET",
-      headers: {
-        authorization: token,
-      },
-    },
-  });
+  const dispatch = useDispatch();
+
+  const { data, loading, error } = useSelector(
+    (state) => state.materials.inventory
+  );
+
+  useEffect(() => {
+    if (data.length === 0) dispatch(getMaterialsInventory());
+  }, []);
 
   return (
     <Table

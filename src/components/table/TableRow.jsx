@@ -1,7 +1,7 @@
 import React from "react";
 
 import { StyledTr, StyledTd } from "../../styles/styled-table";
-
+import DisplayebaleInput from "../ChangableValue";
 import styled from "styled-components";
 
 const StyledImage = styled.img`
@@ -16,7 +16,19 @@ const TableRow = ({ data, fields }) => {
   // const src = "http://localhost:8000/images/1679658285851-20210317_212114.jpg";
 
   const displayedValues = fields.map((field, i) => {
-    if (field.type === "image")
+    if (field.changable) {
+      return (
+        <StyledTd key={i}>
+          <DisplayebaleInput
+            url={field.url}
+            type={field.inputType}
+            value={data[field.value]}
+            id={typeof field.id === "function" ? field.id(data) : ""}
+            name={field.name}
+          />
+        </StyledTd>
+      );
+    } else if (field.type === "image")
       return (
         <StyledTd key={i} className="image">
           <StyledImage src={src} />
