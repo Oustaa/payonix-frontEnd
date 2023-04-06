@@ -13,6 +13,8 @@ import {
   CreateRawMaterialInventory,
   CreateArtisan,
   CreateArtisanCompta,
+  CreateSupplier,
+  CreateSuppliersCompta,
 } from "./Forms";
 
 import { BsX } from "react-icons/bs";
@@ -34,6 +36,8 @@ const components = {
   rawMaterialInventory: { create: <CreateRawMaterialInventory /> },
   artisan: { create: <CreateArtisan /> },
   artisanCompta: { create: <CreateArtisanCompta /> },
+  supplier: { create: <CreateSupplier /> },
+  supplierCompta: { create: <CreateSuppliersCompta /> },
 };
 
 const Alert = () => {

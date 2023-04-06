@@ -7,3 +7,5 @@ export { default as CreateRawMaterialStock } from "./CreateRawMaterialStock";
 export { default as CreateRawMaterialInventory } from "./CreateRawMaterialInventory";
 export { default as CreateArtisan } from "./CreateArtisan";
 export { default as CreateArtisanCompta } from "./CreateArtisanCompta";
+export { default as CreateSupplier } from "./CreateSupplier";
+export { default as CreateSuppliersCompta } from "./CreateSuppliersCompta";
