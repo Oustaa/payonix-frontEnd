@@ -3,6 +3,13 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:8000/api/rawMaterials";
 
+const initialState = {
+  base: { loading: false, error: null, data: [] },
+  type: { loading: false, error: null, data: [] },
+  inventory: { loading: false, error: null, data: [] },
+  stock: { loading: false, error: null, data: [] },
+};
+
 export const getMaterialsBase = createAsyncThunk(
   "get/rawMaterials/bases",
   async () => {
@@ -49,12 +56,7 @@ export const getMaterialsStock = createAsyncThunk(
 
 const materialsSlice = createSlice({
   name: "materials",
-  initialState: {
-    base: { loading: false, error: null, data: [] },
-    type: { loading: false, error: null, data: [] },
-    inventory: { loading: false, error: null, data: [] },
-    stock: { loading: false, error: null, data: [] },
-  },
+  initialState,
   reducers: {
     addBase: (state, { payload }) => {
       state.base.data.unshift(payload);
@@ -77,6 +79,12 @@ const materialsSlice = createSlice({
     },
     updateInventory: (state, { payload }) => {
       console.log(payload);
+    },
+    resetMaterials: (state) => {
+      state.base = { loading: false, error: null, data: [] };
+      state.type = { loading: false, error: null, data: [] };
+      state.inventory = { loading: false, error: null, data: [] };
+      state.stock = { loading: false, error: null, data: [] };
     },
   },
   extraReducers: (builder) => {
@@ -135,7 +143,13 @@ const materialsSlice = createSlice({
   },
 });
 
-export const { addBase, addType, addInventory, addStock, updateInventory } =
-  materialsSlice.actions;
+export const {
+  addBase,
+  addType,
+  addInventory,
+  addStock,
+  updateInventory,
+  resetMaterials,
+} = materialsSlice.actions;
 
 export default materialsSlice.reducer;

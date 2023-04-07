@@ -74,11 +74,9 @@ const CreateProduct = () => {
 
       if (response.status === 201) {
         setError(null);
-        setMessage(
-          `Artisan with the name '${response.data.a_name}' has been created`
-        );
+        setMessage(response.data.message);
         setInputs(initialInputValues);
-        dispatch(addArtisan(response.data));
+        dispatch(addArtisan(response.data.item));
       }
     } catch (err) {
       setError(err);

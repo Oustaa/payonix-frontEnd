@@ -3,6 +3,11 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:8000/api/suppliers";
 
+const initialState = {
+  suppliers: { loading: false, error: null, data: [] },
+  suppliers_compta: { loading: false, error: null, data: [] },
+};
+
 export const getSuppliers = createAsyncThunk("get/suppliers", async () => {
   const response = await axios.get(BASE_URL, { withCredentials: true });
 
@@ -22,10 +27,7 @@ export const getSuppliersCompta = createAsyncThunk(
 
 const supplierSlice = createSlice({
   name: "suppliers",
-  initialState: {
-    suppliers: { loading: false, error: null, data: [] },
-    suppliers_compta: { loading: false, error: null, data: [] },
-  },
+  initialState,
   reducers: {
     addSupplier: (state, { payload }) => {
       state.suppliers.data.unshift(payload);
@@ -35,6 +37,10 @@ const supplierSlice = createSlice({
         (supplier) => supplier.s_id === payload.sc_supplier_id
       );
       state.suppliers_compta.data.unshift({ ...payload, s_name });
+    },
+    resetSuppliers: (state) => {
+      state.suppliers = { loading: false, error: null, data: [] };
+      state.suppliers_compta = { loading: false, error: null, data: [] };
     },
   },
   extraReducers: (builder) => {
@@ -67,6 +73,7 @@ const supplierSlice = createSlice({
   },
 });
 
-export const { addSupplierCompta, addSupplier } = supplierSlice.actions;
+export const { addSupplierCompta, addSupplier, resetSuppliers } =
+  supplierSlice.actions;
 
 export default supplierSlice.reducer;

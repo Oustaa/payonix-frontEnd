@@ -74,14 +74,10 @@ const CreateProduct = () => {
 
       if (response.status === 201) {
         setError(null);
-        setMessage("Artisans compta was added successfully");
+        setMessage(response.data.message);
         setInputs(initialInputValues);
-        console.log(response);
-        dispatch(
-          addArtisanCompta({
-            ...response.data,
-          })
-        );
+
+        dispatch(addArtisanCompta(response.data.item));
       }
     } catch (err) {
       setError(err);

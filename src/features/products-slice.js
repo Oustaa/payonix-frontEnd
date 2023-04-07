@@ -2,7 +2,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const BASE_URL = "http://localhost:8000/api/products";
-
+const initialState = {
+  products: { loading: false, error: null, data: [] },
+  inventory: { loading: false, error: null, data: [] },
+  varity: { loading: false, error: null, data: [] },
+};
 export const getProducts = createAsyncThunk("get/products", async () => {
   const response = await axios.get(`${BASE_URL}`, {
     withCredentials: true,
@@ -35,11 +39,7 @@ export const getProductsVariety = createAsyncThunk(
 
 const productsSlice = createSlice({
   name: "products",
-  initialState: {
-    products: { loading: false, error: null, data: [] },
-    inventory: { loading: false, error: null, data: [] },
-    varity: { loading: false, error: null, data: [] },
-  },
+  initialState,
   reducers: {
     addProduct: (state, { payload }) => {
       state.products.data.unshift(payload);
@@ -49,6 +49,11 @@ const productsSlice = createSlice({
     },
     addProductVariety: (state, { payload }) => {
       state.varity.data.unshift(payload);
+    },
+    resetProducts: (state, { payload }) => {
+      state.products = { loading: false, error: null, data: [] };
+      state.inventory = { loading: false, error: null, data: [] };
+      state.varity = { loading: false, error: null, data: [] };
     },
   },
   extraReducers: (builder) => {
@@ -94,7 +99,11 @@ const productsSlice = createSlice({
   },
 });
 
-export const { addProduct, addProductInventory, addProductVariety } =
-  productsSlice.actions;
+export const {
+  addProduct,
+  addProductInventory,
+  addProductVariety,
+  resetProducts,
+} = productsSlice.actions;
 
 export default productsSlice.reducer;

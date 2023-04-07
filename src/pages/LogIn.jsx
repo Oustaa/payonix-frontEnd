@@ -49,7 +49,6 @@ const LogIn = () => {
 
   // eslint-disable-next-line
   const [cookies, setCookie] = useCookies();
-  const token = cookies.access_token;
 
   const { status, value } = useSelector((state) => state.auth);
 
@@ -68,7 +67,7 @@ const LogIn = () => {
   };
 
   useEffect(() => {
-    dispatch(isLoggedIn({ token }));
+    dispatch(isLoggedIn());
   }, []);
 
   useEffect(() => {
@@ -104,6 +103,11 @@ const LogIn = () => {
         });
 
         // setCookie('refresh_token', response.data.refresh_token, {path: '/', expires})
+
+        // dispatch(resetArtisans());
+        // dispatch(resetSuppliers());
+        // dispatch(resetProducts());
+        // dispatch(resetMaterials());
 
         navigate("/dashboard");
       }

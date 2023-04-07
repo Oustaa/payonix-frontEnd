@@ -36,8 +36,9 @@ const Table = ({
   }
 
   if (!loading && error) {
-    console.log(error);
-    return <Navigate to="/log_in" />;
+    console.log(error.message);
+    if (error.message === "Request failed with status code 401")
+      return <Navigate to="/log_in" />;
   }
 
   const openCreateAlertHandler = () => {

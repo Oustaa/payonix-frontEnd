@@ -3,6 +3,11 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:8000/api/artisans";
 
+const initialState = {
+  artisans: { loading: false, error: null, data: [] },
+  artisans_compta: { loading: false, error: null, data: [] },
+};
+
 export const getArtisans = createAsyncThunk("get/artisans", async () => {
   const response = await axios.get(BASE_URL, { withCredentials: true });
 
@@ -22,10 +27,7 @@ export const getArtisansCompta = createAsyncThunk(
 
 const artisnasSlice = createSlice({
   name: "artisans",
-  initialState: {
-    artisans: { loading: false, error: null, data: [] },
-    artisans_compta: { loading: false, error: null, data: [] },
-  },
+  initialState,
   reducers: {
     addArtisan: (state, { payload }) => {
       state.artisans.data.unshift(payload);
@@ -35,6 +37,10 @@ const artisnasSlice = createSlice({
         (artisan) => artisan.a_id === payload.ac_artisan_id
       ).a_name;
       state.artisans_compta.data.unshift({ ...payload, a_name });
+    },
+    resetArtisans: (state) => {
+      state.artisans = { loading: false, error: null, data: [] };
+      state.artisans_compta = { loading: false, error: null, data: [] };
     },
   },
   extraReducers: (builder) => {
@@ -67,6 +73,7 @@ const artisnasSlice = createSlice({
   },
 });
 
-export const { addArtisanCompta, addArtisan } = artisnasSlice.actions;
+export const { addArtisanCompta, addArtisan, resetArtisans } =
+  artisnasSlice.actions;
 
 export default artisnasSlice.reducer;

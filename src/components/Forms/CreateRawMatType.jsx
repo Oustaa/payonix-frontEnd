@@ -66,6 +66,7 @@ const CreateRawMatBase = () => {
         }
       );
       if (response.status === 201) {
+        setError(null);
         setMessage(response?.data?.message);
         setInputs(initialInputValues);
         dispatch(addType(response.data.item));
@@ -73,7 +74,7 @@ const CreateRawMatBase = () => {
     } catch (err) {
       console.log(err);
       setError(err);
-      setMessage(error?.response?.data?.error_message);
+      setMessage(err?.response?.data?.error_message);
     }
   };
 
