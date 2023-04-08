@@ -7,7 +7,7 @@ import styled from "styled-components";
 const StyledImage = styled.img`
   width: 100px;
   aspect-ratio: 1 / 0.8;
-  object-fit: cover;
+  object-fit: ;
 `;
 
 const TableRow = ({ data, fields }) => {

@@ -6,8 +6,8 @@ import { CookiesProvider } from "react-cookie";
 import { Provider } from "react-redux";
 import store from "./store";
 
-import { getArtisans } from "./features/artisan-slice";
-store.dispatch(getArtisans());
+import { isLoggedIn } from "./features/auth-slice";
+store.dispatch(isLoggedIn());
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

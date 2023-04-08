@@ -77,11 +77,9 @@ const CreateProduct = () => {
     e.preventDefault();
 
     try {
-      const { a_name } = artisansData.find((artisan) => {
-        console.log(artisan);
+      const a_name = artisansData.find((artisan) => {
         return artisan.a_id === inputs.rmi_artisan_id.value;
-      });
-      console.log(a_name);
+      })?.a_name;
 
       const response = await axios.post(
         `http://localhost:8000/api/rawMaterials/inventory`,
@@ -97,7 +95,7 @@ const CreateProduct = () => {
           withCredentials: true,
         }
       );
-
+      console.log(response);
       if (response.status === 201) {
         setMessage(response?.data?.message);
         setInputs(initialInputValues);

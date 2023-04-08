@@ -1,47 +1,21 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { logIn as login, isLoggedIn } from "../features/auth-slice";
 import { useCookies } from "react-cookie";
-
-import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { logIn as login } from "../features/auth-slice";
+import { resetArtisans } from "../features/artisan-slice";
+import { resetProducts } from "../features/products-slice";
+import { resetMaterials } from "../features/rawMaterial-slice";
+import { resetSuppliers } from "../features/supplier-slice";
 import { InputGroup, Button } from "../styles";
-
-const StyledLogInContainer = styled.div`
-  width: 100%;
-  height: 100vh;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const StyledLogIn = styled.div`
-  padding: var(--spacing-xxl) var(--spacing-lg);
-  width: calc(100% - var(--spacing-lg));
-  max-width: 500px;
-  background-color: var(--white);
-  // height: 300px;
-  border-radius: var(--radius-lg);
-`;
-
-const StyledLogInHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-
-  h1 {
-    color: var(--primary-blue-800);
-  }
-  h2 {
-    color: var(--primary-cyan-800);
-  }
-`;
-
-const StyledLogInForm = styled.form`
-  margin-block-start: var(--spacing-xl);
-`;
+import {
+  StyledLogInContainer,
+  StyledLogIn,
+  StyledLogInHeader,
+  StyledLogInForm,
+} from "../styles/styled-login";
+import Loading from "../components/Loading";
 
 const LogIn = () => {
   const dispatch = useDispatch();
@@ -65,10 +39,6 @@ const LogIn = () => {
       return { ...prev, value: e.target.value };
     });
   };
-
-  useEffect(() => {
-    dispatch(isLoggedIn());
-  }, []);
 
   useEffect(() => {
     if (status === "idle") return navigate("/");
@@ -104,10 +74,10 @@ const LogIn = () => {
 
         // setCookie('refresh_token', response.data.refresh_token, {path: '/', expires})
 
-        // dispatch(resetArtisans());
-        // dispatch(resetSuppliers());
-        // dispatch(resetProducts());
-        // dispatch(resetMaterials());
+        dispatch(resetArtisans());
+        dispatch(resetSuppliers());
+        dispatch(resetProducts());
+        dispatch(resetMaterials());
 
         navigate("/dashboard");
       }
@@ -133,6 +103,8 @@ const LogIn = () => {
       }
     }
   };
+
+  if (status === "loading") return <Loading />;
 
   return (
     <StyledLogInContainer>

@@ -76,9 +76,7 @@ const CreateProductForm = () => {
       );
       if (response.status === 201) {
         setError(null);
-        setMessage(
-          `Artisan with the name '${response.data.a_name}' has been created`
-        );
+        setMessage(response.data.message);
         setInputs(initialInputValues);
         dispatch(addProductVariety(response.data.item));
       }

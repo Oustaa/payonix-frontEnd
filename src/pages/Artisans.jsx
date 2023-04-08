@@ -9,12 +9,12 @@ import { BsDashLg } from "react-icons/bs";
 
 const artisansHeaders = {
   "Artisan name": { value: "a_name" },
-  "Phone number": {
-    value: "a_phone",
-    default: true,
-    defaultValue: <BsDashLg />,
-  },
-  Address: { value: "a_address", default: true, defaultValue: <BsDashLg /> },
+  // "Phone number": {
+  //   value: "a_phone",
+  //   default: true,
+  //   defaultValue: <BsDashLg />,
+  // },
+  // Address: { value: "a_address", default: true, defaultValue: <BsDashLg /> },
   Total: {
     checked: true,
     check: (data) => {
@@ -27,7 +27,15 @@ const artisansHeaders = {
 };
 
 const artisansComptaHeaders = {
-  "Artisan name": { value: "a_name" },
+  "Artisan name": {
+    checked: true,
+    check: (data) => {
+      if (data["a_name"]) {
+        return data["a_name"];
+      }
+      return data["ac_artisan_id"];
+    },
+  },
   "Amount (DH)": { value: "ac_amount" },
   "Translate at": { value: "ac_date", type: "date" },
   Note: { value: "ac_note", default: true, defaultValue: <BsDashLg /> },
@@ -61,7 +69,7 @@ const Artisans = () => {
   return (
     <FlexContainer>
       <Table
-        width="40%"
+        width="30%"
         headers={artisansHeaders}
         data={artisansData}
         loading={artisansLoading}
@@ -71,7 +79,7 @@ const Artisans = () => {
         alertTitle="Create Artisan"
       />
       <Table
-        width="60%"
+        width="80%"
         headers={artisansComptaHeaders}
         data={productsVarietyData}
         loading={productsVarietyLoading}

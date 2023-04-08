@@ -13,7 +13,7 @@ export const isLoggedIn = createAsyncThunk("auth/isLoogedIn", async () => {
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { status: null, value: false },
+  initialState: { status: "loading", value: false },
   reducers: {
     logIn: (state, { payload: { accessToken, username } }) => {
       state.value = true;
