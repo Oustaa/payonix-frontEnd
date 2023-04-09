@@ -64,12 +64,12 @@ const LogIn = () => {
         let expires = new Date();
         expires.setTime(expires.getTime() + 43200 * 1000);
         setCookie("access_token", accessToken, {
-          path: "/",
           expires,
+          secure: true,
         });
         setCookie("user_name", username, {
-          path: "/",
           expires,
+          secure: true,
         });
 
         // setCookie('refresh_token', response.data.refresh_token, {path: '/', expires})
