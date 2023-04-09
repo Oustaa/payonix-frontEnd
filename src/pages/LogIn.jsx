@@ -49,7 +49,7 @@ const LogIn = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/auth/login",
+        `${process.env.REACT_APP_BASE_URL}/auth/login`,
         {
           u_email: email.value,
           u_password: password.value,
