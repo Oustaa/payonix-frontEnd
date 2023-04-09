@@ -61,7 +61,7 @@ const CreateProduct = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/artisans`,
+        `${process.env.REACT_APP_BASE_URL}/artisans`,
         {
           a_name: inputs.a_name.value,
           a_phone: inputs.a_phone.value,
@@ -110,7 +110,7 @@ const CreateProduct = () => {
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         label="Artisan Address:"
       />
-      <Button bgColor="var(--primary-cyan-800)">Create</Button>
+      <Button bgColor="var(--primary-cyan-800)">Add</Button>
     </StyledForm>
   );
 };

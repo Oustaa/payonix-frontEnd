@@ -82,7 +82,7 @@ const CreateProduct = () => {
       })?.a_name;
 
       const response = await axios.post(
-        `http://localhost:8000/api/rawMaterials/inventory`,
+        `${process.env.REACT_APP_BASE_URL}/rawMaterials/inventory`,
         {
           rms_date_stock: inputs.rms_date_stock.value,
           rmi_raw_mat_stock_id: inputs.rmi_raw_mat_stock_id.value,
@@ -159,7 +159,7 @@ const CreateProduct = () => {
         value={inputs.rmi_estimated_nbr_prod.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
       />
-      <Button bgColor="var(--primary-cyan-800)">Create</Button>
+      <Button bgColor="var(--primary-cyan-800)">Add</Button>
     </StyledForm>
   );
 };

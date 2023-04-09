@@ -6,10 +6,10 @@ import Table from "../components/table/Table";
 import { FlexContainer, StyledTableAlert } from "../styles";
 import { BsDashLg } from "react-icons/bs";
 
-const productsHeaders = {
+const productsCategoriesHeaders = {
   // image: { value: "p_image", type: "image" },
   Name: { value: "p_name" },
-  availability: { value: "p_availibality", default: true, defaultValue: 0 },
+  // availability: { value: "p_availibality", default: true, defaultValue: 0 },
 };
 
 const productsVarietyHeaders = {
@@ -76,17 +76,17 @@ const Products = () => {
     <>
       <FlexContainer>
         <Table
-          width="20%"
-          headers={productsHeaders}
+          width="15%"
+          headers={productsCategoriesHeaders}
           data={productsData}
           loading={productsLoading}
           error={productsError}
-          tableTitle="Products:"
-          alertTitle="Create new title"
+          tableTitle="Categories:"
+          alertTitle="Create new Category"
           componentName="product"
         />
         <Table
-          width="80%"
+          width="85%"
           headers={productsVarietyHeaders}
           data={productsVarietyData}
           loading={productsVarietyLoading}

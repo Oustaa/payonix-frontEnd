@@ -55,7 +55,7 @@ const CreateRawMatBase = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/rawMaterials/types`,
+        `${process.env.REACT_APP_BASE_URL}/rawMaterials/types`,
         {
           rmt_raw_mat_base_type: inputs.rmt_raw_mat_base_type.value,
           rmt_name: inputs.rmt_name.value,
@@ -108,7 +108,7 @@ const CreateRawMatBase = () => {
         value={inputs.rmt_reorder_point.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
       />
-      <Button bgColor="var(--primary-cyan-800)">Create</Button>
+      <Button bgColor="var(--primary-cyan-800)">Add</Button>
     </StyledForm>
   );
 };

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeAlert } from "../features/ui-slice";
 
 import {
-  CreateProduct,
+  CreateProductCategory,
   CreateProductVariety,
   CreateProductInventory,
   CreateRawMatBase,
@@ -27,7 +27,7 @@ import {
 } from "../styles/styled-alert";
 
 const components = {
-  product: { create: <CreateProduct /> },
+  product: { create: <CreateProductCategory /> },
   productsVariety: { create: <CreateProductVariety /> },
   productsInventory: { create: <CreateProductInventory /> },
   rawMaterialBase: { create: <CreateRawMatBase /> },

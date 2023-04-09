@@ -59,7 +59,7 @@ const CreateSupplierCompta = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/suppliers/comptas`,
+        `${process.env.REACT_APP_BASE_URL}/suppliers/comptas`,
         {
           sc_supplier_id: inputs.sc_supplier_id.value,
           sc_amount: inputs.sc_amount.value,
@@ -123,7 +123,7 @@ const CreateSupplierCompta = () => {
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         type="date"
       />
-      <Button bgColor="var(--primary-cyan-800)">Create</Button>
+      <Button bgColor="var(--primary-cyan-800)">Add</Button>
     </StyledForm>
   );
 };

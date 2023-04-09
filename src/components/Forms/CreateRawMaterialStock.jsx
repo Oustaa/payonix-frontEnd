@@ -59,7 +59,7 @@ const CreateProduct = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/rawMaterials/stock`,
+        `${process.env.REACT_APP_BASE_URL}/rawMaterials/stock`,
         {
           rms_date_stock: inputs.rms_date_stock.value,
           rms_raw_mat_id: inputs.rms_raw_mat_id.value,
@@ -123,7 +123,7 @@ const CreateProduct = () => {
         className={() => (!inputs.rms_unit_price.valid ? "invalid" : "")}
       />
 
-      <Button bgColor="var(--primary-cyan-800)">Create</Button>
+      <Button bgColor="var(--primary-cyan-800)">Add</Button>
     </StyledForm>
   );
 };

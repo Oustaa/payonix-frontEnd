@@ -19,7 +19,7 @@ const initialInputValues = {
   },
 };
 
-const CreateProduct = () => {
+const CreateProductCategory = () => {
   const dispatch = useDispatch();
   const [file, setFile] = useState(null);
   const [inputs, setInputs] = useState(initialInputValues);
@@ -48,7 +48,7 @@ const CreateProduct = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/products`,
+        `${process.env.REACT_APP_BASE_URL}/products`,
         formData,
         {
           headers: {
@@ -85,12 +85,12 @@ const CreateProduct = () => {
       ) : null}
       <Input
         name="p_name"
-        label="Products name:"
+        label="Category name:"
         className={() => (!inputs.p_name.valid ? "invalid" : "")}
         value={inputs.p_name.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
       />
-      <Input
+      {/* <Input
         name="p_raw_mat_base_id"
         label="Products Raw Material origin:"
         className={() => (!inputs.p_raw_mat_base_id.valid ? "invalid" : "")}
@@ -100,10 +100,10 @@ const CreateProduct = () => {
       <InputGroup inputBgColor="var(--primary-dark-600)" inline={false}>
         <label htmlFor="p_image">Products Image:</label>
         <input type="file" name="p_image" onChange={handleFileChange} />
-      </InputGroup>
-      <Button bgColor="var(--primary-cyan-800)">Create</Button>
+      </InputGroup> */}
+      <Button bgColor="var(--primary-cyan-800)">Add</Button>
     </StyledForm>
   );
 };
 
-export default CreateProduct;
+export default CreateProductCategory;

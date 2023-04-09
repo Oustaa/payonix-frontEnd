@@ -17,7 +17,7 @@ const headers = {
   "Estemated product's number": {
     changable: true,
     inputType: "number",
-    url: "http://localhost:8000/api/rawMaterials/inventory",
+    url: `${process.env.REACT_APP_BASE_URL}/rawMaterials/inventory`,
     id: (data) => data["rmi_id"],
     value: "rmi_estimated_nbr_prod",
     name: "rmi_estimated_nbr_prod",

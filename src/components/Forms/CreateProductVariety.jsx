@@ -59,7 +59,7 @@ const CreateProductForm = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/products/variety`,
+        `${process.env.REACT_APP_BASE_URL}/variety`,
         formData,
         {
           headers: {
@@ -131,7 +131,7 @@ const CreateProductForm = () => {
         <label htmlFor="p_image">Products Image:</label>
         <input type="file" name="p_image" onChange={handleFileChange} />
       </InputGroup>
-      <Button bgColor="var(--primary-cyan-800)">Create</Button>
+      <Button bgColor="var(--primary-cyan-800)">Add</Button>
     </StyledForm>
   );
 };

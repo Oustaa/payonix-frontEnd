@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8000/api/rawMaterials";
+const BASE_URL = `${process.env.REACT_APP_BASE_URL}/rawMaterials`;
 
 const initialState = {
   base: { loading: false, error: null, data: [] },

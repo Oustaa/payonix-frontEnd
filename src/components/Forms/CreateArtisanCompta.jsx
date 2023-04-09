@@ -60,7 +60,7 @@ const CreateProduct = () => {
     console.log(inputs);
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/artisans/comptas`,
+        `${process.env.REACT_APP_BASE_URL}/comptas`,
         {
           ac_artisan_id: inputs.ac_artisan_id.value,
           ac_amount: inputs.ac_amount.value,
@@ -121,7 +121,7 @@ const CreateProduct = () => {
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         type="date"
       />
-      <Button bgColor="var(--primary-cyan-800)">Create</Button>
+      <Button bgColor="var(--primary-cyan-800)">Add</Button>
     </StyledForm>
   );
 };

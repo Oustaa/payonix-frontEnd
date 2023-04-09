@@ -38,6 +38,7 @@ export const StyledTableHead = styled.div`
   position: sticky;
   top: 0;
   left: 0;
+  z-index: 10;
   background-color: var(--white);
   padding: var(--spacing-sm);
   & > * {
@@ -55,12 +56,13 @@ export const StyledTable = styled.table`
   width: ${({ width }) => (width ? `${width} !important` : "100%")};
   min-width: max-content;
   box-shadow: var(--boxShadow);
+  position: relative;
 `;
 
 export const StyledTableHeader = styled.thead`
   background-color: var(--white);
   position: sticky;
-  top: 55px;
+  top: 48px;
 `;
 
 export const StyledTr = styled.tr`

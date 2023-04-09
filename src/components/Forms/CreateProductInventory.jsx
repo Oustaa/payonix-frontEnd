@@ -83,7 +83,7 @@ const CreateProductForm = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/products/inventory`,
+        `${process.env.REACT_APP_BASE_URL}/inventory`,
         {
           pi_date: inputs.pi_date.value,
           pi_quantity: inputs.pi_quantity.value,
@@ -166,7 +166,7 @@ const CreateProductForm = () => {
         className={() => (!inputs.pi_unit_price.valid ? "invalid" : "")}
       />
 
-      <Button bgColor="var(--primary-cyan-800)">Create</Button>
+      <Button bgColor="var(--primary-cyan-800)">Add</Button>
     </StyledForm>
   );
 };

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8000/api/auth";
+const BASE_URL = `${process.env.REACT_APP_BASE_URL}/auth`;
 
 export const isLoggedIn = createAsyncThunk("auth/isLoogedIn", async () => {
   const response = await axios.get(`${BASE_URL}/isLoggedIn`, {

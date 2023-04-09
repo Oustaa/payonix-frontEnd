@@ -40,7 +40,7 @@ const CreateRawMatBase = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/rawMaterials/bases`,
+        `${process.env.REACT_APP_BASE_URL}/rawMaterials/bases`,
         { rmb_name: inputs.rmb_name.value },
         {
           withCredentials: true,
@@ -70,7 +70,7 @@ const CreateRawMatBase = () => {
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.rmb_name.valid ? "invalid" : "")}
       />
-      <Button bgColor="var(--primary-cyan-800)">Create</Button>
+      <Button bgColor="var(--primary-cyan-800)">Add</Button>
     </StyledForm>
   );
 };

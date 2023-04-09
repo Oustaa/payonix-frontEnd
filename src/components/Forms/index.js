@@ -1,4 +1,4 @@
-export { default as CreateProduct } from "./CreateProduct";
+export { default as CreateProductCategory } from "./CreateProductCategory";
 export { default as CreateProductVariety } from "./CreateProductVariety";
 export { default as CreateProductInventory } from "./CreateProductInventory";
 export { default as CreateRawMatBase } from "./CreateRawMatBase";
