@@ -65,11 +65,9 @@ const LogIn = () => {
         expires.setTime(expires.getTime() + 43200 * 1000);
         setCookie("access_token", accessToken, {
           expires,
-          secure: true,
         });
         setCookie("user_name", username, {
           expires,
-          secure: true,
         });
 
         // setCookie('refresh_token', response.data.refresh_token, {path: '/', expires})

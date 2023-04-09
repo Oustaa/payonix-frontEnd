@@ -12,9 +12,12 @@ const initialState = {
 
 export const getMaterialsBase = createAsyncThunk(
   "get/rawMaterials/bases",
-  async () => {
+  async ({ token }) => {
     const response = await axios.get(`${BASE_URL}/bases`, {
       withCredentials: true,
+      headers: {
+        authorization: token,
+      },
     });
 
     return response.data;
@@ -23,9 +26,12 @@ export const getMaterialsBase = createAsyncThunk(
 
 export const getMaterialsTypes = createAsyncThunk(
   "get/rawMaterials/types",
-  async () => {
+  async ({ token }) => {
     const response = await axios.get(`${BASE_URL}/types`, {
       withCredentials: true,
+      headers: {
+        authorization: token,
+      },
     });
 
     return response.data;
@@ -34,9 +40,12 @@ export const getMaterialsTypes = createAsyncThunk(
 
 export const getMaterialsInventory = createAsyncThunk(
   "get/rawMaterials/inventory",
-  async () => {
+  async ({ token }) => {
     const response = await axios.get(`${BASE_URL}/inventory`, {
       withCredentials: true,
+      headers: {
+        authorization: token,
+      },
     });
 
     return response.data;
@@ -45,9 +54,12 @@ export const getMaterialsInventory = createAsyncThunk(
 
 export const getMaterialsStock = createAsyncThunk(
   "get/rawMaterials/stock",
-  async () => {
+  async ({ token }) => {
     const response = await axios.get(`${BASE_URL}/stock`, {
       withCredentials: true,
+      headers: {
+        authorization: token,
+      },
     });
 
     return response.data;

@@ -23,9 +23,10 @@ const RawMaterialsStock = () => {
   const { data, loading, error } = useSelector(
     (state) => state.materials.stock
   );
+  const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (data.length === 0) dispatch(getMaterialsStock());
+    if (data.length === 0) dispatch(getMaterialsStock({ token }));
   }, []);
 
   return (

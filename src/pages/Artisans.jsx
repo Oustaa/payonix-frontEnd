@@ -44,6 +44,7 @@ const artisansComptaHeaders = {
 const Artisans = () => {
   const dispatch = useDispatch();
   const { artisans, artisans_compta } = useSelector((state) => state.artisans);
+  const { token } = useSelector((state) => state.auth);
 
   const {
     data: artisansData,
@@ -59,10 +60,10 @@ const Artisans = () => {
 
   useEffect(() => {
     if (artisans.data.length === 0) {
-      dispatch(getArtisans());
+      dispatch(getArtisans({ token }));
     }
     if (artisans_compta.data.length === 0) {
-      dispatch(getArtisansCompta());
+      dispatch(getArtisansCompta({ token }));
     }
   }, []);
 

@@ -56,6 +56,8 @@ const productsVarietyHeaders = {
 const Products = () => {
   const dispatch = useDispatch();
   const { products, varity } = useSelector((state) => state.products);
+  const { token } = useSelector((state) => state.auth);
+
   const {
     data: productsData,
     loading: productsLoading,
@@ -68,8 +70,9 @@ const Products = () => {
   } = varity;
 
   useEffect(() => {
-    if (productsData.length === 0) dispatch(getProducts());
-    if (productsVarietyData.length === 0) dispatch(getProductsVariety());
+    if (productsData.length === 0) dispatch(getProducts({ token }));
+    if (productsVarietyData.length === 0)
+      dispatch(getProductsVariety({ token }));
   }, []);
 
   return (

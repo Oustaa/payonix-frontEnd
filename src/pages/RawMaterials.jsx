@@ -51,6 +51,8 @@ const rawMaterialsTypesHeaders = {
 const RawMaterials = () => {
   const dispatch = useDispatch();
   const { base, type } = useSelector((state) => state.materials);
+  const { token } = useSelector((state) => state.auth);
+
   const {
     data: rawMaterialsData,
     loading: rawMaterialsLoading,
@@ -63,8 +65,9 @@ const RawMaterials = () => {
   } = type;
 
   useEffect(() => {
-    if (rawMaterialsData.length === 0) dispatch(getMaterialsBase());
-    if (rawMaterialsTypesData.length === 0) dispatch(getMaterialsTypes());
+    if (rawMaterialsData.length === 0) dispatch(getMaterialsBase({ token }));
+    if (rawMaterialsTypesData.length === 0)
+      dispatch(getMaterialsTypes({ token }));
   }, []);
 
   return (

@@ -8,17 +8,28 @@ const initialState = {
   suppliers_compta: { loading: false, error: null, data: [] },
 };
 
-export const getSuppliers = createAsyncThunk("get/suppliers", async () => {
-  const response = await axios.get(BASE_URL, { withCredentials: true });
+export const getSuppliers = createAsyncThunk(
+  "get/suppliers",
+  async ({ token }) => {
+    const response = await axios.get(BASE_URL, {
+      withCredentials: true,
+      headers: {
+        authorization: token,
+      },
+    });
 
-  return response.data;
-});
+    return response.data;
+  }
+);
 
 export const getSuppliersCompta = createAsyncThunk(
   "get/suppliers/compta",
-  async () => {
+  async ({ token }) => {
     const response = await axios.get(`${BASE_URL}/comptas`, {
       withCredentials: true,
+      headers: {
+        authorization: token,
+      },
     });
 
     return response.data;

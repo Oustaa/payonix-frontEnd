@@ -38,6 +38,7 @@ const Suppliers = () => {
   const { suppliers, suppliers_compta } = useSelector(
     (state) => state.suppliers
   );
+  const { token } = useSelector((state) => state.auth);
 
   const {
     data: suppliersData,
@@ -53,10 +54,10 @@ const Suppliers = () => {
 
   useEffect(() => {
     if (suppliers.data.length === 0) {
-      dispatch(getSuppliers());
+      dispatch(getSuppliers({ token }));
     }
     if (suppliers_compta.data.length === 0) {
-      dispatch(getSuppliersCompta());
+      dispatch(getSuppliersCompta({ token }));
     }
   }, []);
 

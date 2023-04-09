@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 
+import { useSelector, useDispatch } from "react-redux";
+import { isLoggedIn } from "../features/auth-slice";
 import Layout from "./Layout";
-import { useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
 
 const ProtectedRoutes = () => {
-  const isLoggedIn = useSelector((state) => state.auth.value);
+  const dispatch = useDispatch();
+  const [cookies, setCookie] = useCookies();
+  const isAuth = useSelector((state) => state.auth.value);
 
-  return isLoggedIn ? (
+  useEffect(() => {
+    dispatch(isLoggedIn({ token: cookies.access_token }));
+  }, [cookies.access_token]);
+
+  return isAuth ? (
     <>
       <Layout>
         <Outlet />

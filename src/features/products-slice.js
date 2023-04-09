@@ -8,19 +8,28 @@ const initialState = {
   inventory: { loading: false, error: null, data: [] },
   varity: { loading: false, error: null, data: [] },
 };
-export const getProducts = createAsyncThunk("get/products", async () => {
-  const response = await axios.get(`${BASE_URL}`, {
-    withCredentials: true,
-  });
+export const getProducts = createAsyncThunk(
+  "get/products",
+  async ({ token }) => {
+    const response = await axios.get(`${BASE_URL}`, {
+      withCredentials: true,
+      headers: {
+        authorization: token,
+      },
+    });
 
-  return response.data;
-});
+    return response.data;
+  }
+);
 
 export const getProductsInventory = createAsyncThunk(
   "get/products_inventory",
-  async () => {
+  async ({ token }) => {
     const response = await axios.get(`${BASE_URL}/inventory`, {
       withCredentials: true,
+      headers: {
+        authorization: token,
+      },
     });
 
     return response.data;
@@ -29,9 +38,12 @@ export const getProductsInventory = createAsyncThunk(
 
 export const getProductsVariety = createAsyncThunk(
   "get/products_variety",
-  async () => {
+  async ({ token }) => {
     const response = await axios.get(`${BASE_URL}/variety`, {
       withCredentials: true,
+      headers: {
+        authorization: token,
+      },
     });
 
     return response.data;

@@ -3,13 +3,19 @@ import axios from "axios";
 
 const BASE_URL = `${process.env.REACT_APP_BASE_URL}/auth`;
 
-export const isLoggedIn = createAsyncThunk("auth/isLoogedIn", async () => {
-  const response = await axios.get(`${BASE_URL}/isLoggedIn`, {
-    withCredentials: true,
-  });
+export const isLoggedIn = createAsyncThunk(
+  "auth/isLoogedIn",
+  async ({ token }) => {
+    const response = await axios.get(`${BASE_URL}/isLoggedIn`, {
+      withCredentials: true,
+      headers: {
+        authorization: token,
+      },
+    });
 
-  return response.data;
-});
+    return response.data;
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -18,8 +24,8 @@ const authSlice = createSlice({
     logIn: (state, { payload: { accessToken, username } }) => {
       state.value = true;
       state.username = username;
+      state.token = accessToken;
     },
-
     logOut: (state) => {
       state.value = false;
       state.username = "";

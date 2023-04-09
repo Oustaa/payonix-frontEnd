@@ -8,17 +8,28 @@ const initialState = {
   artisans_compta: { loading: false, error: null, data: [] },
 };
 
-export const getArtisans = createAsyncThunk("get/artisans", async () => {
-  const response = await axios.get(BASE_URL, { withCredentials: true });
+export const getArtisans = createAsyncThunk(
+  "get/artisans",
+  async ({ token }) => {
+    const response = await axios.get(BASE_URL, {
+      withCredentials: true,
+      headers: {
+        authorization: token,
+      },
+    });
 
-  return response.data;
-});
+    return response.data;
+  }
+);
 
 export const getArtisansCompta = createAsyncThunk(
   "get/artisans/compta",
-  async () => {
+  async ({ token }) => {
     const response = await axios.get(`${BASE_URL}/comptas`, {
       withCredentials: true,
+      headers: {
+        authorization: token,
+      },
     });
 
     return response.data;

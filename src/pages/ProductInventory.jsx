@@ -21,9 +21,10 @@ const ProductInventory = () => {
   const { data, loading, error } = useSelector(
     (state) => state.products.inventory
   );
+  const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (data.length === 0) dispatch(getProductsInventory());
+    if (data.length === 0) dispatch(getProductsInventory({ token }));
   }, []);
 
   return (
