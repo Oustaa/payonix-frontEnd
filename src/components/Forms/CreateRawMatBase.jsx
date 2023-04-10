@@ -35,6 +35,16 @@ const CreateRawMatBase = () => {
     }
   }, [error]);
 
+  useEffect(() => {
+    return setInputs({
+      rmb_name: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+    });
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 

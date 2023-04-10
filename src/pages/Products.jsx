@@ -8,15 +8,20 @@ import { BsDashLg } from "react-icons/bs";
 
 const productsCategoriesHeaders = {
   // image: { value: "p_image", type: "image" },
-  Name: { value: "p_name" },
+  Name: { value: "pc_name" },
   // availability: { value: "p_availibality", default: true, defaultValue: 0 },
 };
 
-const productsVarietyHeaders = {
-  image: { value: "pv_image", type: "image" },
-  Name: { value: "pv_name" },
+const productsHeaders = {
+  image: { value: "p_image", type: "image" },
+  Name: { value: "p_name" },
   Description: {
-    value: "pv_description",
+    value: "p_description",
+    default: true,
+    defaultValue: <BsDashLg />,
+  },
+  Category: {
+    value: "p_category_name",
     default: true,
     defaultValue: <BsDashLg />,
   },
@@ -24,18 +29,18 @@ const productsVarietyHeaders = {
     checked: true,
     check: (data) => {
       if (
-        data["pv_availibility"] < data["pv_reorder_point"] &&
-        !Boolean(data["pv_command_lanched"])
+        data["p_availibility"] < data["p_reorder_point"] &&
+        !Boolean(data["p_command_lanched"])
       ) {
-        return <StyledTableAlert>{data["pv_availibility"]}</StyledTableAlert>;
+        return <StyledTableAlert>{data["p_availibility"]}</StyledTableAlert>;
       }
-      return data["pv_availibility"];
+      return data["p_availibility"];
     },
   },
   "Reorder Point": {
-    value: "pv_reorder_point",
+    value: "p_reorder_point",
     check: (data) => {
-      return data["pv_description"];
+      return data["p_description"];
     },
   },
 
@@ -43,8 +48,8 @@ const productsVarietyHeaders = {
     checked: true,
     check: (data) => {
       if (
-        data["pv_availibility"] < data["pv_reorder_point"] &&
-        !Boolean(data["pv_command_lanched"])
+        data["p_availibility"] < data["p_reorder_point"] &&
+        !Boolean(data["p_command_lanched"])
       ) {
         return <StyledTableAlert>Not yet!</StyledTableAlert>;
       }
@@ -90,13 +95,13 @@ const Products = () => {
         />
         <Table
           width="85%"
-          headers={productsVarietyHeaders}
+          headers={productsHeaders}
           data={productsVarietyData}
           loading={productsVarietyLoading}
           error={productsVarietyError}
-          tableTitle="Product Varieties:"
+          tableTitle="Products:"
           componentName="productsVariety"
-          alertTitle="Create new product variety"
+          alertTitle="Create new product"
           filter={true}
         />
       </FlexContainer>

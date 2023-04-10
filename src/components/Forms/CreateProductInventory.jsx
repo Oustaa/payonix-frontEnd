@@ -34,7 +34,7 @@ const initialInputValues = {
     valid: true,
     focused: false,
   },
-  pi_prod_variant_id: {
+  pi_prod_id: {
     value: "",
     valid: true,
     focused: false,
@@ -51,6 +51,7 @@ const CreateProductForm = () => {
   const [inputs, setInputs] = useState(initialInputValues);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
+  const { token } = useSelector((state) => state.auth);
   const { data: dataVariety, loading: loadingVariety } = useSelector(
     (state) => state.products.varity
   );
@@ -59,12 +60,12 @@ const CreateProductForm = () => {
   );
   const { data: dataMaterialInventory, loading: loadingMaterialInventory } =
     useSelector((state) => state.materials.inventory);
+
   useEffect(() => {
     if (error?.response?.status === 400) {
       const missingFields = error.response.data?.missing_field || [];
       const updatedInputs = { ...inputs };
       for (const missingField of missingFields) {
-        console.log(missingField);
         if (Boolean(missingField) && updatedInputs[missingField]) {
           updatedInputs[missingField].valid = false;
         }
@@ -74,8 +75,46 @@ const CreateProductForm = () => {
   }, [error, message]);
 
   useEffect(() => {
-    if (dataVariety.length === 0) dispatch(getProductsVariety());
-    if (dataArtisan.length === 0) dispatch(getArtisans());
+    console.log(dataArtisan.length === 0);
+    if (dataVariety.length === 0) dispatch(getProductsVariety({ token }));
+    if (dataArtisan.length === 0) dispatch(getArtisans({ token }));
+    if (dataMaterialInventory.length === 0)
+      dispatch(getMaterialsInventory({ token }));
+
+    return () => {
+      setInputs({
+        pi_date: {
+          value: currentDate,
+          valid: true,
+          focused: false,
+        },
+        pi_quantity: {
+          value: "",
+          valid: true,
+          focused: false,
+        },
+        pi_unit_price: {
+          value: "",
+          valid: true,
+          focused: false,
+        },
+        pi_artisan_id: {
+          value: "",
+          valid: true,
+          focused: false,
+        },
+        pi_prod_id: {
+          value: "",
+          valid: true,
+          focused: false,
+        },
+        pi_raw_mat_inv_id: {
+          value: "",
+          valid: true,
+          focused: false,
+        },
+      });
+    };
   }, []);
 
   const handleSubmit = async (e) => {
@@ -83,13 +122,13 @@ const CreateProductForm = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/inventory`,
+        `${process.env.REACT_APP_BASE_URL}/products/inventory`,
         {
           pi_date: inputs.pi_date.value,
           pi_quantity: inputs.pi_quantity.value,
           pi_unit_price: inputs.pi_unit_price.value,
           pi_artisan_id: inputs.pi_artisan_id.value,
-          pi_prod_variant_id: inputs.pi_prod_variant_id.value,
+          pi_prod_id: inputs.pi_prod_id.value,
           pi_raw_mat_inv_id: inputs.pi_raw_mat_inv_id.value,
         },
         {
@@ -134,12 +173,12 @@ const CreateProductForm = () => {
       <Input
         type="select"
         data={dataVariety}
-        holders={["pv_id", "pv_name"]}
-        name="pi_prod_variant_id"
-        label="Product variety:"
-        value={inputs.pi_prod_variant_id.value}
+        holders={["p_id", "p_name"]}
+        name="pi_prod_id"
+        label="Product:"
+        value={inputs.pi_prod_id.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
-        className={() => (!inputs.pi_prod_variant_id.valid ? "invalid" : "")}
+        className={() => (!inputs.pi_prod_id.valid ? "invalid" : "")}
       />
       <Input
         type="select"

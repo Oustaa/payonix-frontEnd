@@ -57,6 +57,34 @@ const CreateProduct = () => {
   useEffect(() => {
     if (artisansData.length === 0) dispatch(getArtisans());
     if (materialStockData.length === 0) dispatch(getMaterialsStock());
+
+    return setInputs({
+      rms_date_stock: {
+        value: CURRENT_DATE,
+        valid: true,
+        focused: false,
+      },
+      rmi_raw_mat_stock_id: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      rmi_artisan_id: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      rmi_quantity: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      rmi_estimated_nbr_prod: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+    });
   }, []);
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addArtisan } from "../../features/artisan-slice";
 import { StyledForm, Button } from "../../styles";
 import changeHandler from "../../utils/inputChangeHndler";
@@ -27,9 +27,10 @@ const initialInputValues = {
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
-
+  const { token } = useSelector((state) => state.auth);
   const [inputs, setInputs] = useState(initialInputValues);
 
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
@@ -38,7 +39,23 @@ const CreateProduct = () => {
     return () => {
       console.log("form exited");
       setError(null);
-      setInputs((prev) => initialInputValues);
+      setInputs({
+        a_name: {
+          value: "",
+          valid: true,
+          focused: false,
+        },
+        a_phone: {
+          value: "",
+          valid: true,
+          focused: false,
+        },
+        a_address: {
+          value: "",
+          valid: true,
+          focused: false,
+        },
+      });
     };
   }, []);
 
@@ -60,6 +77,7 @@ const CreateProduct = () => {
     e.preventDefault();
 
     try {
+      setLoading(true);
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/artisans`,
         {
@@ -69,6 +87,9 @@ const CreateProduct = () => {
         },
         {
           withCredentials: true,
+          headers: {
+            authorization: token,
+          },
         }
       );
 
@@ -81,6 +102,8 @@ const CreateProduct = () => {
     } catch (err) {
       setError(err);
       setMessage(err?.response?.data?.error_message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -110,7 +133,9 @@ const CreateProduct = () => {
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         label="Artisan Address:"
       />
-      <Button bgColor="var(--primary-cyan-800)">Add</Button>
+      <Button bgColor="var(--primary-cyan-800)">
+        {loading ? "loading" : "Add"}
+      </Button>
     </StyledForm>
   );
 };

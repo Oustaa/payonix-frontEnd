@@ -52,6 +52,29 @@ const CreateProduct = () => {
 
   useEffect(() => {
     if (data.length === 0) dispatch(getMaterialsTypes());
+
+    return setInputs({
+      rms_date_stock: {
+        value: CURRENT_DATE,
+        valid: true,
+        focused: false,
+      },
+      rms_raw_mat_id: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      rms_quantity: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      rms_unit_price: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+    });
   }, []);
 
   const handleSubmit = async (e) => {

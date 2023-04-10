@@ -24,7 +24,7 @@ const App = () => {
   return (
     <>
       {/* <img
-        src="http://localhost:8000/static/images/1679658285851-20210317_212114.jpg"
+        src="https://localhost:8000/images/1681124757326-20210317_212114.jpg"
         alt="sd"
       /> */}
       {alertOpen ? <Alert /> : null}

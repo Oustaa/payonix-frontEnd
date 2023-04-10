@@ -4,14 +4,16 @@ import axios from "axios";
 const BASE_URL = `${process.env.REACT_APP_BASE_URL}/products`;
 
 const initialState = {
+  // shouled be renamed to category
   products: { loading: false, error: null, data: [] },
   inventory: { loading: false, error: null, data: [] },
+  // shouled be renamed to products
   varity: { loading: false, error: null, data: [] },
 };
 export const getProducts = createAsyncThunk(
   "get/products",
   async ({ token }) => {
-    const response = await axios.get(`${BASE_URL}`, {
+    const response = await axios.get(`${BASE_URL}/category`, {
       withCredentials: true,
       headers: {
         authorization: token,
@@ -39,7 +41,7 @@ export const getProductsInventory = createAsyncThunk(
 export const getProductsVariety = createAsyncThunk(
   "get/products_variety",
   async ({ token }) => {
-    const response = await axios.get(`${BASE_URL}/variety`, {
+    const response = await axios.get(`${BASE_URL}`, {
       withCredentials: true,
       headers: {
         authorization: token,
@@ -58,12 +60,31 @@ const productsSlice = createSlice({
       state.products.data.unshift(payload);
     },
     addProductInventory: (state, { payload }) => {
-      state.inventory.data.unshift(payload);
+      const product = state.varity.data.find(
+        (product) => product.p_id === payload.pi_prod_id
+      );
+      const catigory = state.products.data.find((category) => {
+        console.log(category.pc_id === product.p_category);
+        return category.pc_id === product.p_category;
+      })?.pc_name;
+
+      const name = product?.p_name;
+      const p_category_name = catigory?.pc_name;
+
+      state.inventory.data.unshift({
+        ...payload,
+        name,
+        p_category_name,
+      });
     },
     addProductVariety: (state, { payload }) => {
-      state.varity.data.unshift(payload);
+      const p_category = state.products.data.find(
+        (category) => (category.pc_id = payload.p_category)
+      )?.pc_name;
+
+      state.varity.data.unshift({ ...payload, p_category_name: p_category });
     },
-    resetProducts: (state, { payload }) => {
+    resetProducts: (state) => {
       state.products = { loading: false, error: null, data: [] };
       state.inventory = { loading: false, error: null, data: [] };
       state.varity = { loading: false, error: null, data: [] };

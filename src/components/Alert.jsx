@@ -5,7 +5,7 @@ import { closeAlert } from "../features/ui-slice";
 
 import {
   CreateProductCategory,
-  CreateProductVariety,
+  CreateProduct,
   CreateProductInventory,
   CreateRawMatBase,
   CreateRawMatType,
@@ -28,7 +28,7 @@ import {
 
 const components = {
   product: { create: <CreateProductCategory /> },
-  productsVariety: { create: <CreateProductVariety /> },
+  productsVariety: { create: <CreateProduct /> },
   productsInventory: { create: <CreateProductInventory /> },
   rawMaterialBase: { create: <CreateRawMatBase /> },
   rawMaterialsTypes: { create: <CreateRawMatType /> },

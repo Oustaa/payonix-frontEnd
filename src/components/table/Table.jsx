@@ -59,7 +59,7 @@ const Table = ({
             padding="var(--spacing-xsm)"
             onClick={openCreateAlertHandler}
           >
-            Add new
+            Add
           </Button>
         </div>
         {filter ? (

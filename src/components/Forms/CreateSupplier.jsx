@@ -47,6 +47,26 @@ const CreateProduct = () => {
     }
   }, [error, message]);
 
+  useEffect(() => {
+    return setInputs({
+      s_name: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      s_phone: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      s_address: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+    });
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 

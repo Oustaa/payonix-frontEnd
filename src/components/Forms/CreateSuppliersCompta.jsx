@@ -55,6 +55,31 @@ const CreateSupplierCompta = () => {
     }
   }, [error, message]);
 
+  useEffect(() => {
+    return setInputs({
+      sc_date: {
+        value: CURRENT_DATE,
+        valid: true,
+        focused: false,
+      },
+      sc_amount: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      sc_note: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      sc_supplier_id: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+    });
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

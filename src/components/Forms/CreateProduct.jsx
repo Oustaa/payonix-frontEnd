@@ -7,22 +7,22 @@ import { InputGroup, StyledForm, Button } from "../../styles";
 import changeHandler from "../../utils/inputChangeHndler";
 
 const initialInputValues = {
-  pv_name: {
+  p_name: {
     value: "",
     valid: true,
     focused: false,
   },
-  pv_description: {
+  p_description: {
     value: "",
     valid: true,
     focused: false,
   },
-  pv_reorder_point: {
+  p_reorder_point: {
     value: "",
     valid: true,
     focused: false,
   },
-  pv_product_id: {
+  p_category: {
     value: "",
     valid: true,
     focused: false,
@@ -52,6 +52,31 @@ const CreateProductForm = () => {
     }
   }, [error]);
 
+  useEffect(() => {
+    return setInputs({
+      p_name: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      p_description: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      p_reorder_point: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      p_category: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+    });
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -59,17 +84,17 @@ const CreateProductForm = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/variety`,
+        `${process.env.REACT_APP_BASE_URL}/products`,
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
           params: {
-            pv_name: inputs.pv_name.value,
-            pv_description: inputs.pv_description.value,
-            pv_reorder_point: inputs.pv_reorder_point.value,
-            pv_product_id: inputs.pv_product_id.value,
+            p_name: inputs.p_name.value,
+            p_description: inputs.p_description.value,
+            p_reorder_point: inputs.p_reorder_point.value,
+            p_category: inputs.p_category.value,
           },
           withCredentials: true,
         }
@@ -81,6 +106,7 @@ const CreateProductForm = () => {
         dispatch(addProductVariety(response.data.item));
       }
     } catch (err) {
+      console.log(err);
       setError(err);
       setMessage(err?.response?.data?.error_message);
     }
@@ -96,35 +122,35 @@ const CreateProductForm = () => {
         <p className={`message ${error ? "error" : ""}`}>{message}</p>
       ) : null}
       <Input
-        label="Products Variety Name:"
-        name="pv_name"
-        value={inputs.pv_name.value}
+        label="Product Name:"
+        name="p_name"
+        value={inputs.p_name.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
-        className={() => (!inputs.pv_name.valid ? "invalid" : "")}
+        className={() => (!inputs.p_name.valid ? "invalid" : "")}
       />
       <Input
-        label="Products origin:"
-        name="pv_product_id"
-        value={inputs.pv_product_id.value}
+        label="Product Category:"
+        name="p_category"
+        value={inputs.p_category.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
-        className={() => (!inputs.pv_product_id.valid ? "invalid" : "")}
+        className={() => (!inputs.p_category.valid ? "invalid" : "")}
         type="select"
         data={productsData}
-        holders={["p_id", "p_name"]}
+        holders={["pc_id", "pc_name"]}
       />
       <Input
-        label="Product Variety description:"
-        name="pv_description"
-        value={inputs.pv_description.value}
+        label="Product description:"
+        name="p_description"
+        value={inputs.p_description.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
-        className={() => (!inputs.pv_description.valid ? "invalid" : "")}
+        className={() => (!inputs.p_description.valid ? "invalid" : "")}
       />
       <Input
         label="Reorder point:"
-        name="pv_reorder_point"
-        value={inputs.pv_reorder_point.value}
+        name="p_reorder_point"
+        value={inputs.p_reorder_point.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
-        className={() => (!inputs.pv_reorder_point.valid ? "invalid" : "")}
+        className={() => (!inputs.p_reorder_point.valid ? "invalid" : "")}
       />
 
       <InputGroup>

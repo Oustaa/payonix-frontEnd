@@ -85,6 +85,31 @@ const CreateProduct = () => {
     }
   };
 
+  useEffect(() => {
+    return setInputs({
+      ac_date: {
+        value: CURRENT_DATE,
+        valid: true,
+        focused: false,
+      },
+      ac_amount: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      ac_note: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      ac_artisan_id: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+    });
+  }, []);
+
   return (
     <StyledForm onSubmit={handleSubmit}>
       {message ? (

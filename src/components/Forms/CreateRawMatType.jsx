@@ -48,6 +48,23 @@ const CreateRawMatBase = () => {
 
   useEffect(() => {
     if (data.length === 0) dispatch(getMaterialsBase());
+    return setInputs({
+      rmt_raw_mat_base_type: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      rmt_name: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      rmt_reorder_point: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+    });
   }, []);
 
   const handleSubmit = async (e) => {
