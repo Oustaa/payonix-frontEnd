@@ -64,7 +64,7 @@ const CreateProduct = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/comptas`,
+        `${process.env.REACT_APP_BASE_URL}/artisans/comptas`,
         {
           ac_artisan_id: inputs.ac_artisan_id.value,
           ac_amount: inputs.ac_amount.value,

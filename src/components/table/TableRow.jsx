@@ -1,5 +1,6 @@
 import React from "react";
-
+import { useDispatch } from "react-redux";
+import { openRightClickAlert } from "../../features/ui-slice";
 import { StyledTr, StyledTd } from "../../styles/styled-table";
 import DisplayebaleInput from "../ChangableValue";
 import styled from "styled-components";
@@ -10,7 +11,8 @@ const StyledImage = styled.img`
   object-fit: ;
 `;
 
-const TableRow = ({ data, fields }) => {
+const TableRow = ({ data, fields, id }) => {
+  const dispatch = useDispatch();
   const src =
     "https://content.la-z-boy.com/Images/product/category/tables/large/090_1065.jpg";
   // const src = "http://localhost:8000/images/1679658285851-20210317_212114.jpg";
@@ -55,7 +57,17 @@ const TableRow = ({ data, fields }) => {
 
   return (
     <>
-      <StyledTr>{displayedValues}</StyledTr>
+      <StyledTr
+        onContextMenu={function (e) {
+          e.preventDefault();
+          const x = e.clientX;
+          const y = e.clientY;
+          dispatch(openRightClickAlert({ x, y }));
+          return false;
+        }}
+      >
+        {displayedValues}
+      </StyledTr>
     </>
   );
 };

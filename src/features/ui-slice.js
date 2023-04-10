@@ -3,10 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const authSlice = createSlice({
   name: "ui",
   initialState: {
+    // side nave
     sidNavOpen: true,
+    // alert
     alertOpen: false,
     alertFor: null,
     alertTitle: "",
+    // right click menu
+    rightClickMenuOpen: false,
+    cordinates: { x: null, y: null },
   },
   reducers: {
     // side nav
@@ -26,10 +31,24 @@ const authSlice = createSlice({
       state.alertOpen = false;
       state.alertFor = null;
     },
+    // right click alert
+    openRightClickAlert: (state, { payload }) => {
+      state.rightClickMenuOpen = true;
+      state.cordinates = payload;
+    },
+    closeRightClickAlert: (state) => {
+      state.rightClickMenuOpen = false;
+    },
   },
 });
 
-export const { openSidebar, closeSidebar, openAlert, closeAlert } =
-  authSlice.actions;
+export const {
+  openSidebar,
+  closeSidebar,
+  openAlert,
+  closeAlert,
+  openRightClickAlert,
+  closeRightClickAlert,
+} = authSlice.actions;
 
 export default authSlice.reducer;

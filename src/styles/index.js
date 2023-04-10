@@ -108,3 +108,34 @@ export const StyledForm = styled.form`
     }
   }
 `;
+
+export const StyledMenuAlert = styled.div`
+  width: 200px;
+  background-color: var(--white);
+  box-shadow: var(--boxShadow);
+  border-radius: var(--radius);
+  border: 1px solid var(--primary-dark-300);
+
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  left: ${({ x }) => `${x}px`};
+  top: ${({ y }) => `${y}px`};
+  z-index: 10000;
+
+  & button {
+    text-align: left !important;
+  }
+
+  & button + button {
+    border-top: 1px solid var(--primary-dark-300);
+  }
+`;
+
+export const StyledBackDrop = styled.div`
+  position: absolute;
+  inset: 0 0 0 0;
+  background-color: ${({ dark }) => (dark ? "#3a3a3a4a" : "")};
+  z-index: 300;
+`;

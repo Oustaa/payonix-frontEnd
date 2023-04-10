@@ -1,18 +1,12 @@
 import styled from "styled-components";
 
-export const StyledAlertContainer = styled.div`
-  position: absolute;
-  inset: 0 0 0 0;
-  background-color: #3a3a3a4a;
-  z-index: 1000;
-  color: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow-y: auto;
-`;
-
 export const StyledAlert = styled.div`
+  color: #fff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 300;
   width: 500px;
   max-width: calc(100% - var(--spacing-lg));
   height: max-content;

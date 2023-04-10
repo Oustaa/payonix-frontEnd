@@ -20,11 +20,7 @@ import {
 import { BsX } from "react-icons/bs";
 
 import { Button } from "../styles";
-import {
-  StyledAlertContainer,
-  StyledAlert,
-  StyledAlertHeader,
-} from "../styles/styled-alert";
+import { StyledAlert, StyledAlertHeader } from "../styles/styled-alert";
 
 const components = {
   product: { create: <CreateProductCategory /> },
@@ -45,17 +41,15 @@ const Alert = () => {
   const { alertFor, alertTitle } = useSelector((state) => state.ui);
 
   return (
-    <StyledAlertContainer>
-      <StyledAlert>
-        <StyledAlertHeader>
-          <h4>{alertTitle}</h4>
-          <Button>
-            <BsX onClick={() => dispatch(closeAlert())} />
-          </Button>
-        </StyledAlertHeader>
-        {components[alertFor?.name][alertFor?.type]}
-      </StyledAlert>
-    </StyledAlertContainer>
+    <StyledAlert>
+      <StyledAlertHeader>
+        <h4>{alertTitle}</h4>
+        <Button>
+          <BsX onClick={() => dispatch(closeAlert())} />
+        </Button>
+      </StyledAlertHeader>
+      {components[alertFor?.name][alertFor?.type]}
+    </StyledAlert>
   );
 };
 
