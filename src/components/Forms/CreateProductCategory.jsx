@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "../../features/products-slice";
 import { StyledForm, Button } from "../../styles";
 import Input from "../Input";
@@ -16,6 +16,9 @@ const initialInputValues = {
 
 const CreateProductCategory = () => {
   const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.auth);
+
+  const [loading, setLoading] = useState(false);
   const [file, setFile] = useState(null);
   const [inputs, setInputs] = useState(initialInputValues);
 
@@ -51,12 +54,14 @@ const CreateProductCategory = () => {
     formData.append("file", file);
 
     try {
+      setLoading(true);
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/products/category`,
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            authorization: token,
           },
           params: {
             pc_name: inputs.pc_name.value,
@@ -70,11 +75,11 @@ const CreateProductCategory = () => {
         setMessage(response?.data?.message);
         setInputs(initialInputValues);
       }
-      console.log(response);
     } catch (err) {
-      console.log(err);
       setError(err);
       setMessage(err?.response?.data?.error_message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -94,7 +99,9 @@ const CreateProductCategory = () => {
         value={inputs.pc_name.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
       />
-      <Button bgColor="var(--primary-cyan-800)">Add</Button>
+      <Button bgColor="var(--primary-cyan-800)">
+        {loading ? "Adding" : "Add"}
+      </Button>
     </StyledForm>
   );
 };

@@ -64,7 +64,6 @@ const productsSlice = createSlice({
         (product) => product.p_id === payload.pi_prod_id
       );
       const catigory = state.products.data.find((category) => {
-        console.log(category.pc_id === product.p_category);
         return category.pc_id === product.p_category;
       })?.pc_name;
 

@@ -33,12 +33,16 @@ const initialInputValues = {
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
+
   const { artisans } = useSelector((state) => state.artisans);
+  const { token } = useSelector((state) => state.auth);
+
   const memoizedArtisans = useMemo(() => artisans, []);
   const { data: artisansData } = memoizedArtisans;
 
   const [inputs, setInputs] = useState(initialInputValues);
 
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
@@ -57,7 +61,7 @@ const CreateProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
+    setLoading(true);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/comptas`,
@@ -69,6 +73,9 @@ const CreateProduct = () => {
         },
         {
           withCredentials: true,
+          headers: {
+            authorization: token,
+          },
         }
       );
 
@@ -82,6 +89,8 @@ const CreateProduct = () => {
     } catch (err) {
       setError(err);
       setMessage(err?.response?.data?.error_message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -146,7 +155,9 @@ const CreateProduct = () => {
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         type="date"
       />
-      <Button bgColor="var(--primary-cyan-800)">Add</Button>
+      <Button bgColor="var(--primary-cyan-800)">
+        {loading ? "adding" : "add"}
+      </Button>
     </StyledForm>
   );
 };

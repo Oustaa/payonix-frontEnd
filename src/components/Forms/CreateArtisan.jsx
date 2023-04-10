@@ -29,15 +29,12 @@ const CreateProduct = () => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
   const [inputs, setInputs] = useState(initialInputValues);
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    console.log("form entred");
     return () => {
-      console.log("form exited");
       setError(null);
       setInputs({
         a_name: {
@@ -64,7 +61,6 @@ const CreateProduct = () => {
       const missingFields = error.response.data?.missing_field || [];
       const updatedInputs = { ...inputs };
       for (const missingField of missingFields) {
-        console.log(missingField);
         if (Boolean(missingField) && updatedInputs[missingField]) {
           updatedInputs[missingField].valid = false;
         }
@@ -134,7 +130,7 @@ const CreateProduct = () => {
         label="Artisan Address:"
       />
       <Button bgColor="var(--primary-cyan-800)">
-        {loading ? "loading" : "Add"}
+        {loading ? "Adding" : "Add"}
       </Button>
     </StyledForm>
   );

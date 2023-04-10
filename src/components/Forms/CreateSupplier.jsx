@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addSupplier } from "../../features/supplier-slice";
 import { StyledForm, Button } from "../../styles";
 import changeHandler from "../../utils/inputChangeHndler";
@@ -27,9 +27,9 @@ const initialInputValues = {
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
-
   const [inputs, setInputs] = useState(initialInputValues);
-
+  const { token } = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
@@ -38,7 +38,6 @@ const CreateProduct = () => {
       const missingFields = error.response.data?.missing_field || [];
       const updatedInputs = { ...inputs };
       for (const missingField of missingFields) {
-        console.log(missingField);
         if (Boolean(missingField) && updatedInputs[missingField]) {
           updatedInputs[missingField].valid = false;
         }
@@ -69,7 +68,7 @@ const CreateProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/suppliers`,
@@ -80,6 +79,9 @@ const CreateProduct = () => {
         },
         {
           withCredentials: true,
+          headers: {
+            authorization: token,
+          },
         }
       );
 
@@ -94,6 +96,8 @@ const CreateProduct = () => {
     } catch (err) {
       setError(err);
       setMessage(err?.response?.data?.error_message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -123,7 +127,9 @@ const CreateProduct = () => {
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         label="Supplier Address:"
       />
-      <Button bgColor="var(--primary-cyan-800)">Add</Button>
+      <Button bgColor="var(--primary-cyan-800)">
+        {loading ? "Adding" : "Add"}
+      </Button>
     </StyledForm>
   );
 };

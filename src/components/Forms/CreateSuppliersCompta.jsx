@@ -36,9 +36,9 @@ const CreateSupplierCompta = () => {
   const { suppliers } = useSelector((state) => state.suppliers);
   const memoizedSuppliers = useMemo(() => suppliers, []);
   const { data: artisansData } = memoizedSuppliers;
-
+  const { token } = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
   const [inputs, setInputs] = useState(initialInputValues);
-
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
@@ -82,6 +82,7 @@ const CreateSupplierCompta = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/suppliers/comptas`,
@@ -93,9 +94,11 @@ const CreateSupplierCompta = () => {
         },
         {
           withCredentials: true,
+          headers: {
+            authorization: token,
+          },
         }
       );
-      console.log(response);
       if (response.status === 201) {
         setError(null);
         setMessage("Artisans compta was added successfully");
@@ -109,6 +112,8 @@ const CreateSupplierCompta = () => {
     } catch (err) {
       setError(err);
       setMessage(err?.response?.data?.error_message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -148,7 +153,9 @@ const CreateSupplierCompta = () => {
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         type="date"
       />
-      <Button bgColor="var(--primary-cyan-800)">Add</Button>
+      <Button bgColor="var(--primary-cyan-800)">
+        {loading ? "Adding" : "Add"}
+      </Button>
     </StyledForm>
   );
 };

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addBase } from "../../features/rawMaterial-slice";
 import { StyledForm, Button } from "../../styles";
 import Input from "../Input";
@@ -17,7 +17,8 @@ const initialInputValues = {
 const CreateRawMatBase = () => {
   const dispatch = useDispatch();
   const [inputs, setInputs] = useState(initialInputValues);
-
+  const { token } = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
@@ -26,7 +27,6 @@ const CreateRawMatBase = () => {
       const missingFields = error.response.data?.missing_field || [];
       const updatedInputs = { ...inputs };
       for (const missingField of missingFields) {
-        console.log(missingField);
         if (Boolean(missingField) && updatedInputs[missingField]) {
           updatedInputs[missingField].valid = false;
         }
@@ -47,6 +47,7 @@ const CreateRawMatBase = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await axios.post(
@@ -54,6 +55,9 @@ const CreateRawMatBase = () => {
         { rmb_name: inputs.rmb_name.value },
         {
           withCredentials: true,
+          headers: {
+            authorization: token,
+          },
         }
       );
       if (response.status === 201) {
@@ -64,6 +68,8 @@ const CreateRawMatBase = () => {
     } catch (err) {
       setError(err);
       setMessage(err?.response?.data?.error_message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,7 +86,9 @@ const CreateRawMatBase = () => {
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.rmb_name.valid ? "invalid" : "")}
       />
-      <Button bgColor="var(--primary-cyan-800)">Add</Button>
+      <Button bgColor="var(--primary-cyan-800)">
+        {loading ? "Adding" : "Add"}
+      </Button>
     </StyledForm>
   );
 };

@@ -51,6 +51,8 @@ const CreateProductForm = () => {
   const [inputs, setInputs] = useState(initialInputValues);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
+
+  const [loading, setLoading] = useState(false);
   const { token } = useSelector((state) => state.auth);
   const { data: dataVariety, loading: loadingVariety } = useSelector(
     (state) => state.products.varity
@@ -75,7 +77,6 @@ const CreateProductForm = () => {
   }, [error, message]);
 
   useEffect(() => {
-    console.log(dataArtisan.length === 0);
     if (dataVariety.length === 0) dispatch(getProductsVariety({ token }));
     if (dataArtisan.length === 0) dispatch(getArtisans({ token }));
     if (dataMaterialInventory.length === 0)
@@ -119,7 +120,7 @@ const CreateProductForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/products/inventory`,
@@ -133,6 +134,9 @@ const CreateProductForm = () => {
         },
         {
           withCredentials: true,
+          headers: {
+            authorization: token,
+          },
         }
       );
 
@@ -142,9 +146,10 @@ const CreateProductForm = () => {
         setInputs(initialInputValues);
       }
     } catch (err) {
-      console.log(err);
       setError(err);
       setMessage(err?.response?.data?.error_message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -205,7 +210,9 @@ const CreateProductForm = () => {
         className={() => (!inputs.pi_unit_price.valid ? "invalid" : "")}
       />
 
-      <Button bgColor="var(--primary-cyan-800)">Add</Button>
+      <Button bgColor="var(--primary-cyan-800)">
+        {loading ? "Adding" : "Add"}
+      </Button>
     </StyledForm>
   );
 };

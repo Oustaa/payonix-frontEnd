@@ -44,7 +44,8 @@ const initialInputValues = {
 const CreateProduct = () => {
   const dispatch = useDispatch();
   const [inputs, setInputs] = useState(initialInputValues);
-
+  const { token } = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
@@ -92,7 +93,6 @@ const CreateProduct = () => {
       const missingFields = error.response.data?.missing_field || [];
       const updatedInputs = { ...inputs };
       for (const missingField of missingFields) {
-        console.log(missingField);
         if (Boolean(missingField) && updatedInputs[missingField]) {
           updatedInputs[missingField].valid = false;
         }
@@ -103,7 +103,7 @@ const CreateProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const a_name = artisansData.find((artisan) => {
         return artisan.a_id === inputs.rmi_artisan_id.value;
@@ -121,9 +121,11 @@ const CreateProduct = () => {
         },
         {
           withCredentials: true,
+          headers: {
+            authorization: token,
+          },
         }
       );
-      console.log(response);
       if (response.status === 201) {
         setMessage(response?.data?.message);
         setInputs(initialInputValues);
@@ -134,9 +136,10 @@ const CreateProduct = () => {
         dispatch(addInventory({ ...response?.data?.item, a_name }));
       }
     } catch (err) {
-      console.log(err);
       setError(err);
       setMessage(err?.response?.data?.error_message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -187,7 +190,9 @@ const CreateProduct = () => {
         value={inputs.rmi_estimated_nbr_prod.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
       />
-      <Button bgColor="var(--primary-cyan-800)">Add</Button>
+      <Button bgColor="var(--primary-cyan-800)">
+        {loading ? "Adding" : "Add"}
+      </Button>
     </StyledForm>
   );
 };

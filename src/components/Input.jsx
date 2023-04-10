@@ -11,7 +11,6 @@ const Input = ({
   data,
   holders,
 }) => {
-  console.log(value);
   return (
     <InputGroup
       margin="0px"

@@ -23,10 +23,10 @@ const App = () => {
 
   return (
     <>
-      <img
+      {/* <img
         src="https://localhost:8000/images/1681124757326-20210317_212114.jpg"
         alt="sd"
-      />
+      /> */}
       {alertOpen ? <Alert /> : null}
       <Router>
         <Routes>

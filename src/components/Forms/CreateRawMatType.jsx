@@ -26,9 +26,10 @@ const initialInputValues = {
 
 const CreateRawMatBase = () => {
   const dispatch = useDispatch();
-  const { data, loading } = useSelector((state) => state.materials.base);
+  const { data } = useSelector((state) => state.materials.base);
   const [inputs, setInputs] = useState(initialInputValues);
-
+  const { token } = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
@@ -37,7 +38,6 @@ const CreateRawMatBase = () => {
       const missingFields = error.response.data?.missing_field || [];
       const updatedInputs = { ...inputs };
       for (const missingField of missingFields) {
-        console.log(missingField);
         if (Boolean(missingField) && updatedInputs[missingField]) {
           updatedInputs[missingField].valid = false;
         }
@@ -69,6 +69,7 @@ const CreateRawMatBase = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await axios.post(
@@ -80,6 +81,9 @@ const CreateRawMatBase = () => {
         },
         {
           withCredentials: true,
+          headers: {
+            authorization: token,
+          },
         }
       );
       if (response.status === 201) {
@@ -89,9 +93,10 @@ const CreateRawMatBase = () => {
         dispatch(addType(response.data.item));
       }
     } catch (err) {
-      console.log(err);
       setError(err);
       setMessage(err?.response?.data?.error_message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -125,7 +130,9 @@ const CreateRawMatBase = () => {
         value={inputs.rmt_reorder_point.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
       />
-      <Button bgColor="var(--primary-cyan-800)">Add</Button>
+      <Button bgColor="var(--primary-cyan-800)">
+        {loading ? "Adding" : "Add"}
+      </Button>
     </StyledForm>
   );
 };

@@ -19,7 +19,7 @@ export const isLoggedIn = createAsyncThunk(
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { status: "loading", value: false },
+  initialState: { status: "loading", value: false, token: null },
   reducers: {
     logIn: (state, { payload: { accessToken, username } }) => {
       state.value = true;
@@ -29,6 +29,7 @@ const authSlice = createSlice({
     logOut: (state) => {
       state.value = false;
       state.username = "";
+      state.token = null;
     },
   },
   extraReducers: (builder) => {
@@ -38,10 +39,11 @@ const authSlice = createSlice({
       })
       .addCase(
         isLoggedIn.fulfilled,
-        (state, { payload: { isLoggedIn, username } }) => {
+        (state, { payload: { isLoggedIn, username, token } }) => {
           state.value = isLoggedIn;
           state.username = username;
           state.status = "idle";
+          state.token = token;
         }
       )
       .addCase(isLoggedIn.rejected, (state, action) => {

@@ -21,8 +21,6 @@ const DisplayebaleInput = ({ value, type, url, id, name }) => {
   };
 
   const submitHandler = (e) => {
-    console.log(url, id);
-
     e.preventDefault();
     axios
       .put(
@@ -33,12 +31,9 @@ const DisplayebaleInput = ({ value, type, url, id, name }) => {
         { withCredentials: true }
       )
       .then((response) => {
-        console.log(response);
         setUpdating(false);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   };
 
   const inLineForm = (

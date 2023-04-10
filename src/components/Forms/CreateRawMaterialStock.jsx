@@ -33,7 +33,9 @@ const initialInputValues = {
 const CreateProduct = () => {
   const dispatch = useDispatch();
   const [inputs, setInputs] = useState(initialInputValues);
-  const { data, loading } = useSelector((state) => state.materials.type);
+  const { token } = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
+  const { data } = useSelector((state) => state.materials.type);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
@@ -79,7 +81,7 @@ const CreateProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/rawMaterials/stock`,
@@ -91,6 +93,9 @@ const CreateProduct = () => {
         },
         {
           withCredentials: true,
+          headers: {
+            authorization: token,
+          },
         }
       );
 
@@ -101,9 +106,10 @@ const CreateProduct = () => {
         dispatch(addStock(response.data.item));
       }
     } catch (err) {
-      console.log(err);
       setError(err);
       setMessage(err?.response?.data?.error_message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -146,7 +152,9 @@ const CreateProduct = () => {
         className={() => (!inputs.rms_unit_price.valid ? "invalid" : "")}
       />
 
-      <Button bgColor="var(--primary-cyan-800)">Add</Button>
+      <Button bgColor="var(--primary-cyan-800)">
+        {loading ? "Adding" : "Add"}
+      </Button>
     </StyledForm>
   );
 };

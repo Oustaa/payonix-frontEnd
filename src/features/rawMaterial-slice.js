@@ -80,7 +80,6 @@ const materialsSlice = createSlice({
       state.type.data.unshift({ ...payload, rmb_origin });
     },
     addInventory: (state, { payload }) => {
-      console.log(payload);
       state.inventory.data.unshift(payload);
     },
     addStock: (state, { payload }) => {
@@ -89,9 +88,7 @@ const materialsSlice = createSlice({
       ).rmt_name;
       state.stock.data.unshift({ ...payload, rms_rm_type });
     },
-    updateInventory: (state, { payload }) => {
-      console.log(payload);
-    },
+    updateInventory: (state, { payload }) => {},
     resetMaterials: (state) => {
       state.base = { loading: false, error: null, data: [] };
       state.type = { loading: false, error: null, data: [] };

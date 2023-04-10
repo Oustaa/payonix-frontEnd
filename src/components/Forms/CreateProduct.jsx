@@ -31,9 +31,13 @@ const initialInputValues = {
 
 const CreateProductForm = () => {
   const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.auth);
+
   const { data: productsData } = useSelector(
     (state) => state.products.products
   );
+
+  const [loading, setLoading] = useState(false);
   const [file, setFile] = useState(null);
   const [inputs, setInputs] = useState(initialInputValues);
   const [error, setError] = useState(null);
@@ -79,6 +83,7 @@ const CreateProductForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     formData.append("file", file);
 
@@ -89,6 +94,7 @@ const CreateProductForm = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            authorization: token,
           },
           params: {
             p_name: inputs.p_name.value,
@@ -106,9 +112,10 @@ const CreateProductForm = () => {
         dispatch(addProductVariety(response.data.item));
       }
     } catch (err) {
-      console.log(err);
       setError(err);
       setMessage(err?.response?.data?.error_message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -157,7 +164,9 @@ const CreateProductForm = () => {
         <label htmlFor="p_image">Products Image:</label>
         <input type="file" name="p_image" onChange={handleFileChange} />
       </InputGroup>
-      <Button bgColor="var(--primary-cyan-800)">Add</Button>
+      <Button bgColor="var(--primary-cyan-800)">
+        {loading ? "Adding" : "Add"}
+      </Button>
     </StyledForm>
   );
 };
