@@ -34,24 +34,23 @@ const CreateProduct = () => {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    return () =>
-      setInputs({
-        a_name: {
-          value: "",
-          valid: true,
-          focused: false,
-        },
-        a_phone: {
-          value: "",
-          valid: true,
-          focused: false,
-        },
-        a_address: {
-          value: "",
-          valid: true,
-          focused: false,
-        },
-      });
+    return setInputs({
+      a_name: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      a_phone: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      a_address: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+    });
   }, []);
 
   useEffect(() => {

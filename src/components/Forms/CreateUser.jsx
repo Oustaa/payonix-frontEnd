@@ -44,34 +44,33 @@ const CreateProduct = () => {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    return () =>
-      setInputs({
-        u_name: {
-          value: "",
-          valid: true,
-          focused: false,
-        },
-        u_phone: {
-          value: "",
-          valid: true,
-          focused: false,
-        },
-        u_email: {
-          value: "",
-          valid: true,
-          focused: false,
-        },
-        u_password: {
-          value: "",
-          valid: true,
-          focused: false,
-        },
-        u_role: {
-          value: "",
-          valid: true,
-          focused: false,
-        },
-      });
+    return setInputs({
+      u_name: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      u_phone: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      u_email: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      u_password: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      u_role: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+    });
   }, []);
 
   useEffect(() => {
