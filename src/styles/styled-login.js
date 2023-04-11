@@ -23,12 +23,12 @@ export const StyledLogInHeader = styled.div`
   justify-content: space-between;
   align-items: flex-end;
 
-  h1 {
-    color: var(--primary-blue-800);
+  img {
+    width: 130px;
   }
-  h2 {
-    color: var(--primary-cyan-800);
-  }
+  // h2 {
+  //   color: var(--primary-cyan-800);
+  // }
 `;
 
 export const StyledLogInForm = styled.form`

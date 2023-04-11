@@ -81,6 +81,8 @@ const RawMaterials = () => {
         tableTitle="Raw materials:"
         componentName="rawMaterialBase"
         alertTitle="Create a new material base"
+        endPoint="/rawMaterials/bases"
+        id_name="rmb_id"
       />
       <Table
         width="80%"
@@ -92,6 +94,8 @@ const RawMaterials = () => {
         filter={true}
         componentName="rawMaterialsTypes"
         alertTitle="Create a new material type"
+        endPoint="/rawMaterials/types"
+        id_name="rmt_id"
       />
     </FlexContainer>
   );

@@ -61,6 +61,8 @@ const RawMaterialsInventory = () => {
       filter={true}
       alertTitle="Add Material Inventory"
       componentName="rawMaterialInventory"
+      endPoint="/rawMaterials/inventory"
+      id_name="rmi_id"
     />
   );
 };

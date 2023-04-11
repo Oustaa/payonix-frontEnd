@@ -7,7 +7,8 @@ const authSlice = createSlice({
     sidNavOpen: true,
     // alert
     alertOpen: false,
-    alertFor: null,
+    alertforName: null,
+    alertforType: null,
     alertTitle: "",
     // right click menu
     rightClickMenuOpen: false,
@@ -28,7 +29,8 @@ const authSlice = createSlice({
     // alert
     openAlert: (state, { payload: { name, type, alertTitle } }) => {
       state.alertOpen = true;
-      state.alertFor = { name, type };
+      state.alertforName = name;
+      state.alertfortype = type;
       state.alertTitle = alertTitle;
     },
     closeAlert: (state) => {
@@ -37,16 +39,17 @@ const authSlice = createSlice({
     },
     // right click alert
     openRightClickAlert: (state, { payload }) => {
-      console.log(payload.id);
       state.rightClickMenuOpen = true;
       state.cordinates = payload.cordinates;
       state.id = payload.id;
       state.endPoint = payload.endPoint;
       state.deletable = payload.deletable;
+      state.alertforName = payload.alertforName;
     },
     closeRightClickAlert: (state) => {
       state.rightClickMenuOpen = false;
       state.deletable = false;
+      state.alertforName = false;
     },
   },
 });

@@ -37,6 +37,8 @@ const ProductInventory = () => {
       filter={true}
       componentName="productsInventory"
       alertTitle="Create Product Inventory"
+      id_name="pi_id"
+      endPoint="/products/inventory"
     />
   );
 };

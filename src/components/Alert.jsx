@@ -42,7 +42,9 @@ const components = {
 
 const Alert = () => {
   const dispatch = useDispatch();
-  const { alertFor, alertTitle } = useSelector((state) => state.ui);
+  const { alertforName, alertfortype, alertTitle } = useSelector(
+    (state) => state.ui
+  );
 
   return (
     <StyledAlert>
@@ -52,7 +54,7 @@ const Alert = () => {
           <BsX onClick={() => dispatch(closeAlert())} />
         </Button>
       </StyledAlertHeader>
-      {components[alertFor?.name][alertFor?.type]}
+      {components[alertforName][alertfortype]}
     </StyledAlert>
   );
 };

@@ -28,12 +28,40 @@ const initialInputValues = {
 const CreateProduct = () => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
+  const { id } = useSelector((state) => state.ui);
+  const { artisans } = useSelector((state) => state.artisans);
+
   const [inputs, setInputs] = useState(initialInputValues);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
+    if (id) {
+      const artisanWithID = artisans.data.find(
+        (artisan) => artisan.a_id === id
+      );
+      const values = {
+        a_name: {
+          value: artisanWithID.a_name,
+          valid: true,
+          focused: false,
+        },
+        a_phone: {
+          value: artisanWithID.a_phone,
+          valid: true,
+          focused: false,
+        },
+        a_address: {
+          value: artisanWithID.a_address,
+          valid: true,
+          focused: false,
+        },
+      };
+      setInputs(values);
+    }
+
     return setInputs({
       a_name: {
         value: "",
@@ -51,7 +79,7 @@ const CreateProduct = () => {
         focused: false,
       },
     });
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (error?.response?.status === 400) {

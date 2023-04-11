@@ -62,7 +62,7 @@ export const StyledTable = styled.table`
 export const StyledTableHeader = styled.thead`
   background-color: var(--white);
   position: sticky;
-  top: 48px;
+  top: 40px;
 `;
 
 export const StyledTr = styled.tr`

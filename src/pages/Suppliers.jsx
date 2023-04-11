@@ -72,6 +72,8 @@ const Suppliers = () => {
         tableTitle="Suppliers:"
         componentName="supplier"
         alertTitle="Create Supplier"
+        endPoint="/suppliers"
+        id_name="s_id"
       />
       <Table
         width="60%"
@@ -83,6 +85,8 @@ const Suppliers = () => {
         filter={true}
         componentName="supplierCompta"
         alertTitle="Create Supplier Compta"
+        endPoint="/suppliers/comptas"
+        id_name="sc_id"
       />
     </FlexContainer>
   );

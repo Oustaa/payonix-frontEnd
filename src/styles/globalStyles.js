@@ -32,6 +32,8 @@ const GlobalStyles = createGlobalStyle`
     
         --boxShadow: rgba(0, 0, 0, 0.32) 1px 1px 14px -10px;
 
+        font-size: 14px;
+
     }
 
     *,

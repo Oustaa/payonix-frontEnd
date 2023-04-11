@@ -22,10 +22,23 @@ const TableRow = ({ data, fields, id, endPoint, deletable, name }) => {
         : e.target.parentNode.parentNode;
 
     const id = parent.dataset?.id;
-    const x = e.clientX;
-    const y = e.clientY;
+    const alertforName = parent.dataset?.name;
+    const x =
+      e.clientX + 200 <= window.innerWidth
+        ? e.clientX
+        : window.innerWidth - 110;
+    const y =
+      e.clientY + 200 <= window.innerHeight
+        ? e.clientY
+        : window.innerHeight - 80;
     dispatch(
-      openRightClickAlert({ cordinates: { x, y }, id, endPoint, deletable })
+      openRightClickAlert({
+        cordinates: { x, y },
+        id,
+        endPoint,
+        deletable,
+        alertforName,
+      })
     );
     return false;
   };

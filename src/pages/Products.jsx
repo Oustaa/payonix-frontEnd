@@ -92,7 +92,7 @@ const Products = () => {
           tableTitle="Categories:"
           alertTitle="Create new Category"
           componentName="productCategory"
-          id_name="pc _id"
+          id_name="pc_id"
           endPoint="/products/category"
         />
         <Table

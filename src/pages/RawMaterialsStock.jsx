@@ -39,6 +39,8 @@ const RawMaterialsStock = () => {
       filter={true}
       componentName="rawMaterialStock"
       alertTitle={"Create a new Material Stock"}
+      endPoint="/rawMaterials/stock"
+      id_name="rms_id"
     />
   );
 };

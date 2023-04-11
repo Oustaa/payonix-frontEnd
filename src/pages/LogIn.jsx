@@ -108,8 +108,11 @@ const LogIn = () => {
     <StyledLogInContainer>
       <StyledLogIn>
         <StyledLogInHeader>
-          <h1>Logo</h1>
-          <h2>Log in</h2>
+          <img
+            src="https://payonix-stock.onrender.com/api/images/logo-text.png"
+            alt="payonix text logo"
+          />
+          {/* <h2>Log in</h2> */}
         </StyledLogInHeader>
         <StyledLogInForm onSubmit={submitHundler}>
           <InputGroup className={!email.valid ? "invalid" : ""} inline={false}>

@@ -5,7 +5,7 @@ import { openAlert, closeRightClickAlert } from "../features/ui-slice";
 
 const MenuAlert = () => {
   const dispatch = useDispatch();
-
+  const { alertforName } = useSelector((state) => state.ui);
   const {
     cordinates: { x, y },
     deletable,
@@ -26,7 +26,7 @@ const MenuAlert = () => {
     dispatch(closeRightClickAlert());
     dispatch(
       openAlert({
-        name: "product",
+        name: alertforName,
         type: "create",
         alertTitle: "Update",
       })

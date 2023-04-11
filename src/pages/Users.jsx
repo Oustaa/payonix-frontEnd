@@ -53,6 +53,8 @@ const Users = () => {
       tableTitle="Users:"
       componentName="user"
       alertTitle="Create User"
+      id_name="u_id"
+      endPoint="/users"
     />
   );
 };
