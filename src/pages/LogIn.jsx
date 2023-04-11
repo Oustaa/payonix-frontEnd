@@ -56,10 +56,10 @@ const LogIn = () => {
         }
       );
 
-      const { accessToken, username } = response.data;
+      const { accessToken, username, role } = response.data;
 
       if (accessToken) {
-        dispatch(login({ accessToken, username }));
+        dispatch(login({ accessToken, username, role }));
 
         let expires = new Date();
         expires.setTime(expires.getTime() + 43200 * 1000);

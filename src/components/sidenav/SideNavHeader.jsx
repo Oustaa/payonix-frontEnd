@@ -11,7 +11,10 @@ const SideNavHeader = () => {
   return (
     <StyledHeader>
       {/* shouled be replaced with an actual image */}
-      <h1>logo</h1>
+      <img
+        src={`${process.env.REACT_APP_BASE_URL}/images/logo-text.png`}
+        alt=""
+      />
       <Button onClick={() => dispatch(closeSidebar())}>
         <BsLayoutSidebarInset />
       </Button>

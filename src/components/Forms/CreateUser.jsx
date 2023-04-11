@@ -8,17 +8,27 @@ import changeHandler from "../../utils/inputChangeHndler";
 import Input from "../Input";
 
 const initialInputValues = {
-  a_name: {
+  u_name: {
     value: "",
     valid: true,
     focused: false,
   },
-  a_phone: {
+  u_phone: {
     value: "",
     valid: true,
     focused: false,
   },
-  a_address: {
+  u_email: {
+    value: "",
+    valid: true,
+    focused: false,
+  },
+  u_password: {
+    value: "",
+    valid: true,
+    focused: false,
+  },
+  u_role: {
     value: "",
     valid: true,
     focused: false,
@@ -34,25 +44,34 @@ const CreateProduct = () => {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    return () => {
+    return () =>
       setInputs({
-        a_name: {
+        u_name: {
           value: "",
           valid: true,
           focused: false,
         },
-        a_phone: {
+        u_phone: {
           value: "",
           valid: true,
           focused: false,
         },
-        a_address: {
+        u_email: {
+          value: "",
+          valid: true,
+          focused: false,
+        },
+        u_password: {
+          value: "",
+          valid: true,
+          focused: false,
+        },
+        u_role: {
           value: "",
           valid: true,
           focused: false,
         },
       });
-    };
   }, []);
 
   useEffect(() => {
@@ -74,11 +93,13 @@ const CreateProduct = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/artisans`,
+        `${process.env.REACT_APP_BASE_URL}/users`,
         {
-          a_name: inputs.a_name.value,
-          a_phone: inputs.a_phone.value,
-          a_address: inputs.a_address.value,
+          u_name: inputs.u_name.value,
+          u_phone: inputs.u_phone.value,
+          u_email: inputs.u_email.value,
+          u_password: inputs.u_password.value,
+          u_role: inputs.u_role.value,
         },
         {
           withCredentials: true,
@@ -108,27 +129,55 @@ const CreateProduct = () => {
         <p className={`message ${error ? "error" : ""}`}>{message}</p>
       ) : null}
       <Input
-        name="a_name"
-        value={inputs.a_name.value}
+        name="u_name"
+        value={inputs.u_name.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
-        label="Artisans Name:"
+        label="name:"
         className={() => {
-          return !inputs.a_name.valid ? "invalid" : "";
+          return !inputs.u_name.valid ? "invalid" : "";
         }}
       />
       <Input
-        name="a_phone"
-        value={inputs.a_phone.value}
+        name="u_email"
+        value={inputs.u_email.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
-        label="Artisan Phone Number:"
+        label="Email:"
+        className={() => {
+          return !inputs.u_email.valid ? "invalid" : "";
+        }}
       />
       <Input
-        name="a_address"
-        value={inputs.a_address.value}
+        type={"password"}
+        name="u_password"
+        value={inputs.u_password.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
-        label="Artisan Address:"
+        label="Password:"
+        className={() => {
+          return !inputs.u_password.valid ? "invalid" : "";
+        }}
       />
-      <Button bgColor="var(--primary-cyan-800)">
+      <Input
+        name="u_phone"
+        value={inputs.u_phone.value}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
+        label="Phone Number:"
+      />
+      <Input
+        name="u_role"
+        value={inputs.u_role.value}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
+        label="Role:"
+        type={"select"}
+        data={[
+          { role: "admin", name: "Admin" },
+          { role: "user", name: "User" },
+        ]}
+        holders={["role", "name"]}
+        className={() => {
+          return !inputs.u_role.valid ? "invalid" : "";
+        }}
+      />
+      <Button mTop={true} bgColor="var(--primary-cyan-800)">
         {loading ? "Adding" : "Add"}
       </Button>
     </StyledForm>

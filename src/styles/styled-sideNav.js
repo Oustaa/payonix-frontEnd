@@ -22,10 +22,10 @@ export const StyledSidNav = styled.aside`
     `;
   }};
 
-  @media (max-width: 900px) {
-    position: absolute;
-    transform: translateX(-100%);
-  }
+  // @media (max-width: 900px) {
+  //   position: absolute;
+  //   transform: translateX(-100%);
+  // }
 `;
 
 export const StyledHeader = styled.header`
@@ -35,8 +35,8 @@ export const StyledHeader = styled.header`
   color: var(--primary-blue-800);
   height: 70px;
 
-  h1 {
-    font-weight: 700;
+  img {
+    width: 100px;
   }
 `;
 

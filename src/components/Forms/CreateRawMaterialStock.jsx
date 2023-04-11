@@ -152,7 +152,7 @@ const CreateProduct = () => {
         className={() => (!inputs.rms_unit_price.valid ? "invalid" : "")}
       />
 
-      <Button bgColor="var(--primary-cyan-800)">
+      <Button mTop={true} bgColor="var(--primary-cyan-800)">
         {loading ? "Adding" : "Add"}
       </Button>
     </StyledForm>

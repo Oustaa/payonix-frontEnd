@@ -3,6 +3,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 import { StyledNavLinks } from "../../styles/styled-sideNav";
+import { useSelector } from "react-redux";
 
 function isActive({ isActive }) {
   return isActive ? "active" : "";
@@ -17,10 +18,10 @@ const links = [
   { to: "/raw_material_inventory", text: "Raw Material inventory" },
   { to: "/artisans", text: "Artisans" },
   { to: "/suppliers", text: "Suppliers" },
-  { to: "/users", text: "Users" },
 ];
 
 const SideNavLinks = () => {
+  const { role } = useSelector((state) => state.auth);
   return (
     <StyledNavLinks>
       {links.map(({ to, text }, id) => (
@@ -28,6 +29,11 @@ const SideNavLinks = () => {
           {text}
         </NavLink>
       ))}
+      {role === "admin" && (
+        <NavLink className={isActive} to="/users">
+          Users
+        </NavLink>
+      )}
     </StyledNavLinks>
   );
 };

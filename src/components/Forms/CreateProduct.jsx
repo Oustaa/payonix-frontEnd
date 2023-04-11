@@ -165,7 +165,7 @@ const CreateProductForm = () => {
         <label htmlFor="p_image">Products Image:</label>
         <input type="file" name="p_image" onChange={handleFileChange} />
       </InputGroup>
-      <Button bgColor="var(--primary-cyan-800)">
+      <Button mTop={true} bgColor="var(--primary-cyan-800)">
         {loading ? "Adding" : "Add"}
       </Button>
     </StyledForm>

@@ -11,6 +11,7 @@ export const Button = styled.button`
   background-color: ${({ bgColor }) => (bgColor ? bgColor : "transparent")};
   color: ${({ color }) => (color ? color : "inherit")};
   border: none;
+  margin-top: ${({ mTop }) => (mTop ? "var(--spacing-lg)" : "")};
 
   &:hover {
     cursor: pointer;
@@ -25,7 +26,7 @@ export const InputGroup = styled.div`
   margin-bottom: ${({ margin }) => (margin ? margin : "var(--spacing-sm)")};
 
   & + & {
-    margin-bottom: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
   }
 
   label {

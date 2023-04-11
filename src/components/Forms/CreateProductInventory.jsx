@@ -212,7 +212,7 @@ const CreateProductForm = () => {
         value={inputs.pi_raw_mat_inv_id.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
       />
-      <Button bgColor="var(--primary-cyan-800)">
+      <Button mTop={true} bgColor="var(--primary-cyan-800)">
         {loading ? "Adding" : "Add"}
       </Button>
     </StyledForm>

@@ -34,7 +34,7 @@ const CreateProduct = () => {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    return () => {
+    return () =>
       setInputs({
         a_name: {
           value: "",
@@ -52,7 +52,6 @@ const CreateProduct = () => {
           focused: false,
         },
       });
-    };
   }, []);
 
   useEffect(() => {
@@ -128,7 +127,7 @@ const CreateProduct = () => {
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         label="Artisan Address:"
       />
-      <Button bgColor="var(--primary-cyan-800)">
+      <Button mTop={true} bgColor="var(--primary-cyan-800)">
         {loading ? "Adding" : "Add"}
       </Button>
     </StyledForm>

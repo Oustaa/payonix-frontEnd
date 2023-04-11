@@ -155,7 +155,7 @@ const CreateProduct = () => {
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         type="date"
       />
-      <Button bgColor="var(--primary-cyan-800)">
+      <Button mTop={true} bgColor="var(--primary-cyan-800)">
         {loading ? "adding" : "add"}
       </Button>
     </StyledForm>
