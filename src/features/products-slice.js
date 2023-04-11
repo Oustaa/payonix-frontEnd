@@ -10,6 +10,7 @@ const initialState = {
   // shouled be renamed to products
   varity: { loading: false, error: null, data: [] },
 };
+
 export const getProducts = createAsyncThunk(
   "get/products",
   async ({ token }) => {
@@ -88,6 +89,12 @@ const productsSlice = createSlice({
       state.inventory = { loading: false, error: null, data: [] };
       state.varity = { loading: false, error: null, data: [] };
     },
+    deletProducts: (state, { payload }) => {
+      const filtredDeletion = state.varity.data.filter(
+        (product) => product.p_id !== payload.id
+      );
+      state.varity.data = filtredDeletion;
+    },
   },
   extraReducers: (builder) => {
     // getting products
@@ -137,6 +144,7 @@ export const {
   addProductInventory,
   addProductVariety,
   resetProducts,
+  deletProducts,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;

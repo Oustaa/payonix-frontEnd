@@ -15,6 +15,7 @@ import {
   CreateArtisanCompta,
   CreateSupplier,
   CreateSuppliersCompta,
+  Delete,
 } from "./Forms";
 
 import { BsX } from "react-icons/bs";
@@ -23,8 +24,8 @@ import { Button } from "../styles";
 import { StyledAlert, StyledAlertHeader } from "../styles/styled-alert";
 
 const components = {
-  product: { create: <CreateProductCategory /> },
-  productsVariety: { create: <CreateProduct /> },
+  productCategory: { create: <CreateProductCategory /> },
+  product: { create: <CreateProduct /> },
   productsInventory: { create: <CreateProductInventory /> },
   rawMaterialBase: { create: <CreateRawMatBase /> },
   rawMaterialsTypes: { create: <CreateRawMatType /> },
@@ -34,6 +35,7 @@ const components = {
   artisanCompta: { create: <CreateArtisanCompta /> },
   supplier: { create: <CreateSupplier /> },
   supplierCompta: { create: <CreateSuppliersCompta /> },
+  delete: { delete: <Delete /> },
 };
 
 const Alert = () => {

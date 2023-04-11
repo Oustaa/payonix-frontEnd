@@ -35,7 +35,6 @@ const CreateProduct = () => {
 
   useEffect(() => {
     return () => {
-      setError(null);
       setInputs({
         a_name: {
           value: "",

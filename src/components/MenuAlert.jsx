@@ -1,17 +1,30 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { StyledMenuAlert, Button } from "../styles";
+import { openAlert, closeRightClickAlert } from "../features/ui-slice";
 
 const MenuAlert = () => {
+  const dispatch = useDispatch();
   const {
     cordinates: { x, y },
   } = useSelector((state) => state.ui);
+
+  const openDeleleAlert = () => {
+    dispatch(closeRightClickAlert());
+    dispatch(
+      openAlert({
+        name: "delete",
+        type: "delete",
+        alertTitle: "Delete",
+      })
+    );
+  };
 
   return (
     <StyledMenuAlert x={x} y={y}>
       <Button onClick={() => window.location.reload()}>Refrech</Button>
       <Button>Edit</Button>
-      <Button>Delete</Button>
+      <Button onClick={openDeleleAlert}>Delete</Button>
     </StyledMenuAlert>
   );
 };

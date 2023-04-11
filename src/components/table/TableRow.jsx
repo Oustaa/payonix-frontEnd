@@ -11,11 +11,25 @@ const StyledImage = styled.img`
   object-fit: ;
 `;
 
-const TableRow = ({ data, fields, id }) => {
+const TableRow = ({ data, fields, id, endPoint }) => {
   const dispatch = useDispatch();
   const src =
     "https://content.la-z-boy.com/Images/product/category/tables/large/090_1065.jpg";
   // const src = "http://localhost:8000/images/1679658285851-20210317_212114.jpg";
+
+  const rightClickHandler = (e) => {
+    e.preventDefault();
+    let parent =
+      e.target.parentNode.tagName === "TR"
+        ? e.target.parentNode
+        : e.target.parentNode.parentNode;
+
+    const id = parent.dataset?.id;
+    const x = e.clientX;
+    const y = e.clientY;
+    dispatch(openRightClickAlert({ cordinates: { x, y }, id, endPoint }));
+    return false;
+  };
 
   const displayedValues = fields.map((field, i) => {
     if (field.changable) {
@@ -57,15 +71,7 @@ const TableRow = ({ data, fields, id }) => {
 
   return (
     <>
-      <StyledTr
-        onContextMenu={function (e) {
-          e.preventDefault();
-          const x = e.clientX;
-          const y = e.clientY;
-          dispatch(openRightClickAlert({ x, y }));
-          return false;
-        }}
-      >
+      <StyledTr data-id={id} onContextMenu={rightClickHandler}>
         {displayedValues}
       </StyledTr>
     </>

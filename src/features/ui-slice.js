@@ -12,6 +12,9 @@ const authSlice = createSlice({
     // right click menu
     rightClickMenuOpen: false,
     cordinates: { x: null, y: null },
+    // related to deleting an item "shouldn't be here but it s ok as long as it works"
+    id: null,
+    endPoint: null,
   },
   reducers: {
     // side nav
@@ -33,8 +36,11 @@ const authSlice = createSlice({
     },
     // right click alert
     openRightClickAlert: (state, { payload }) => {
+      console.log(payload.id);
       state.rightClickMenuOpen = true;
-      state.cordinates = payload;
+      state.cordinates = payload.cordinates;
+      state.id = payload.id;
+      state.endPoint = payload.endPoint;
     },
     closeRightClickAlert: (state) => {
       state.rightClickMenuOpen = false;

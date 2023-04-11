@@ -16,6 +16,7 @@ import RawMaterialsInventory from "./pages/RawMaterialsInventory";
 import RawMaterialsStock from "./pages/RawMaterialsStock";
 import Artisans from "./pages/Artisans";
 import Suppliers from "./pages/Suppliers";
+import Users from "./pages/Users";
 
 import GlobalStyles from "./styles/globalStyles";
 import MenuAlert from "./components/MenuAlert";
@@ -73,6 +74,7 @@ const App = () => {
             />
             <Route path="/artisans" element={<Artisans />} />
             <Route path="/suppliers" element={<Suppliers />} />
+            <Route path="/users" element={<Users />} />
           </Route>
         </Routes>
         <GlobalStyles />

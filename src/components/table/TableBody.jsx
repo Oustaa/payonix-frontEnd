@@ -3,7 +3,7 @@ import React from "react";
 import TableRow from "./TableRow";
 import { StyledTableBody } from "../../styles/styled-table";
 
-const TableBody = ({ data, headers }) => {
+const TableBody = ({ data, headers, id_name, endPoint }) => {
   const fields = Object.values(headers).filter((field) => {
     return typeof field !== "function";
   });
@@ -11,7 +11,13 @@ const TableBody = ({ data, headers }) => {
   return (
     <StyledTableBody>
       {data.map((data, i) => (
-        <TableRow key={i} data={data} fields={fields} />
+        <TableRow
+          endPoint={endPoint}
+          id={data[id_name]}
+          key={i}
+          data={data}
+          fields={fields}
+        />
       ))}
     </StyledTableBody>
   );

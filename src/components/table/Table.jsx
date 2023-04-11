@@ -28,6 +28,8 @@ const Table = ({
   filter,
   componentName,
   alertTitle,
+  id_name,
+  endPoint,
 }) => {
   const dispatch = useDispatch();
 
@@ -70,7 +72,12 @@ const Table = ({
       </StyledTableHead>
       <StyledTable>
         <TableHeader headers={headers} />
-        <TableBody data={data} headers={headers} />
+        <TableBody
+          endPoint={endPoint}
+          id_name={id_name}
+          data={data}
+          headers={headers}
+        />
       </StyledTable>
     </StyledTableConainers>
   );
