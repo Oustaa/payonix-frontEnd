@@ -1,5 +1,6 @@
 import React from "react";
-
+import { useDispatch } from "react-redux";
+import { openRightClickAlert } from "../../features/ui-slice";
 import { StyledTr, StyledTd } from "../../styles/styled-table";
 import DisplayebaleInput from "../ChangableValue";
 import styled from "styled-components";
@@ -10,10 +11,27 @@ const StyledImage = styled.img`
   object-fit: ;
 `;
 
-const TableRow = ({ data, fields }) => {
+const TableRow = ({ data, fields, id, endPoint, deletable }) => {
+  const dispatch = useDispatch();
   const src =
     "https://content.la-z-boy.com/Images/product/category/tables/large/090_1065.jpg";
   // const src = "http://localhost:8000/images/1679658285851-20210317_212114.jpg";
+
+  const rightClickHandler = (e) => {
+    e.preventDefault();
+    let parent =
+      e.target.parentNode.tagName === "TR"
+        ? e.target.parentNode
+        : e.target.parentNode.parentNode;
+
+    const id = parent.dataset?.id;
+    const x = e.clientX;
+    const y = e.clientY;
+    dispatch(
+      openRightClickAlert({ cordinates: { x, y }, id, endPoint, deletable })
+    );
+    return false;
+  };
 
   const displayedValues = fields.map((field, i) => {
     if (field.changable) {
@@ -31,7 +49,11 @@ const TableRow = ({ data, fields }) => {
     } else if (field.type === "image")
       return (
         <StyledTd key={i} className="image">
-          <StyledImage src={src} />
+          <StyledImage
+            src={`${process.env.REACT_APP_BASE_URL}/images/${
+              data[field.value]
+            }`}
+          />
         </StyledTd>
       );
     else if (field.type === "date")
@@ -55,7 +77,9 @@ const TableRow = ({ data, fields }) => {
 
   return (
     <>
-      <StyledTr>{displayedValues}</StyledTr>
+      <StyledTr data-id={id} onContextMenu={rightClickHandler}>
+        {displayedValues}
+      </StyledTr>
     </>
   );
 };

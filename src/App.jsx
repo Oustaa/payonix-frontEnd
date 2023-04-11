@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { createPortal } from "react-dom";
+import { closeAlert, closeRightClickAlert } from "./features/ui-slice";
 import LogIn from "./pages/LogIn";
 import Alert from "./components/Alert";
 import ProtectedRoutes from "./components/ProtectedRoutes";
@@ -15,19 +16,48 @@ import RawMaterialsInventory from "./pages/RawMaterialsInventory";
 import RawMaterialsStock from "./pages/RawMaterialsStock";
 import Artisans from "./pages/Artisans";
 import Suppliers from "./pages/Suppliers";
+import Users from "./pages/Users";
 
 import GlobalStyles from "./styles/globalStyles";
+import MenuAlert from "./components/MenuAlert";
+import BackDrop from "./components/BackDrop";
 
 const App = () => {
+  const dispatch = useDispatch();
   const { alertOpen } = useSelector((state) => state.ui);
-
+  const { rightClickMenuOpen } = useSelector((state) => state.ui);
   return (
     <>
       {/* <img
-        src="https://localhost:8000/images/1681124757326-20210317_212114.jpg"
+        src="http://localhost:8000/images/1681206109678-20210317_212114.jpg"
         alt="sd"
       /> */}
-      {alertOpen ? <Alert /> : null}
+      {alertOpen ? (
+        <>
+          <Alert />
+          {createPortal(
+            <BackDrop
+              clickHandler={() => dispatch(closeAlert())}
+              dark={true}
+            />,
+            document.getElementById("backDrop")
+          )}
+        </>
+      ) : null}
+
+      {rightClickMenuOpen ? (
+        <>
+          <MenuAlert />
+          {createPortal(
+            <BackDrop
+              clickHandler={() => dispatch(closeRightClickAlert())}
+              dark={false}
+            />,
+            document.getElementById("backDrop")
+          )}
+        </>
+      ) : null}
+
       <Router>
         <Routes>
           <Route path="/log_in" element={<LogIn />} />
@@ -44,6 +74,7 @@ const App = () => {
             />
             <Route path="/artisans" element={<Artisans />} />
             <Route path="/suppliers" element={<Suppliers />} />
+            <Route path="/users" element={<Users />} />
           </Route>
         </Routes>
         <GlobalStyles />

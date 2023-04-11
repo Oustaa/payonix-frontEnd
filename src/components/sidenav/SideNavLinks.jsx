@@ -17,6 +17,7 @@ const links = [
   { to: "/raw_material_inventory", text: "Raw Material inventory" },
   { to: "/artisans", text: "Artisans" },
   { to: "/suppliers", text: "Suppliers" },
+  { to: "/users", text: "Users" },
 ];
 
 const SideNavLinks = () => {

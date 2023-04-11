@@ -141,9 +141,13 @@ const CreateProductForm = () => {
       );
 
       if (response.status === 201) {
+        const vendor = dataArtisan.find(
+          (artisan) => artisan.a_id === inputs.pi_artisan_id.value
+        ).a_name;
         setMessage(response?.data?.message);
-        dispatch(addProductInventory(response.data?.item));
+        dispatch(addProductInventory({ ...response.data?.item, vendor }));
         setInputs(initialInputValues);
+        setError(null);
       }
     } catch (err) {
       setError(err);
@@ -186,16 +190,6 @@ const CreateProductForm = () => {
         className={() => (!inputs.pi_prod_id.valid ? "invalid" : "")}
       />
       <Input
-        type="select"
-        data={dataMaterialInventory}
-        holders={["rmi_id", "rmi_id"]}
-        name="pi_raw_mat_inv_id"
-        label="Material Inventory origin:"
-        value={inputs.pi_raw_mat_inv_id.value}
-        onChangeHandler={(e) => changeHandler(e, setInputs)}
-        className={() => (!inputs.pi_raw_mat_inv_id.valid ? "invalid" : "")}
-      />
-      <Input
         name="pi_quantity"
         label="Products quantity:"
         value={inputs.pi_quantity.value}
@@ -209,7 +203,15 @@ const CreateProductForm = () => {
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.pi_unit_price.valid ? "invalid" : "")}
       />
-
+      <Input
+        type="select"
+        data={dataMaterialInventory}
+        holders={["rmi_id", "rmi_id"]}
+        name="pi_raw_mat_inv_id"
+        label="Material Inventory origin:"
+        value={inputs.pi_raw_mat_inv_id.value}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
+      />
       <Button bgColor="var(--primary-cyan-800)">
         {loading ? "Adding" : "Add"}
       </Button>

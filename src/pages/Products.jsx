@@ -91,7 +91,9 @@ const Products = () => {
           error={productsError}
           tableTitle="Categories:"
           alertTitle="Create new Category"
-          componentName="product"
+          componentName="productCategory"
+          id_name="pc _id"
+          endPoint="/products/category"
         />
         <Table
           width="85%"
@@ -100,9 +102,12 @@ const Products = () => {
           loading={productsVarietyLoading}
           error={productsVarietyError}
           tableTitle="Products:"
-          componentName="productsVariety"
+          componentName="product"
           alertTitle="Create new product"
           filter={true}
+          id_name="p_id"
+          endPoint="/products"
+          deletable={true}
         />
       </FlexContainer>
     </>

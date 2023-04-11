@@ -15,20 +15,18 @@ import {
   CreateArtisanCompta,
   CreateSupplier,
   CreateSuppliersCompta,
+  Delete,
+  CreateUser,
 } from "./Forms";
 
 import { BsX } from "react-icons/bs";
 
 import { Button } from "../styles";
-import {
-  StyledAlertContainer,
-  StyledAlert,
-  StyledAlertHeader,
-} from "../styles/styled-alert";
+import { StyledAlert, StyledAlertHeader } from "../styles/styled-alert";
 
 const components = {
-  product: { create: <CreateProductCategory /> },
-  productsVariety: { create: <CreateProduct /> },
+  productCategory: { create: <CreateProductCategory /> },
+  product: { create: <CreateProduct /> },
   productsInventory: { create: <CreateProductInventory /> },
   rawMaterialBase: { create: <CreateRawMatBase /> },
   rawMaterialsTypes: { create: <CreateRawMatType /> },
@@ -38,6 +36,8 @@ const components = {
   artisanCompta: { create: <CreateArtisanCompta /> },
   supplier: { create: <CreateSupplier /> },
   supplierCompta: { create: <CreateSuppliersCompta /> },
+  delete: { delete: <Delete /> },
+  user: { create: <CreateUser /> },
 };
 
 const Alert = () => {
@@ -45,17 +45,15 @@ const Alert = () => {
   const { alertFor, alertTitle } = useSelector((state) => state.ui);
 
   return (
-    <StyledAlertContainer>
-      <StyledAlert>
-        <StyledAlertHeader>
-          <h4>{alertTitle}</h4>
-          <Button>
-            <BsX onClick={() => dispatch(closeAlert())} />
-          </Button>
-        </StyledAlertHeader>
-        {components[alertFor?.name][alertFor?.type]}
-      </StyledAlert>
-    </StyledAlertContainer>
+    <StyledAlert>
+      <StyledAlertHeader>
+        <h4>{alertTitle}</h4>
+        <Button>
+          <BsX onClick={() => dispatch(closeAlert())} />
+        </Button>
+      </StyledAlertHeader>
+      {components[alertFor?.name][alertFor?.type]}
+    </StyledAlert>
   );
 };
 
