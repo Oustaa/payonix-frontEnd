@@ -11,7 +11,10 @@ const SideNavHeader = () => {
   return (
     <StyledHeader>
       {/* shouled be replaced with an actual image */}
-      <h1>logo</h1>
+      <img
+        src="https://payonix-stock.onrender.com/api/images/logo-text.png"
+        alt="payonix text logo"
+      />
       <Button onClick={() => dispatch(closeSidebar())}>
         <BsLayoutSidebarInset />
       </Button>

@@ -35,8 +35,8 @@ export const StyledHeader = styled.header`
   color: var(--primary-blue-800);
   height: 70px;
 
-  h1 {
-    font-weight: 700;
+  img {
+    width: 100px;
   }
 `;
 

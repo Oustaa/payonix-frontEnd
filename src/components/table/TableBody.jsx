@@ -3,7 +3,7 @@ import React from "react";
 import TableRow from "./TableRow";
 import { StyledTableBody } from "../../styles/styled-table";
 
-const TableBody = ({ data, headers, id_name, endPoint, deletable }) => {
+const TableBody = ({ data, headers, id_name, endPoint, deletable, name }) => {
   const fields = Object.values(headers).filter((field) => {
     return typeof field !== "function";
   });
@@ -18,6 +18,7 @@ const TableBody = ({ data, headers, id_name, endPoint, deletable }) => {
           key={i}
           data={data}
           fields={fields}
+          name={name}
         />
       ))}
     </StyledTableBody>

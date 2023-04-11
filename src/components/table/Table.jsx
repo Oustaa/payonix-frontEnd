@@ -74,6 +74,7 @@ const Table = ({
       <StyledTable>
         <TableHeader headers={headers} />
         <TableBody
+          name={componentName}
           endPoint={endPoint}
           id_name={id_name}
           data={data}

@@ -11,15 +11,12 @@ const StyledImage = styled.img`
   object-fit: ;
 `;
 
-const TableRow = ({ data, fields, id, endPoint, deletable }) => {
+const TableRow = ({ data, fields, id, endPoint, deletable, name }) => {
   const dispatch = useDispatch();
-  const src =
-    "https://content.la-z-boy.com/Images/product/category/tables/large/090_1065.jpg";
-  // const src = "http://localhost:8000/images/1679658285851-20210317_212114.jpg";
 
   const rightClickHandler = (e) => {
     e.preventDefault();
-    let parent =
+    const parent =
       e.target.parentNode.tagName === "TR"
         ? e.target.parentNode
         : e.target.parentNode.parentNode;
@@ -77,7 +74,7 @@ const TableRow = ({ data, fields, id, endPoint, deletable }) => {
 
   return (
     <>
-      <StyledTr data-id={id} onContextMenu={rightClickHandler}>
+      <StyledTr data-name={name} data-id={id} onContextMenu={rightClickHandler}>
         {displayedValues}
       </StyledTr>
     </>

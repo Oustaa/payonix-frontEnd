@@ -28,10 +28,6 @@ const App = () => {
   const { rightClickMenuOpen } = useSelector((state) => state.ui);
   return (
     <>
-      {/* <img
-        src="http://localhost:8000/images/1681206109678-20210317_212114.jpg"
-        alt="sd"
-      /> */}
       {alertOpen ? (
         <>
           <Alert />
