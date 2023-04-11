@@ -140,3 +140,9 @@ export const StyledBackDrop = styled.div`
   background-color: ${({ dark }) => (dark ? "#3a3a3a4a" : "")};
   z-index: 300;
 `;
+
+export const StyledPreviewImage = styled.img`
+  width: 80%;
+  margin-inline: auto;
+  margin-block: var(--spacing-sm);
+`;

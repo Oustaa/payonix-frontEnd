@@ -16,5 +16,5 @@ export default configureStore({
     suppliers: supplierSlice,
     materials: materialSlice,
   },
-  devTools: false,
+  devTools: true,
 });

@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addProductVariety } from "../../features/products-slice";
 import Input from "../Input";
-import { InputGroup, StyledForm, Button } from "../../styles";
+import {
+  InputGroup,
+  StyledForm,
+  Button,
+  StyledPreviewImage,
+} from "../../styles";
 import changeHandler from "../../utils/inputChangeHndler";
 
 const initialInputValues = {
@@ -42,6 +47,7 @@ const CreateProductForm = () => {
   const [inputs, setInputs] = useState(initialInputValues);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
+  const [previewURL, setPreviewURL] = useState(null);
 
   useEffect(() => {
     if (error?.response?.status === 400) {
@@ -122,6 +128,7 @@ const CreateProductForm = () => {
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
+    setPreviewURL(URL.createObjectURL(e.target.files[0]));
   };
 
   return (
@@ -160,7 +167,7 @@ const CreateProductForm = () => {
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         className={() => (!inputs.p_reorder_point.valid ? "invalid" : "")}
       />
-
+      {previewURL && <StyledPreviewImage src={previewURL} alt="" />}
       <InputGroup>
         <label htmlFor="p_image">Products Image:</label>
         <input type="file" name="p_image" onChange={handleFileChange} />
