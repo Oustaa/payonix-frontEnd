@@ -11,7 +11,7 @@ const StyledImage = styled.img`
   object-fit: ;
 `;
 
-const TableRow = ({ data, fields, id, endPoint }) => {
+const TableRow = ({ data, fields, id, endPoint, deletable }) => {
   const dispatch = useDispatch();
   const src =
     "https://content.la-z-boy.com/Images/product/category/tables/large/090_1065.jpg";
@@ -27,7 +27,9 @@ const TableRow = ({ data, fields, id, endPoint }) => {
     const id = parent.dataset?.id;
     const x = e.clientX;
     const y = e.clientY;
-    dispatch(openRightClickAlert({ cordinates: { x, y }, id, endPoint }));
+    dispatch(
+      openRightClickAlert({ cordinates: { x, y }, id, endPoint, deletable })
+    );
     return false;
   };
 
@@ -47,7 +49,11 @@ const TableRow = ({ data, fields, id, endPoint }) => {
     } else if (field.type === "image")
       return (
         <StyledTd key={i} className="image">
-          <StyledImage src={src} />
+          <StyledImage
+            src={`${process.env.REACT_APP_BASE_URL}/images/${
+              data[field.value]
+            }`}
+          />
         </StyledTd>
       );
     else if (field.type === "date")

@@ -10,3 +10,4 @@ export { default as CreateArtisanCompta } from "./CreateArtisanCompta";
 export { default as CreateSupplier } from "./CreateSupplier";
 export { default as CreateSuppliersCompta } from "./CreateSuppliersCompta";
 export { default as Delete } from "./Delete";
+export { default as CreateUser } from "./CreateUser";

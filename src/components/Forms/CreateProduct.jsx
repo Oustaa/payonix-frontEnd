@@ -105,6 +105,7 @@ const CreateProductForm = () => {
           withCredentials: true,
         }
       );
+
       if (response.status === 201) {
         setError(null);
         setMessage(response.data.message);

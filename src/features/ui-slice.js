@@ -15,6 +15,7 @@ const authSlice = createSlice({
     // related to deleting an item "shouldn't be here but it s ok as long as it works"
     id: null,
     endPoint: null,
+    deletable: false,
   },
   reducers: {
     // side nav
@@ -41,9 +42,11 @@ const authSlice = createSlice({
       state.cordinates = payload.cordinates;
       state.id = payload.id;
       state.endPoint = payload.endPoint;
+      state.deletable = payload.deletable;
     },
     closeRightClickAlert: (state) => {
       state.rightClickMenuOpen = false;
+      state.deletable = false;
     },
   },
 });

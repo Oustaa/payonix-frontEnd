@@ -16,6 +16,7 @@ import {
   CreateSupplier,
   CreateSuppliersCompta,
   Delete,
+  CreateUser,
 } from "./Forms";
 
 import { BsX } from "react-icons/bs";
@@ -36,6 +37,7 @@ const components = {
   supplier: { create: <CreateSupplier /> },
   supplierCompta: { create: <CreateSuppliersCompta /> },
   delete: { delete: <Delete /> },
+  user: { create: <CreateUser /> },
 };
 
 const Alert = () => {

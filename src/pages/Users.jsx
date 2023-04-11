@@ -51,7 +51,7 @@ const Users = () => {
       loading={loading}
       error={error}
       tableTitle="Users:"
-      componentName="users"
+      componentName="user"
       alertTitle="Create User"
     />
   );
