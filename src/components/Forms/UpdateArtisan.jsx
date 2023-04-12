@@ -1,88 +1,44 @@
 import axios from "axios";
+import { useFetch } from "../../hooks/useFetch";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addArtisan } from "../../features/artisan-slice";
 import { StyledForm, Button } from "../../styles";
 import changeHandler from "../../utils/inputChangeHndler";
-
+import Loading from "../Loading";
 import Input from "../Input";
 
-const initialInputValues = {
-  a_name: {
-    value: "",
-    valid: true,
-    focused: false,
-  },
-  a_phone: {
-    value: "",
-    valid: true,
-    focused: false,
-  },
-  a_address: {
-    value: "",
-    valid: true,
-    focused: false,
-  },
-};
+function getArtisan(data, id) {
+  return new Promise(function (resolve, reject) {
+    const artisan = data.find((artisan) => artisan.a_id === id);
 
-const CreateProduct = () => {
+    if (artisan) resolve(artisan);
+    reject(new Error(`could not find artisan with the id ${id}`));
+  });
+}
+
+async function test(data, id, successCallback, errorCallback, loadingCallback) {
+  loadingCallback(true);
+  try {
+    const artsan = await getArtisan(data, id);
+    successCallback(artsan);
+  } catch (error) {
+    errorCallback(error);
+  } finally {
+    loadingCallback(false);
+  }
+}
+
+const UpdateArtisan = () => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
   const { id } = useSelector((state) => state.ui);
-  const { artisans } = useSelector((state) => state.artisans);
-
-  const [inputs, setInputs] = useState(initialInputValues);
-  const [loading, setLoading] = useState(false);
+  const [inputs, setInputs] = useState(null);
   const [error, setError] = useState(null);
-
+  const [loading, setLoading] = useState(null);
+  const artisans = useSelector((state) => state.artisans.artisans);
   const [message, setMessage] = useState(null);
-
-  useEffect(() => {
-    if (id) {
-      const artisanWithID = artisans.data.find(
-        (artisan) => artisan.a_id === id
-      );
-      console.log(artisanWithID);
-      const values = {
-        a_name: {
-          value: artisanWithID.a_name,
-          valid: true,
-          focused: false,
-        },
-        a_phone: {
-          value: artisanWithID.a_phone,
-          valid: true,
-          focused: false,
-        },
-        a_address: {
-          value: artisanWithID.a_address,
-          valid: true,
-          focused: false,
-        },
-      };
-      setInputs((prevInputs) => ({ ...prevInputs, ...values }));
-    }
-  }, [id, artisans.data]);
-
-  useEffect(() => {
-    return setInputs({
-      a_name: {
-        value: "",
-        valid: true,
-        focused: false,
-      },
-      a_phone: {
-        value: "",
-        valid: true,
-        focused: false,
-      },
-      a_address: {
-        value: "",
-        valid: true,
-        focused: false,
-      },
-    });
-  }, []);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     if (error?.response?.status === 400) {
@@ -96,6 +52,36 @@ const CreateProduct = () => {
       setInputs(updatedInputs);
     }
   }, [error, message]);
+
+  useEffect(() => {
+    test(artisans.data, id, setData, setError, setLoading);
+  }, []);
+
+  useEffect(() => {
+    if (data)
+      setInputs({
+        a_name: {
+          value: data.a_name ? data.a_name : "",
+          valid: true,
+          focused: false,
+        },
+        a_phone: {
+          value: data.a_phone ? data.a_phone : "",
+          valid: true,
+          focused: false,
+        },
+        a_address: {
+          value: data.a_address ? data.a_address : "",
+          valid: true,
+          focused: false,
+        },
+        a_total: {
+          value: data.a_total ? data.a_total : 0,
+          valid: true,
+          focused: false,
+        },
+      });
+  }, [data]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -120,7 +106,6 @@ const CreateProduct = () => {
       if (response.status === 201) {
         setError(null);
         setMessage(response.data.message);
-        setInputs(initialInputValues);
         dispatch(addArtisan(response.data.item));
       }
     } catch (err) {
@@ -131,31 +116,38 @@ const CreateProduct = () => {
     }
   };
 
+  if (loading || !data) return <Loading />;
+
   return (
     <StyledForm onSubmit={handleSubmit}>
       {message ? (
         <p className={`message ${error ? "error" : ""}`}>{message}</p>
       ) : null}
+      <Input value={data.a_id} label="Artisans Id:" readOnly={true} />
       <Input
         name="a_name"
-        value={inputs.a_name.value}
+        value={inputs?.a_name?.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         label="Artisans Name:"
-        className={() => {
-          return !inputs.a_name.valid ? "invalid" : "";
-        }}
       />
       <Input
         name="a_phone"
-        value={inputs.a_phone.value}
+        value={inputs?.a_phone?.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         label="Artisan Phone Number:"
       />
       <Input
         name="a_address"
-        value={inputs.a_address.value}
+        value={inputs?.a_address?.value}
         onChangeHandler={(e) => changeHandler(e, setInputs)}
         label="Artisan Address:"
+      />
+      <Input
+        type="number"
+        name="a_total"
+        value={inputs?.a_total?.value}
+        onChangeHandler={(e) => changeHandler(e, setInputs)}
+        label="Artisan Total:"
       />
       <Button mTop={true} bgColor="var(--primary-cyan-800)">
         {loading ? "Adding" : "Add"}
@@ -164,4 +156,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default UpdateArtisan;

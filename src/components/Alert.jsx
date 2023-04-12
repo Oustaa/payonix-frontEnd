@@ -17,6 +17,7 @@ import {
   CreateSuppliersCompta,
   Delete,
   CreateUser,
+  UpdateArtisan,
 } from "./Forms";
 
 import { BsX } from "react-icons/bs";
@@ -32,7 +33,7 @@ const components = {
   rawMaterialsTypes: { create: <CreateRawMatType /> },
   rawMaterialStock: { create: <CreateRawMaterialStock /> },
   rawMaterialInventory: { create: <CreateRawMaterialInventory /> },
-  artisan: { create: <CreateArtisan /> },
+  artisan: { create: <CreateArtisan />, update: <UpdateArtisan /> },
   artisanCompta: { create: <CreateArtisanCompta /> },
   supplier: { create: <CreateSupplier /> },
   supplierCompta: { create: <CreateSuppliersCompta /> },

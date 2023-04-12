@@ -57,6 +57,8 @@ export const StyledTable = styled.table`
   min-width: max-content;
   box-shadow: var(--boxShadow);
   position: relative;
+  border-spacing: 0;
+  border-collapse: collapse;
 `;
 
 export const StyledTableHeader = styled.thead`
@@ -74,6 +76,7 @@ export const StyledTh = styled.th`
   padding: var(--spacing-lg) var(--spacing-sm);
   font-size: 0.9rem;
   font-weight: 300;
+  border: 1px solid var(--primary-dark-100);
 `;
 
 export const StyledTd = styled.td`
@@ -82,6 +85,7 @@ export const StyledTd = styled.td`
   padding-inline: var(--spacing-sm);
   font-weight: 500;
   text-align: center;
+  border: 1px solid var(--primary-dark-100);
 
   &.image {
     display: flex;

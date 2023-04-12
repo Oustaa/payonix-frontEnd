@@ -82,40 +82,38 @@ const CreateProductForm = () => {
     if (dataMaterialInventory.length === 0)
       dispatch(getMaterialsInventory({ token }));
 
-    return () => {
-      setInputs({
-        pi_date: {
-          value: currentDate,
-          valid: true,
-          focused: false,
-        },
-        pi_quantity: {
-          value: "",
-          valid: true,
-          focused: false,
-        },
-        pi_unit_price: {
-          value: "",
-          valid: true,
-          focused: false,
-        },
-        pi_artisan_id: {
-          value: "",
-          valid: true,
-          focused: false,
-        },
-        pi_prod_id: {
-          value: "",
-          valid: true,
-          focused: false,
-        },
-        pi_raw_mat_inv_id: {
-          value: "",
-          valid: true,
-          focused: false,
-        },
-      });
-    };
+    return setInputs({
+      pi_date: {
+        value: currentDate,
+        valid: true,
+        focused: false,
+      },
+      pi_quantity: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      pi_unit_price: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      pi_artisan_id: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      pi_prod_id: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+      pi_raw_mat_inv_id: {
+        value: "",
+        valid: true,
+        focused: false,
+      },
+    });
   }, []);
 
   const handleSubmit = async (e) => {

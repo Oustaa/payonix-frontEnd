@@ -26,11 +26,12 @@ export const StyledLogInHeader = styled.div`
   img {
     width: 130px;
   }
-  // h2 {
-  //   color: var(--primary-cyan-800);
-  // }
 `;
 
 export const StyledLogInForm = styled.form`
   margin-block-start: var(--spacing-xl);
+
+  button {
+    margin-top: var(--spacing-xl);
+  }
 `;

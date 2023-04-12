@@ -110,10 +110,7 @@ const LogIn = () => {
     <StyledLogInContainer>
       <StyledLogIn>
         <StyledLogInHeader>
-          <img
-            src="https://payonix-stock.onrender.com/api/images/logo-text.png"
-            alt="payonix text logo"
-          />
+          <img src="./images/logo-text.png" alt="payonix text logo" />
           {/* <h2>Log in</h2> */}
         </StyledLogInHeader>
         <StyledLogInForm onSubmit={submitHundler}>

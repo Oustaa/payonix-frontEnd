@@ -117,6 +117,8 @@ const CreateProductForm = () => {
         setMessage(response.data.message);
         setInputs(initialInputValues);
         dispatch(addProductVariety(response.data.item));
+        setFile(null);
+        setPreviewURL(null);
       }
     } catch (err) {
       setError(err);

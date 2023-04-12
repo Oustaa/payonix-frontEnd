@@ -26,11 +26,11 @@ const TableRow = ({ data, fields, id, endPoint, deletable, name }) => {
     const x =
       e.clientX + 200 <= window.innerWidth
         ? e.clientX
-        : window.innerWidth - 110;
+        : window.innerWidth - 200 - 10;
     const y =
       e.clientY + 200 <= window.innerHeight
         ? e.clientY
-        : window.innerHeight - 80;
+        : window.innerHeight - 110;
     dispatch(
       openRightClickAlert({
         cordinates: { x, y },

@@ -8,8 +8,6 @@ import NavBar from "./NavBar/NavBar";
 
 const StyledBody = styled.div`
   display: flex;
-  // gap: var(--spacing-lg);
-  // max-width: 1600px;
   margin-inline: auto;
 `;
 

@@ -27,7 +27,7 @@ const MenuAlert = () => {
     dispatch(
       openAlert({
         name: alertforName,
-        type: "create",
+        type: "update",
         alertTitle: "Update",
       })
     );

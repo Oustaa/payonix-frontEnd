@@ -1,8 +1,7 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
 import { MdFilterListAlt } from "react-icons/md";
 import { useDispatch } from "react-redux";
-
+import Error from "../Error";
 import { openAlert } from "../../features/ui-slice";
 
 // components
@@ -39,7 +38,7 @@ const Table = ({
   }
 
   if (!loading && error) {
-    return <Navigate to="/log_in" />;
+    return <Error message={error.message} />;
   }
 
   const openCreateAlertHandler = () => {

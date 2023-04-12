@@ -9,12 +9,12 @@ import { BsDashLg } from "react-icons/bs";
 
 const artisansHeaders = {
   "Artisan name": { value: "a_name" },
-  // "Phone number": {
-  //   value: "a_phone",
-  //   default: true,
-  //   defaultValue: <BsDashLg />,
-  // },
-  // Address: { value: "a_address", default: true, defaultValue: <BsDashLg /> },
+  "Phone number": {
+    value: "a_phone",
+    default: true,
+    defaultValue: <BsDashLg />,
+  },
+  Address: { value: "a_address", default: true, defaultValue: <BsDashLg /> },
   Total: {
     checked: true,
     check: (data) => {
@@ -70,7 +70,7 @@ const Artisans = () => {
   return (
     <FlexContainer>
       <Table
-        width="30%"
+        width="40%"
         headers={artisansHeaders}
         data={artisansData}
         loading={artisansLoading}
@@ -83,7 +83,7 @@ const Artisans = () => {
         deletable={true}
       />
       <Table
-        width="80%"
+        width="60%"
         headers={artisansComptaHeaders}
         data={productsVarietyData}
         loading={productsVarietyLoading}

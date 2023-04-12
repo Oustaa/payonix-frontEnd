@@ -146,3 +146,25 @@ export const StyledPreviewImage = styled.img`
   margin-inline: auto;
   margin-block: var(--spacing-sm);
 `;
+
+export const StyledErroPage = styled.div`
+  width: 100%;
+  height: calc(80vh);
+  background-color: var(--white);
+  height: calc(100vh - var(--spacing-lg) - 90px);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxl);
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    color: var(--primary-dark-800);
+  }
+
+  img {
+    max-width: 600px;
+    width: 50%;
+  }
+`;

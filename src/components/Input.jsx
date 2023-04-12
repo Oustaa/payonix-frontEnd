@@ -10,6 +10,7 @@ const Input = ({
   className,
   data,
   holders,
+  readOnly,
 }) => {
   return (
     <InputGroup
@@ -34,6 +35,7 @@ const Input = ({
           value={value}
           onChange={onChangeHandler}
           placeholder={placeholder}
+          readOnly={readOnly}
         />
       )}
     </InputGroup>

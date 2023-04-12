@@ -64,17 +64,18 @@ const productsSlice = createSlice({
       const product = state.varity.data.find(
         (product) => product.p_id === payload.pi_prod_id
       );
+
       const catigory = state.products.data.find((category) => {
         return category.pc_id === product.p_category;
-      })?.pc_name;
+      });
 
       const name = product?.p_name;
-      const p_category_name = catigory?.pc_name;
+      const category_name = catigory?.pc_name;
 
       state.inventory.data.unshift({
         ...payload,
         name,
-        p_category_name,
+        catigory: category_name,
       });
     },
     addProductVariety: (state, { payload }) => {
@@ -99,8 +100,6 @@ const productsSlice = createSlice({
     },
     deletProductsInventory: (state, { payload }) => {
       const filtredDeletion = state.inventory.data.filter((inv) => {
-        console.log(inv.pi_id !== payload.id);
-        console.log(inv);
         return inv.pi_id !== payload.id;
       });
       state.inventory.data = filtredDeletion;

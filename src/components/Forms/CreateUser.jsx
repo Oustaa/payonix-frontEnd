@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addArtisan } from "../../features/artisan-slice";
+import { addUsers } from "../../features/user-slice";
 import { StyledForm, Button } from "../../styles";
 import changeHandler from "../../utils/inputChangeHndler";
 
@@ -112,7 +112,7 @@ const CreateProduct = () => {
         setError(null);
         setMessage(response.data.message);
         setInputs(initialInputValues);
-        dispatch(addArtisan(response.data.item));
+        dispatch(addUsers(response.data.item));
       }
     } catch (err) {
       setError(err);

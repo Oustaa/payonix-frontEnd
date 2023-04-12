@@ -17,6 +17,7 @@ import {
   deletSupplier,
   deletSupplierCompta,
 } from "../../features/supplier-slice";
+import { deletUsers } from "../../features/user-slice";
 import styled from "styled-components";
 import { Button } from "../../styles";
 import axios from "axios";
@@ -48,6 +49,7 @@ const functionTodispatch = {
   "/artisans/comptas": deletArtisanCompta,
   "/suppliers": deletSupplier,
   "/suppliers/comptas": deletSupplierCompta,
+  "/users": deletUsers,
 };
 
 const Delete = () => {
