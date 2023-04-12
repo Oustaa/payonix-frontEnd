@@ -8,6 +8,7 @@ import { resetArtisans } from "../features/artisan-slice";
 import { resetProducts } from "../features/products-slice";
 import { resetMaterials } from "../features/rawMaterial-slice";
 import { resetSuppliers } from "../features/supplier-slice";
+import { resetUsers } from "../features/user-slice";
 import { InputGroup, Button } from "../styles";
 import {
   StyledLogInContainer,
@@ -76,6 +77,7 @@ const LogIn = () => {
         dispatch(resetSuppliers());
         dispatch(resetProducts());
         dispatch(resetMaterials());
+        dispatch(resetUsers());
 
         navigate("/dashboard");
       }

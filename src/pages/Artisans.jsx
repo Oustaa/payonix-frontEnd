@@ -80,6 +80,7 @@ const Artisans = () => {
         alertTitle="Create Artisan"
         endPoint="/artisans"
         id_name="a_id"
+        deletable={true}
       />
       <Table
         width="80%"
@@ -93,6 +94,7 @@ const Artisans = () => {
         alertTitle="Create Artisan Compta"
         endPoint="/artisans/comptas"
         id_name="ac_id"
+        deletable={true}
       />
     </FlexContainer>
   );

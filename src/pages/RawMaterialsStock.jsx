@@ -41,6 +41,7 @@ const RawMaterialsStock = () => {
       alertTitle={"Create a new Material Stock"}
       endPoint="/rawMaterials/stock"
       id_name="rms_id"
+      deletable={true}
     />
   );
 };

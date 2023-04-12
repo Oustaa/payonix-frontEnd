@@ -63,6 +63,7 @@ const RawMaterialsInventory = () => {
       componentName="rawMaterialInventory"
       endPoint="/rawMaterials/inventory"
       id_name="rmi_id"
+      deletable={true}
     />
   );
 };

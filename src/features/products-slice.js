@@ -84,16 +84,31 @@ const productsSlice = createSlice({
 
       state.varity.data.unshift({ ...payload, p_category_name: p_category });
     },
-    resetProducts: (state) => {
-      state.products = { loading: false, error: null, data: [] };
-      state.inventory = { loading: false, error: null, data: [] };
-      state.varity = { loading: false, error: null, data: [] };
+    deletProductsCategory: (state, { payload }) => {
+      console.log(payload.id);
+      const filtredDeletion = state.products.data.filter(
+        (category) => category.pc_id !== payload.id
+      );
+      state.products.data = filtredDeletion;
     },
     deletProducts: (state, { payload }) => {
       const filtredDeletion = state.varity.data.filter(
         (product) => product.p_id !== payload.id
       );
       state.varity.data = filtredDeletion;
+    },
+    deletProductsInventory: (state, { payload }) => {
+      const filtredDeletion = state.inventory.data.filter((inv) => {
+        console.log(inv.pi_id !== payload.id);
+        console.log(inv);
+        return inv.pi_id !== payload.id;
+      });
+      state.inventory.data = filtredDeletion;
+    },
+    resetProducts: (state) => {
+      state.products = { loading: false, error: null, data: [] };
+      state.inventory = { loading: false, error: null, data: [] };
+      state.varity = { loading: false, error: null, data: [] };
     },
   },
   extraReducers: (builder) => {
@@ -145,6 +160,8 @@ export const {
   addProductVariety,
   resetProducts,
   deletProducts,
+  deletProductsCategory,
+  deletProductsInventory,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;

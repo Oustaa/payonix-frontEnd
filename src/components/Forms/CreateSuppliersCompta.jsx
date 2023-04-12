@@ -101,13 +101,9 @@ const CreateSupplierCompta = () => {
       );
       if (response.status === 201) {
         setError(null);
-        setMessage("Artisans compta was added successfully");
+        setMessage(response?.data?.message);
         setInputs(initialInputValues);
-        dispatch(
-          addSupplierCompta({
-            ...response.data,
-          })
-        );
+        dispatch(addSupplierCompta(response?.data?.item));
       }
     } catch (err) {
       setError(err);

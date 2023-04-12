@@ -49,6 +49,18 @@ const supplierSlice = createSlice({
       );
       state.suppliers_compta.data.unshift({ ...payload, s_name });
     },
+    deletSupplier: (state, { payload }) => {
+      const filtredDeletion = state.suppliers.data.filter(
+        (supplier) => supplier.s_id !== payload.id
+      );
+      state.suppliers.data = filtredDeletion;
+    },
+    deletSupplierCompta: (state, { payload }) => {
+      const filtredDeletion = state.suppliers_compta.data.filter(
+        (supplierCompta) => supplierCompta.sc_id !== payload.id
+      );
+      state.suppliers_compta.data = filtredDeletion;
+    },
     resetSuppliers: (state) => {
       state.suppliers = { loading: false, error: null, data: [] };
       state.suppliers_compta = { loading: false, error: null, data: [] };
@@ -84,7 +96,12 @@ const supplierSlice = createSlice({
   },
 });
 
-export const { addSupplierCompta, addSupplier, resetSuppliers } =
-  supplierSlice.actions;
+export const {
+  addSupplierCompta,
+  addSupplier,
+  resetSuppliers,
+  deletSupplier,
+  deletSupplierCompta,
+} = supplierSlice.actions;
 
 export default supplierSlice.reducer;

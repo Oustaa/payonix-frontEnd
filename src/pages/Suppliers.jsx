@@ -74,6 +74,7 @@ const Suppliers = () => {
         alertTitle="Create Supplier"
         endPoint="/suppliers"
         id_name="s_id"
+        deletable={true}
       />
       <Table
         width="60%"
@@ -87,6 +88,7 @@ const Suppliers = () => {
         alertTitle="Create Supplier Compta"
         endPoint="/suppliers/comptas"
         id_name="sc_id"
+        deletable={true}
       />
     </FlexContainer>
   );

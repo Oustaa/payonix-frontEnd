@@ -6,6 +6,7 @@ import productsSlice from "../features/products-slice";
 import artisanSlice from "../features/artisan-slice";
 import supplierSlice from "../features/supplier-slice";
 import materialSlice from "../features/rawMaterial-slice";
+import usersSlice from "../features/user-slice";
 
 export default configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export default configureStore({
     artisans: artisanSlice,
     suppliers: supplierSlice,
     materials: materialSlice,
+    users: usersSlice,
   },
   devTools: true,
 });

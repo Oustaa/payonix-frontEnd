@@ -83,6 +83,7 @@ const RawMaterials = () => {
         alertTitle="Create a new material base"
         endPoint="/rawMaterials/bases"
         id_name="rmb_id"
+        deletable={true}
       />
       <Table
         width="80%"
@@ -96,6 +97,7 @@ const RawMaterials = () => {
         alertTitle="Create a new material type"
         endPoint="/rawMaterials/types"
         id_name="rmt_id"
+        deletable={true}
       />
     </FlexContainer>
   );

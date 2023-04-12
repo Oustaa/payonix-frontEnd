@@ -92,6 +92,7 @@ const Products = () => {
           tableTitle="Categories:"
           alertTitle="Create new Category"
           componentName="productCategory"
+          deletable={true}
           id_name="pc_id"
           endPoint="/products/category"
         />

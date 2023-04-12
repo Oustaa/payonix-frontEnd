@@ -39,6 +39,7 @@ const ProductInventory = () => {
       alertTitle="Create Product Inventory"
       id_name="pi_id"
       endPoint="/products/inventory"
+      deletable={true}
     />
   );
 };

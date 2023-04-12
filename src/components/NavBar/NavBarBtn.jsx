@@ -8,6 +8,7 @@ import { resetArtisans } from "../../features/artisan-slice";
 import { resetSuppliers } from "../../features/supplier-slice";
 import { resetProducts } from "../../features/products-slice";
 import { resetMaterials } from "../../features/rawMaterial-slice";
+import { resetUsers } from "../../features/user-slice";
 import { logOut as logout } from "../../features/auth-slice";
 
 import { Button } from "../../styles";
@@ -25,6 +26,7 @@ const NavBarBtn = () => {
     dispatch(resetSuppliers());
     dispatch(resetProducts());
     dispatch(resetMaterials());
+    dispatch(resetUsers());
     dispatch(logout());
     navigate("/log_in");
   };

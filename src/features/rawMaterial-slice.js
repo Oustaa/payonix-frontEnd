@@ -88,7 +88,30 @@ const materialsSlice = createSlice({
       ).rmt_name;
       state.stock.data.unshift({ ...payload, rms_rm_type });
     },
-    updateInventory: (state, { payload }) => {},
+    deletBase: (state, { payload }) => {
+      const filtredDeletion = state.base.data.filter(
+        (base) => base.rmb_id !== payload.id
+      );
+      state.base.data = filtredDeletion;
+    },
+    deletType: (state, { payload }) => {
+      const filtredDeletion = state.type.data.filter(
+        (type) => type.rmt_id !== payload.id
+      );
+      state.type.data = filtredDeletion;
+    },
+    deletStock: (state, { payload }) => {
+      const filtredDeletion = state.stock.data.filter(
+        (stock) => stock.rms_id !== payload.id
+      );
+      state.stock.data = filtredDeletion;
+    },
+    deletInventory: (state, { payload }) => {
+      const filtredDeletion = state.inventory.data.filter(
+        (inventory) => inventory.rms_id !== payload.id
+      );
+      state.inventory.data = filtredDeletion;
+    },
     resetMaterials: (state) => {
       state.base = { loading: false, error: null, data: [] };
       state.type = { loading: false, error: null, data: [] };
@@ -159,6 +182,10 @@ export const {
   addStock,
   updateInventory,
   resetMaterials,
+  deletBase,
+  deletType,
+  deletStock,
+  deletInventory,
 } = materialsSlice.actions;
 
 export default materialsSlice.reducer;
