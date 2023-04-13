@@ -6,7 +6,7 @@ export const useFetch = ({ url, config }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch(url, { ...config })
+    fetch(url, config)
       .then((response) => response.json())
       .then((data) => {
         if (data.error) setError(true);

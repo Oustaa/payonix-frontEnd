@@ -6,6 +6,8 @@ import {
 } from "../features/rawMaterial-slice";
 import Table from "../components/table/Table";
 import { StyledTableAlert } from "../styles";
+import Loading from "../components/Loading";
+import Error from "../components/Error";
 
 const headers = {
   "Inventory Date": { value: "rmi_date", type: "date" },
@@ -51,12 +53,13 @@ const RawMaterialsInventory = () => {
     if (data.length === 0) dispatch(getMaterialsInventory({ token }));
   }, []);
 
+  if (loading) return <Loading />;
+  if (error && !data) return <Error />;
+
   return (
     <Table
       headers={headers}
-      loading={loading}
       data={data}
-      error={error}
       tableTitle="Raw Material Inventory:"
       filter={true}
       alertTitle="Add Material Inventory"

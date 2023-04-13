@@ -6,6 +6,8 @@ import Table from "../components/table/Table";
 
 import { FlexContainer, StyledTableAlert } from "../styles";
 import { BsDashLg } from "react-icons/bs";
+import Loading from "../components/Loading";
+import Error from "../components/Error";
 
 const suppliersHeaders = {
   "Supplier name": { value: "s_name" },
@@ -47,9 +49,9 @@ const Suppliers = () => {
   } = suppliers;
 
   const {
-    data: productsVarietyData,
-    loading: productsVarietyLoading,
-    error: productsVarietyError,
+    data: suppliersComptaData,
+    loading: suppliersComptaLoading,
+    error: suppliersComptaError,
   } = suppliers_compta;
 
   useEffect(() => {
@@ -61,14 +63,16 @@ const Suppliers = () => {
     }
   }, []);
 
+  if (suppliersLoading || suppliersComptaLoading) return <Loading />;
+  if (suppliersError || suppliersComptaError)
+    return <Error message={"Internale Server Error"} />;
+
   return (
     <FlexContainer>
       <Table
         width="40%"
         headers={suppliersHeaders}
         data={suppliersData}
-        loading={suppliersLoading}
-        error={suppliersError}
         tableTitle="Suppliers:"
         componentName="supplier"
         alertTitle="Create Supplier"
@@ -79,9 +83,7 @@ const Suppliers = () => {
       <Table
         width="60%"
         headers={supplersComptaHeaders}
-        data={productsVarietyData}
-        loading={productsVarietyLoading}
-        error={productsVarietyError}
+        data={suppliersComptaData}
         tableTitle="Supplier Compta:"
         filter={true}
         componentName="supplierCompta"

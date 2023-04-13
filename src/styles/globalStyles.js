@@ -124,7 +124,10 @@ const GlobalStyles = createGlobalStyle`
         
         background: #555; 
       }     
-       
+     
+      input:read-only {
+        background-color: yellow;
+      }
     
 `;
 

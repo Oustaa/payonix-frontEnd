@@ -61,6 +61,27 @@ const artisnasSlice = createSlice({
       );
       state.artisans_compta.data = filtredDeletion;
     },
+    updateArtisan: (state, { payload }) => {
+      const filtredUpdate = state.artisans.data.map((artisan) => {
+        if (artisan.a_id === payload.a_id) return payload;
+        return artisan;
+      });
+      state.artisans.data = filtredUpdate;
+    },
+    updateArtisanCompta: (state, { payload }) => {
+      const filtredUpdate = state.artisans_compta.data.map((artisanCompta) => {
+        if (artisanCompta.ac_id === payload.ac_id) {
+          const a_name = state.artisans.data.find(
+            (artisan) => artisan.a_id === payload.ac_artisan_id
+          )?.a_name;
+          return { ...payload, a_name };
+        }
+        return artisanCompta;
+      });
+
+      state.artisans_compta.data = filtredUpdate;
+    },
+
     resetArtisans: (state) => {
       state.artisans = { loading: false, error: null, data: [] };
       state.artisans_compta = { loading: false, error: null, data: [] };
@@ -102,6 +123,8 @@ export const {
   resetArtisans,
   deletArtisan,
   deletArtisanCompta,
+  updateArtisan,
+  updateArtisanCompta,
 } = artisnasSlice.actions;
 
 export default artisnasSlice.reducer;

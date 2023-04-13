@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProductsInventory } from "../features/products-slice";
 
 import Table from "../components/table/Table";
+import Loading from "../components/Loading";
+import Error from "../components/Error";
 
 const headers = {
   // "#": { value: "id" },
@@ -27,12 +29,13 @@ const ProductInventory = () => {
     if (data.length === 0) dispatch(getProductsInventory({ token }));
   }, []);
 
+  if (loading) return <Loading />;
+  if (error) return <Error />;
+
   return (
     <Table
       headers={headers}
-      loading={loading}
       data={data}
-      error={error}
       tableTitle="Product Inventory:"
       filter={true}
       componentName="productsInventory"

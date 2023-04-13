@@ -7,6 +7,8 @@ import {
 import Table from "../components/table/Table";
 import { FlexContainer, StyledTableAlert } from "../styles";
 import { useSelector, useDispatch } from "react-redux";
+import Loading from "../components/Loading";
+import Error from "../components/Error";
 
 const rawMaterialsHeaders = {
   "Raw material": { value: "rmb_name" },
@@ -70,14 +72,15 @@ const RawMaterials = () => {
       dispatch(getMaterialsTypes({ token }));
   }, []);
 
+  if (rawMaterialsLoading || rawMaterialsTypesLoading) return <Loading />;
+  if (rawMaterialsError || rawMaterialsTypesError) return <Error />;
+
   return (
     <FlexContainer>
       <Table
         width="20%"
         headers={rawMaterialsHeaders}
         data={rawMaterialsData}
-        loading={rawMaterialsLoading}
-        error={rawMaterialsError}
         tableTitle="Raw materials:"
         componentName="rawMaterialBase"
         alertTitle="Create a new material base"
@@ -89,8 +92,6 @@ const RawMaterials = () => {
         width="80%"
         headers={rawMaterialsTypesHeaders}
         data={rawMaterialsTypesData}
-        loading={rawMaterialsTypesLoading}
-        error={rawMaterialsTypesError}
         tableTitle="Raw materials types:"
         filter={true}
         componentName="rawMaterialsTypes"

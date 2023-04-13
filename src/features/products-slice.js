@@ -15,7 +15,6 @@ export const getProducts = createAsyncThunk(
   "get/products",
   async ({ token }) => {
     const response = await axios.get(`${BASE_URL}/category`, {
-      withCredentials: true,
       headers: {
         authorization: token,
       },
@@ -29,7 +28,6 @@ export const getProductsInventory = createAsyncThunk(
   "get/products_inventory",
   async ({ token }) => {
     const response = await axios.get(`${BASE_URL}/inventory`, {
-      withCredentials: true,
       headers: {
         authorization: token,
       },
@@ -104,6 +102,13 @@ const productsSlice = createSlice({
       });
       state.inventory.data = filtredDeletion;
     },
+    updateProductCategory: (state, { payload }) => {
+      const filtredUpdate = state.products.data.map((category) => {
+        if (category.pc_id === payload.pc_id) return payload;
+        return category;
+      });
+      state.products.data = filtredUpdate;
+    },
     resetProducts: (state) => {
       state.products = { loading: false, error: null, data: [] };
       state.inventory = { loading: false, error: null, data: [] };
@@ -161,6 +166,7 @@ export const {
   deletProducts,
   deletProductsCategory,
   deletProductsInventory,
+  updateProductCategory,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;

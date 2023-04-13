@@ -149,9 +149,8 @@ export const StyledPreviewImage = styled.img`
 
 export const StyledErroPage = styled.div`
   width: 100%;
-  height: calc(80vh);
-  background-color: var(--white);
   height: calc(100vh - var(--spacing-lg) - 90px);
+  background-color: var(--white);
 
   display: flex;
   flex-direction: column;

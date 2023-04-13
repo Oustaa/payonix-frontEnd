@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import Table from "../components/table/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { getMaterialsStock } from "../features/rawMaterial-slice";
+import Loading from "../components/Loading";
+import Error from "../components/Error";
 
 const headers = {
   // "#": { value: "id" },
@@ -29,12 +31,13 @@ const RawMaterialsStock = () => {
     if (data.length === 0) dispatch(getMaterialsStock({ token }));
   }, []);
 
+  if (loading) return <Loading />;
+  if (error) return <Error />;
+
   return (
     <Table
       headers={headers}
-      loading={loading}
       data={data}
-      error={error}
       tableTitle="Raw Materials stock:"
       filter={true}
       componentName="rawMaterialStock"

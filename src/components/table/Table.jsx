@@ -21,8 +21,6 @@ const Table = ({
   headers,
   data,
   width,
-  loading,
-  error,
   tableTitle,
   filter,
   componentName,
@@ -32,14 +30,6 @@ const Table = ({
   deletable,
 }) => {
   const dispatch = useDispatch();
-
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (!loading && error) {
-    return <Error message={error.message} />;
-  }
 
   const openCreateAlertHandler = () => {
     dispatch(openAlert({ name: componentName, type: "create", alertTitle }));
@@ -63,12 +53,12 @@ const Table = ({
             Add
           </Button>
         </div>
-        {filter ? (
+        {/* {filter ? (
           <Button onClick={openFilterAlertHandler} padding="var(--spacing-xsm)">
             <span>Filters </span>
             <MdFilterListAlt />
           </Button>
-        ) : null}
+        ) : null} */}
       </StyledTableHead>
       <StyledTable>
         <TableHeader headers={headers} />

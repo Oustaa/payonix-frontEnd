@@ -5,6 +5,8 @@ import Table from "../components/table/Table";
 
 import { FlexContainer, StyledTableAlert } from "../styles";
 import { BsDashLg } from "react-icons/bs";
+import Error from "../components/Error";
+import Loading from "../components/Loading";
 
 const productsCategoriesHeaders = {
   // image: { value: "p_image", type: "image" },
@@ -80,6 +82,10 @@ const Products = () => {
       dispatch(getProductsVariety({ token }));
   }, []);
 
+  if (productsLoading || productsVarietyLoading) return <Loading />;
+  if (productsError || productsVarietyError)
+    return <Error message={"Internale Server Error"} />;
+
   return (
     <>
       <FlexContainer>
@@ -87,8 +93,6 @@ const Products = () => {
           width="15%"
           headers={productsCategoriesHeaders}
           data={productsData}
-          loading={productsLoading}
-          error={productsError}
           tableTitle="Categories:"
           alertTitle="Create new Category"
           componentName="productCategory"
@@ -100,8 +104,6 @@ const Products = () => {
           width="85%"
           headers={productsHeaders}
           data={productsVarietyData}
-          loading={productsVarietyLoading}
-          error={productsVarietyError}
           tableTitle="Products:"
           componentName="product"
           alertTitle="Create new product"

@@ -6,6 +6,8 @@ import Table from "../components/table/Table";
 
 import { FlexContainer, StyledTableAlert } from "../styles";
 import { BsDashLg } from "react-icons/bs";
+import Loading from "../components/Loading";
+import Error from "../components/Error";
 
 const artisansHeaders = {
   "Artisan name": { value: "a_name" },
@@ -53,9 +55,9 @@ const Artisans = () => {
   } = artisans;
 
   const {
-    data: productsVarietyData,
-    loading: productsVarietyLoading,
-    error: productsVarietyError,
+    data: artisansComptaData,
+    loading: artisansComptaLoading,
+    error: artisansComptaError,
   } = artisans_compta;
 
   useEffect(() => {
@@ -67,14 +69,15 @@ const Artisans = () => {
     }
   }, []);
 
+  if (artisansLoading || artisansComptaLoading) return <Loading />;
+  if (artisansError || artisansComptaError) return <Error />;
+
   return (
     <FlexContainer>
       <Table
         width="40%"
         headers={artisansHeaders}
         data={artisansData}
-        loading={artisansLoading}
-        error={artisansError}
         tableTitle="Artisans:"
         componentName="artisan"
         alertTitle="Create Artisan"
@@ -85,9 +88,7 @@ const Artisans = () => {
       <Table
         width="60%"
         headers={artisansComptaHeaders}
-        data={productsVarietyData}
-        loading={productsVarietyLoading}
-        error={productsVarietyError}
+        data={artisansComptaData}
         tableTitle="Artisans Compta:"
         filter={true}
         componentName="artisanCompta"

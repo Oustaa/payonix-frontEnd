@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import Table from "../components/table/Table";
 import { useSelector, useDispatch } from "react-redux";
 import { getUsers } from "../features/user-slice";
+import Loading from "../components/Loading";
+import Error from "../components/Error";
 
 const usersHeaders = {
   Name: { value: "u_name" },
@@ -19,12 +21,13 @@ const Users = () => {
     if (data.length === 0) dispatch(getUsers({ token }));
   }, []);
 
+  if (loading) return <Loading />;
+  if (error) return <Error />;
+
   return (
     <Table
       headers={usersHeaders}
       data={data}
-      loading={loading}
-      error={error}
       tableTitle="Users:"
       componentName="user"
       alertTitle="Create User"
