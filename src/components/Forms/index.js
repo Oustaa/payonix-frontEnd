@@ -15,3 +15,4 @@ export { default as UpdateArtisan } from "./UpdateArtisan";
 export { default as UpdateArtisanCompta } from "./UpdateArtisanCompta";
 export { default as UpdateProduct } from "./UpdateProduct";
 export { default as UpdateProductCategory } from "./UpdateProductCategory";
+export { default as UpdateProductInventory } from "./UpdateProductInventory";

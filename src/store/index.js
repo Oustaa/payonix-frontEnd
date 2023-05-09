@@ -18,5 +18,5 @@ export default configureStore({
     materials: materialSlice,
     users: usersSlice,
   },
-  devTools: true,
+  devTools: process.env.REACT_APP_ENV !== "production",
 });

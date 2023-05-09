@@ -5,7 +5,6 @@ import { updateArtisanCompta } from "../../features/artisan-slice";
 import { StyledForm, Button } from "../../styles";
 import changeHandler from "../../utils/inputChangeHndler";
 import Input from "../Input";
-import { getTarget } from "../../utils/getTarger";
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
@@ -22,29 +21,13 @@ const CreateProduct = () => {
   const [message, setMessage] = useState(null);
   const [data, setData] = useState(null);
 
-  async function getArtisanCompta(
-    data,
-    id,
-    successCallback,
-    errorCallback,
-    loadingCallback
-  ) {
-    loadingCallback(true);
-    try {
-      const compta = await getTarget(data, id, "ac_id");
-      successCallback(compta);
-    } catch (error) {
-      errorCallback(error);
-    } finally {
-      loadingCallback(false);
-    }
-  }
-
   useEffect(() => {
-    getArtisanCompta(artisansCompta.data, id, setData, setError, setLoading);
-  }, []);
+    const targetArtisanComta = artisansCompta.data.find(
+      (artisanCompta) => artisanCompta.ac_id === id
+    );
 
-  useEffect(() => {
+    console.log(targetArtisanComta);
+    setData(targetArtisanComta);
     if (data)
       setInputs({
         ac_artisan_id: {

@@ -21,6 +21,7 @@ import {
   UpdateArtisanCompta,
   UpdateProduct,
   UpdateProductCategory,
+  UpdateProductInventory,
 } from "./Forms";
 
 import { BsX } from "react-icons/bs";
@@ -34,7 +35,10 @@ const components = {
     update: <UpdateProductCategory />,
   },
   product: { create: <CreateProduct />, update: <UpdateProduct /> },
-  productsInventory: { create: <CreateProductInventory /> },
+  productsInventory: {
+    create: <CreateProductInventory />,
+    update: <UpdateProductInventory />,
+  },
   rawMaterialBase: { create: <CreateRawMatBase /> },
   rawMaterialsTypes: { create: <CreateRawMatType /> },
   rawMaterialStock: { create: <CreateRawMaterialStock /> },

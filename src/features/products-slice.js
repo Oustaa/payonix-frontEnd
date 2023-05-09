@@ -97,6 +97,7 @@ const productsSlice = createSlice({
       state.varity.data = filtredDeletion;
     },
     deletProductsInventory: (state, { payload }) => {
+      console.log();
       const filtredDeletion = state.inventory.data.filter((inv) => {
         return inv.pi_id !== payload.id;
       });
@@ -108,6 +109,20 @@ const productsSlice = createSlice({
         return category;
       });
       state.products.data = filtredUpdate;
+    },
+    updateProduct: (state, { payload }) => {
+      const filtredUpdate = state.varity.data.map((product) => {
+        if (product.p_id === payload.p_id) return payload;
+        return product;
+      });
+      state.varity.data = filtredUpdate;
+    },
+    updateProductInventory: (state, { payload }) => {
+      const filtredUpdate = state.inventory.data.map((inventory) => {
+        if (inventory.pi_id === payload.pi_id) return payload;
+        return inventory;
+      });
+      state.inventory.data = filtredUpdate;
     },
     resetProducts: (state) => {
       state.products = { loading: false, error: null, data: [] };
@@ -167,6 +182,8 @@ export const {
   deletProductsCategory,
   deletProductsInventory,
   updateProductCategory,
+  updateProduct,
+  updateProductInventory,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;

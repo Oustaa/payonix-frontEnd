@@ -104,7 +104,7 @@ const LogIn = () => {
     }
   };
 
-  if (status === "loading") return <Loading />;
+  // if (status === "loading") return <Loading />;
 
   return (
     <StyledLogInContainer>

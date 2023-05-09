@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProductCategory } from "../../features/products-slice";
+import { updateProduct } from "../../features/products-slice";
 import {
   StyledForm,
   Button,
@@ -43,7 +43,7 @@ const CreateProductForm = () => {
     const targetProduct = products.data.find(
       (category) => category.p_id === id
     );
-    console.log(targetProduct);
+
     setData(targetProduct);
     setPreviewURL(
       `${process.env.REACT_APP_BASE_URL}/images/${targetProduct.p_image}`
@@ -77,6 +77,7 @@ const CreateProductForm = () => {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData();
+
     formData.append("file", file);
     formData.append("p_name", inputs?.p_name.value);
     formData.append("p_description", inputs?.p_description.value);
@@ -95,12 +96,20 @@ const CreateProductForm = () => {
           },
         }
       );
-
+      console.log(response);
       if (response.status === 201) {
         setError(null);
         setMessage(response.data.message);
-        // setInputs(initialInputValues);
-        // dispatch(addProductVariety(response.data.item));
+        dispatch(
+          updateProduct({
+            p_image: response.data.p_image,
+            p_name: inputs?.p_name.value,
+            p_description: inputs?.p_description.value,
+            p_reorder_point: inputs?.p_reorder_point.value,
+            p_category: inputs?.p_category.value,
+            p_id: inputs?.p_id.value,
+          })
+        );
         setFile(null);
         // setPreviewURL(null);
       }

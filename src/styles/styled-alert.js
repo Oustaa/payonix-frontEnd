@@ -14,6 +14,23 @@ export const StyledAlert = styled.div`
   background-color: var(--white);
   border-radius: var(--radius-sm);
   padding: var(--spacing-lg);
+
+  max-height: 80vh;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--primary-dark-200);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary-dark-500);
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark-600);
+  }
 `;
 
 export const StyledAlertHeader = styled.div`

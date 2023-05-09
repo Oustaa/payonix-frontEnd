@@ -5,7 +5,6 @@ import { updateArtisan } from "../../features/artisan-slice";
 import { StyledForm, Button } from "../../styles";
 import changeHandler from "../../utils/inputChangeHndler";
 import Input from "../Input";
-import { getTarget } from "../../utils/getTarger";
 
 const UpdateArtisan = () => {
   const dispatch = useDispatch();
@@ -18,24 +17,6 @@ const UpdateArtisan = () => {
   const artisans = useSelector((state) => state.artisans.artisans);
   const [message, setMessage] = useState(null);
   const [data, setData] = useState(null);
-
-  async function getArtisan(
-    data,
-    id,
-    successCallback,
-    errorCallback,
-    loadingCallback
-  ) {
-    loadingCallback(true);
-    try {
-      const artsan = await getTarget(data, id, "a_id");
-      successCallback(artsan);
-    } catch (error) {
-      errorCallback(error);
-    } finally {
-      loadingCallback(false);
-    }
-  }
 
   useEffect(() => {
     if (error?.response?.status === 400) {
@@ -51,10 +32,11 @@ const UpdateArtisan = () => {
   }, [error, message]);
 
   useEffect(() => {
-    getArtisan(artisans.data, id, setData, setError, setLoading);
-  }, []);
+    const targetArtisan = artisans.data.find((artisan) => artisan.a_id === id);
 
-  useEffect(() => {
+    console.log(targetArtisan);
+    setData(targetArtisan);
+
     if (data)
       setInputs({
         a_name: {
@@ -86,10 +68,10 @@ const UpdateArtisan = () => {
     try {
       const newData = {
         a_id: id,
-        a_name: inputs.a_name.value,
-        a_phone: inputs.a_phone.value,
-        a_address: inputs.a_address.value,
-        a_total: inputs.a_total.value,
+        a_name: inputs?.a_name?.value,
+        a_phone: inputs?.a_phone?.value,
+        a_address: inputs?.a_address?.value,
+        a_total: inputs?.a_total?.value,
       };
 
       setLoading(true);
@@ -120,7 +102,6 @@ const UpdateArtisan = () => {
       {message ? (
         <p className={`message ${error ? "error" : ""}`}>{message}</p>
       ) : null}
-      <Input value={data?.a_id} label="Artisans Id:" readOnly={true} />
       <Input
         name="a_name"
         value={inputs?.a_name?.value}
